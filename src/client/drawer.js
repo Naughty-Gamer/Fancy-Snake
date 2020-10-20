@@ -18,3 +18,16 @@ export function snakeDraw(snake,gameMap){
     })
 }
 
+export function foodDraw(myFood,gameMap){
+    const x = 0
+    const y = 1
+
+    myFood.foodAll.forEach(food => {
+        const currentFood = document.createElement('div'); // makes a div for our snake
+        currentFood.style.gridRowStart = food.getFoodLocation()[y]; // creates snake at x = part[0]
+        currentFood.style.gridColumnStart = food.getFoodLocation()[x]; // creates snake at y = part[1]
+        currentFood.classList.add('food'); // this adds the stylings to our snake div
+        gameMap.appendChild(currentFood); // this adds a snake div as a child node
+    })
+}
+

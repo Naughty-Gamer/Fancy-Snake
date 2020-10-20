@@ -1,8 +1,20 @@
+/**
+ * This file should send the server updates regarding it's state, eg:
+ * - The player's snake position
+ * - Whether it has collided
+ * - Whether it has eaten
+ * - If it's alive
+ * etc...
+ */
+
+
 
 /**
- * This function is going to update the snake's position
- * @param snake The snake that will be updated
+ * Logic:
+ * -user reaches landing page index.html
+ * -dom is loaded
+ * -index.js is called
+ * -new game is made
+ * -new snake is made with coordinates
+ * -all the food is made with coordinates
  */
-export function snakeUpdate(snake){
-    snake.move('up')
-}
