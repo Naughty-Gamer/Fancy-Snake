@@ -26,7 +26,9 @@ body {
 
 .snake {
     background-color: #1b2d53; /* Sets the default color for the snake */
-    border: 0;
+    border: 0.25vmin;
+    border-color: #E5E5E5;
+    border-radius: 0.50vmin;
 }
 
 .food {
