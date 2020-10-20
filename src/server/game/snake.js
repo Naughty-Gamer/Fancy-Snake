@@ -95,13 +95,15 @@ export default class Snake {
         return this.lastTailLocation;
     }
     updateTail(n) { // extends tail of snake by n
+        const x = 0
+        const y = 1
         for (var i = 0; i < this.body.length; i++) {
             console.log(this.body[i])
         }
         console.log("update tail:")
         console.log(n)
         console.log(" ")
-        this.setLastTailLocation(this.body[this.tailIndex][0], this.body[this.tailIndex][1]);
+        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
         this.tailIndex += n;
     }
     setLastTailLocation(x, y) {
@@ -117,12 +119,14 @@ export default class Snake {
     }
 
     move(direction) {
+        const x = 0
+        const y = 1
         console.log("Move")
         console.log(this.tailIndex)
         console.log(" ")
-        this.setLastTailLocation(this.body[this.tailIndex][0], this.body[this.tailIndex][1])
+        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y])
 
-        for (var i = this.tailIndex; i >= 0; i--) { // from tail, to 1 (not 0 or head)
+        for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
             console.log("Inside for loop")
             console.log(i)
             this.body[i+1] = {...this.body[i]}
@@ -130,16 +134,16 @@ export default class Snake {
         
         switch (direction) {
             case "up" || 'w':
-                this.body[0][1] -= 1
+                this.body[0][y] -= 1
                 break;
             case "down" || 's':
-                this.body[0][1] += 1
+                this.body[0][y] += 1
                 break;
             case "left" || 'a':
-                this.body[0][0] -= 1
+                this.body[0][x] -= 1
                 break;
             case "right" || 'd':
-                this.body[0][0] += 1
+                this.body[0][x] += 1
                 break;
         }
         console.log(this.body[0])
@@ -156,5 +160,4 @@ export default class Snake {
         this.increaseLength(n);
     }
 }
-// Snake yourSnake = new Snake(50,20);
 
