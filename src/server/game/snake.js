@@ -78,48 +78,71 @@ class Snake {
 
 // ABOVE IS LINKED LIST VERSION, NOW NOT IN USE ANYMORE, BOTTOM IS DYNAMIC ARRAY VERSION
 
-class Snake {
+export default class Snake {
     constructor(x, y) { // takes argument X and Y for starting coordinates seperately
-        this.body = [[x,y]]; // creates array to represent snake, starting with 1 block at location [x,y]
+        this.body = [[x,y]]; // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
         this.headLocation = this.getHeadLocation; // location of head of snake
-        this.tailIndex = 1; // index for tail of snake, also used for size (by adding 1)
+        this.tailIndex = 0; // index for tail of snake, also used for size (by adding 1)
         this.lastTailLocation = [-1,-1]; // keeps track of the last position the tail of the snake was on, for purpose of growing.
     }
     getHeadLocation() { // return x,y coordinates of the head of the snake
         return this.body[0];
     }
     getTailIndex() { // returns index location in array for the tail of snake
-        return this.tail;
+        return this.tailIndex;
     }
     getLastTailLocation() { // retuns the coordingates of the last position the tail of the snake was on
         return this.lastTailLocation;
     }
     updateTail(n) { // extends tail of snake by n
-        this.updateLastTailLocation(this.body[this.tailIndex][0], this.body[this.tailIndex][1]);
+        for (var i = 0; i < this.body.length; i++) {
+            console.log(this.body[i])
+        }
+        console.log("update tail:")
+        console.log(n)
+        console.log(" ")
+        this.setLastTailLocation(this.body[this.tailIndex][0], this.body[this.tailIndex][1]);
         this.tailIndex += n;
     }
     setLastTailLocation(x, y) {
+        console.log("update last location")
+        console.log(" ")
         this.lastTailLocation = [x,y];
+    }
+    addToBody(x, y) {
+        console.log("Add to body");
+        console.log(" ");
+        this.body.push([x,y]);
+        this.updateTail(1);
     }
 
     move(direction) {
-        for (var i = this.getTailIndex; i > 0; i--) { // from tail, to 1 (not 0 or head)
-            this.body[i] = this.body[i-1];
+        console.log("Move")
+        console.log(this.tailIndex)
+        console.log(" ")
+        this.setLastTailLocation(this.body[this.tailIndex][0], this.body[this.tailIndex][1])
+
+        for (var i = this.tailIndex; i >= 0; i--) { // from tail, to 1 (not 0 or head)
+            console.log("Inside for loop")
+            console.log(i)
+            this.body[i+1] = {...this.body[i]}
         }
+        
         switch (direction) {
-            case "up" || "w":
-                this.body[0][1] += 1
-                break;
-            case "down" || "s":
+            case "up" || 'w':
                 this.body[0][1] -= 1
                 break;
-            case "left" || "a":
-                this.body[0][0] += 1
+            case "down" || 's':
+                this.body[0][1] += 1
                 break;
-            case "right" || "d":
+            case "left" || 'a':
                 this.body[0][0] -= 1
                 break;
+            case "right" || 'd':
+                this.body[0][0] += 1
+                break;
         }
+        console.log(this.body[0])
     }
 
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -133,3 +156,5 @@ class Snake {
         this.increaseLength(n);
     }
 }
+// Snake yourSnake = new Snake(50,20);
+
