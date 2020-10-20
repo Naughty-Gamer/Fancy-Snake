@@ -84,6 +84,7 @@ export default class Snake {
         this.headLocation = this.getHeadLocation; // location of head of snake
         this.tailIndex = 0; // index for tail of snake, also used for size (by adding 1)
         this.lastTailLocation = [-1,-1]; // keeps track of the last position the tail of the snake was on, for purpose of growing.
+        this.directionHeading = null; // current direction the snake is moving. (CURRENTLY NULL???)
     }
     getHeadLocation() { // return x,y coordinates of the head of the snake
         return this.body[0];
@@ -93,6 +94,9 @@ export default class Snake {
     }
     getLastTailLocation() { // retuns the coordingates of the last position the tail of the snake was on
         return this.lastTailLocation;
+    }
+    getDirectionHeading() {
+        return this.directionHeading;
     }
     updateTail(n) { // extends tail of snake by n
         const x = 0
@@ -111,6 +115,9 @@ export default class Snake {
         console.log(" ")
         this.lastTailLocation = [x,y];
     }
+    setdirectionHeading(direction) {
+        this.directionHeading = direction;
+    }
     addToBody(x, y) {
         console.log("Add to body");
         console.log(" ");
@@ -123,30 +130,38 @@ export default class Snake {
         const y = 1
         console.log("Move")
         console.log(this.tailIndex)
-        console.log(" ")
         this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y])
 
         for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
-            console.log("Inside for loop")
-            console.log(i)
-            this.body[i+1] = {...this.body[i]}
+            //console.log("Inside for loop");
+            //console.log(i);
+            this.body[i+1] = {...this.body[i]};
         }
-        
+        if (direction == "up" && this.directionHeading == "down") {
+            console.log("OPPOSITE DIRECTIONS")
+        } // WHY DOES THIS NEVER PASS???????????????????
+
         switch (direction) {
             case "up" || 'w':
                 this.body[0][y] -= 1
+                console.log("Moving UP")
                 break;
             case "down" || 's':
                 this.body[0][y] += 1
+                console.log("Moving DOWN")
                 break;
             case "left" || 'a':
                 this.body[0][x] -= 1
+                console.log("Moving LEFT")
                 break;
             case "right" || 'd':
                 this.body[0][x] += 1
+                console.log("Moving RIGHT")
                 break;
         }
+        this.setdirectionHeading(direction);
         console.log(this.body[0])
+        console.log(this.directionHeading)
     }
 
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -160,4 +175,41 @@ export default class Snake {
         this.increaseLength(n);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
