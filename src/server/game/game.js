@@ -9,7 +9,6 @@ import Snake from './snake.js'
 import MakeAllFood from './food.js'
 import {snakeUpdate} from '../../client/input.js'
 import {snakeDraw,foodDraw} from '../../client/drawer.js'
-import {foodDraw} from '../../client/drawer.js'
 import {collision_border} from '../game/collision.js'
 import {collision_food} from '../game/collision.js'
 
