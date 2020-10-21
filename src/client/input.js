@@ -1,43 +1,54 @@
+import Queue from '../shared/utils/queue.js'
 
-        
-let direction = ""     
+let direction = ""
+let canInteract = true
+let q = new Queue()
+const delay = 65
   
 document.addEventListener("keydown", keyDownHandler);
 
 function keyDownHandler(e) {
-    if(e.key == "d" || e.key == "ArrowRight") {
-        if(direction == "left"){
-            direction = direction
-        }else{
-            direction = "right";
+    if(canInteract){
+        if(e.key == "d" || e.key == "ArrowRight") {
+            //ONLY WHEN DIRECTION IS NOT LEFT
+            if(direction != "left"){
+                direction = "right"
+                setDelay()
+            }
         }
-       
-    }
-    else if(e.key == "a" || e.key == "ArrowLeft") {
-        if(direction == "right"){
-            direction = direction
-        }else{
-            direction = "left";
+        else if(e.key == "a" || e.key == "ArrowLeft") {
+            //ONLY WHEN DIRECTION IS NOT RIGHT
+            if(direction != "right"){
+                direction = "left"
+                setDelay()
+            }
         }
-    }
-    else if(e.key == "w" || e.key == "ArrowUp") {
-        if(direction == "down"){
-            direction  = direction
-        }else{
-            direction = "up";
-        }  
-    }
-    else if(e.key == "s" || e.key == "ArrowDown") {
-        if(direction == "up"){
-            direction = direction
-        }else{
-            direction = "down";
+        else if(e.key == "w" || e.key == "ArrowUp") {
+            //ONLY WHEN DIRECTION IS NOT DOWN
+            if(direction != "down"){
+                direction = "up"
+                setDelay()
+            } 
         }
-
+        else if(e.key == "s" || e.key == "ArrowDown") {
+            //ONLY WHEN DIRECTION IS NOT UP
+            if(direction != "up"){
+                direction = "down"
+                setDelay()
+            }
+        }
     }
 }
 
-function getinputDirection(){    
+function setDelay(){
+    canInteract = false
+    setTimeout(()=>{
+        canInteract = true
+    },delay)
+}
+
+function getinputDirection(){
+    console.log("Input direction:",direction)
     return direction
 }
 
@@ -46,5 +57,13 @@ function getinputDirection(){
  * @param snake The snake that will be updated
  */
 export function snakeUpdate(snake){
-    snake.move(getinputDirection())
+    if (getinputDirection() != "") {
+        snake.move(getinputDirection())
+        // setTimeout(()=>{
+        //     if (!q.isEmpty()) {
+        //         q.dequeue()
+        //     }
+        // },1000)
+        // q.enqueue(snake.move(getinputDirection()))
+    }
 }    
