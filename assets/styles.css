@@ -10,7 +10,7 @@ body {
 
 #game-map {
     background-color: #000000; /* Sets the base color for the map */
-    border: 0.25vmin solid white;
+    border: 0.25vmin solid rgb(221, 6, 6);
     /* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
     width: 90vmin;
     height: 90vmin;
@@ -27,8 +27,8 @@ body {
 
 .snake {
     background-color: #1b2d53; /* Sets the default color for the snake */
-    border: 0.25vmin solid white;
-    border-radius: 0.50;
+    border: 0.05vmin solid white;
+    border-radius: 0.4vmin;
 }
 
 .food {

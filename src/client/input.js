@@ -1,57 +1,54 @@
-
+import Queue from '../shared/utils/queue.js'
 
 let direction = ""
-let val = true
+let canInteract = true
+let q = new Queue()
+const delay = 65
+
   
 document.addEventListener("keydown", keyDownHandler);
 
 function keyDownHandler(e) {
-    const delay = 60
-    if(val){
+    if(canInteract){
         if(e.key == "d" || e.key == "ArrowRight") {
             //ONLY WHEN DIRECTION IS NOT LEFT
             if(direction != "left"){
                 direction = "right"
-                val = false
-                setTimeout(()=>{
-                    val = true
-                },delay)
+                setDelay()
             }
         }
         else if(e.key == "a" || e.key == "ArrowLeft") {
             //ONLY WHEN DIRECTION IS NOT RIGHT
             if(direction != "right"){
                 direction = "left"
-                val = false
-                setTimeout(()=>{
-                    val = true
-                },delay)
+                setDelay()
             }
         }
         else if(e.key == "w" || e.key == "ArrowUp") {
             //ONLY WHEN DIRECTION IS NOT DOWN
             if(direction != "down"){
                 direction = "up"
-                val = false
-                setTimeout(()=>{
-                    val = true
-                },delay)
+                setDelay()
             } 
         }
         else if(e.key == "s" || e.key == "ArrowDown") {
             //ONLY WHEN DIRECTION IS NOT UP
             if(direction != "up"){
                 direction = "down"
-                val = false
-                setTimeout(()=>{
-                    val = true
-                },delay)
+                setDelay()
             }
         }
     }
 }
+function setDelay(){
+    canInteract = false
+    setTimeout(()=>{
+        canInteract = true
+    },delay)
+}
 
 function getinputDirection(){
+    console.log("Input direction:",direction)
     return direction
 }
 
@@ -62,5 +59,11 @@ function getinputDirection(){
 export function snakeUpdate(snake){
     if (getinputDirection() != "") {
         snake.move(getinputDirection())
+        // setTimeout(()=>{
+        //     if (!q.isEmpty()) {
+        //         q.dequeue()
+        //     }
+        // },1000)
+        // q.enqueue(snake.move(getinputDirection()))
     }
 }    

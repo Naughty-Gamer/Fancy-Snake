@@ -1,88 +1,12 @@
-/* class SnakeLinkedList {
-
-    // body part is the Node, the snake is a linked list made of many bodyparts (nodes)
-    class BodyPart {
-        fields:
-            X,Y location // the current block location of this bodypart
-            BodyPart nextPart // the next bodypart in the snake
-
-        constructor: Argument = X,Y location
-            location = X,Y
-            nextPart = null
-        
-        methods:
-            getLocation returns location
-            setLocation returns void, takes X,Y
-            getNextPart returns BodyPart
-            setNextPart returns void, takes BodyPart
-    }
-
-    fields:
-        int size
-        BodyPart head
-    
-    constructor: Argument = X,Y location
-        size = 1 // snake starts with 1 block
-        head = new BodyPart(X,Y) // the head block will be a new bodypart at a given location
-
-
-    methods:
-        getSize returns int
-        incrementSize returns void, takes int // addition of the size by given Int value
-        addBodyPart returns void // Goes through each body part starting at head until nextPart = null, then creates new part here, and updates nextPart
-        die returns void // kill snake, sets location of all body parts to -1,-1 and head to null
-
-
-} */
-
-/* class BodyPart {
-    constructor(x, y) {
-        this.location = [x,y];
-        this.nextPart = null;
-    }
-
-    getLocation () {
-        return this.location;
-    }
-    setLocation (x, y) {
-        this.location = [x,y];
-    }
-    getNextPart() {
-        return this.nextPart;
-    }
-    setNextPart(n) {
-        this.nextPart = n;
-    }
-}
-
-class Snake {
-    constructor(x, y) {
-        this.size = 1;
-        this.headPart = null;
-        this.tailPart = null;
-    }
-
-    addBodyPart(x, y) {
-        var part = new BodyPart(x, y); // make a new part to add to the snake
-        if (this.headPart === null) {
-
-        }
-
-        var currentPart = this.headPart; // keep track of the current part we are looking at, starting at headPart
-        while (currentPart.nextPart !== null) { // while the next part in the snake is not null (while we're not at the tail)
-            currnetPart = currentPart.nextPart; // move current to the next part
-        }
-        
-    }
-} */
-
-// ABOVE IS LINKED LIST VERSION, NOW NOT IN USE ANYMORE, BOTTOM IS DYNAMIC ARRAY VERSION
+import {collidedWithSelf} from './collisionWithSelf.js'
 
 export default class Snake {
+
+
     constructor(x, y) { // takes argument X and Y for starting coordinates seperately
         this.body = [[x,y]]; // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
-        this.headLocation = this.getHeadLocation; // location of head of snake
-        this.tailIndex = 0; // index for tail of snake, also used for size (by adding 1)
+        this.headLocation = this.getHeadLocation(); // location of head of snake
+        this.tailIndex = 0; // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
         this.lastTailLocation = [-1,-1]; // keeps track of the last position the tail of the snake was on, for purpose of growing.
         this.directionHeading = null; // current direction the snake is moving. (CURRENTLY NULL???)
     }
@@ -101,6 +25,10 @@ export default class Snake {
     updateTail(n) { // extends tail of snake by n
         const x = 0
         const y = 1
+        const previousTailPosition = this.body[this.tailIndex]
+
+        console.log(this.body)
+      
         for (var i = 0; i < this.body.length; i++) {
             console.log(this.body[i])
         }
@@ -111,27 +39,31 @@ export default class Snake {
         console.log(this.body[this.tailIndex][y])
         console.log(this.body[this.tailIndex][x])
         this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
+
         this.tailIndex += n;
+        console.log("Tail extended by",n)
+        console.log("New tail location:",this.body[this.tailIndex])
     }
     setLastTailLocation(x, y) {
-        console.log("update last location")
-        console.log(" ")
+        console.log("Last tail location was [",x,",",y,"]")
         this.lastTailLocation = [x,y];
     }
     setdirectionHeading(direction) {
         this.directionHeading = direction;
     }
     addToBody(x, y) {
-        console.log("Add to body");
-        console.log(" ");
         this.body.push([x,y]);
         this.updateTail(1);
+
+        console.log("Now the snake is",this.body.length,"parts long")
+
     }
 
     move(direction) {
         const x = 0
         const y = 1
-        console.log("Move")
+        console.log("Now moving...")
+        console.log("Tail position:",this.tailIndex,"parts from head")
         console.log(this.tailIndex)
         console.log(this.body[this.tailIndex-1][y])
         console.log(this.body[this.tailIndex-1][x])
@@ -145,7 +77,7 @@ export default class Snake {
         }
         if (direction == "up" && this.directionHeading == "down") {
             console.log("OPPOSITE DIRECTIONS")
-        } // WHY DOES THIS NEVER PASS???????????????????
+        } // WHY DOES THIS NEVER PASS??????????????????? cuz its handled in input.js, direction and directionHeading are never opposites when move() is called
 
         switch (direction) {
             case "up" || 'w':
@@ -166,8 +98,7 @@ export default class Snake {
                 break;
         }
         this.setdirectionHeading(direction);
-        console.log(this.body[0])
-        console.log(this.directionHeading)
+        console.log("Snake's head is at",this.body[0])
     }
 
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -179,6 +110,12 @@ export default class Snake {
     }
     ateFood(n) { // player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
         this.increaseLength(n);
+    }
+
+    die(){
+        if (collidedWithSelf(this)) {
+            alert("You died")
+        }
     }
 }
 
