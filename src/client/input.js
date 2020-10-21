@@ -4,6 +4,7 @@ let direction = ""
 let canInteract = true
 let q = new Queue()
 const delay = 65
+
   
 document.addEventListener("keydown", keyDownHandler);
 
@@ -39,7 +40,6 @@ function keyDownHandler(e) {
         }
     }
 }
-
 function setDelay(){
     canInteract = false
     setTimeout(()=>{

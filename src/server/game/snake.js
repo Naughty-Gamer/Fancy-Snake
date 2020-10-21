@@ -1,82 +1,3 @@
-/* class SnakeLinkedList {
-
-    // body part is the Node, the snake is a linked list made of many bodyparts (nodes)
-    class BodyPart {
-        fields:
-            X,Y location // the current block location of this bodypart
-            BodyPart nextPart // the next bodypart in the snake
-
-        constructor: Argument = X,Y location
-            location = X,Y
-            nextPart = null
-        
-        methods:
-            getLocation returns location
-            setLocation returns void, takes X,Y
-            getNextPart returns BodyPart
-            setNextPart returns void, takes BodyPart
-    }
-
-    fields:
-        int size
-        BodyPart head
-    
-    constructor: Argument = X,Y location
-        size = 1 // snake starts with 1 block
-        head = new BodyPart(X,Y) // the head block will be a new bodypart at a given location
-
-
-    methods:
-        getSize returns int
-        incrementSize returns void, takes int // addition of the size by given Int value
-        addBodyPart returns void // Goes through each body part starting at head until nextPart = null, then creates new part here, and updates nextPart
-        die returns void // kill snake, sets location of all body parts to -1,-1 and head to null
-
-
-} */
-
-/* class BodyPart {
-    constructor(x, y) {
-        this.location = [x,y];
-        this.nextPart = null;
-    }
-
-    getLocation () {
-        return this.location;
-    }
-    setLocation (x, y) {
-        this.location = [x,y];
-    }
-    getNextPart() {
-        return this.nextPart;
-    }
-    setNextPart(n) {
-        this.nextPart = n;
-    }
-}
-
-class Snake {
-    constructor(x, y) {
-        this.size = 1;
-        this.headPart = null;
-        this.tailPart = null;
-    }
-
-    addBodyPart(x, y) {
-        var part = new BodyPart(x, y); // make a new part to add to the snake
-        if (this.headPart === null) {
-
-        }
-
-        var currentPart = this.headPart; // keep track of the current part we are looking at, starting at headPart
-        while (currentPart.nextPart !== null) { // while the next part in the snake is not null (while we're not at the tail)
-            currnetPart = currentPart.nextPart; // move current to the next part
-        }
-        
-    }
-} */
-
-// ABOVE IS LINKED LIST VERSION, NOW NOT IN USE ANYMORE, BOTTOM IS DYNAMIC ARRAY VERSION
 import {collidedWithSelf} from './collisionWithSelf.js'
 
 export default class Snake {
@@ -107,8 +28,17 @@ export default class Snake {
         const previousTailPosition = this.body[this.tailIndex]
 
         console.log(this.body)
-
-        this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y])
+      
+        for (var i = 0; i < this.body.length; i++) {
+            console.log(this.body[i])
+        }
+        console.log("update tail:")
+        console.log(n)
+        console.log(" UP PART")
+        console.log(this.tailIndex)
+        console.log(this.body[this.tailIndex][y])
+        console.log(this.body[this.tailIndex][x])
+        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
 
         this.tailIndex += n;
         console.log("Tail extended by",n)
@@ -134,7 +64,11 @@ export default class Snake {
         const y = 1
         console.log("Now moving...")
         console.log("Tail position:",this.tailIndex,"parts from head")
-        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y])
+        console.log(this.tailIndex)
+        console.log(this.body[this.tailIndex-1][y])
+        console.log(this.body[this.tailIndex-1][x])
+        
+        this.setLastTailLocation(this.body[this.tailIndex-1][x], this.body[this.tailIndex-1][y])
 
         for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
             //console.log("Inside for loop");

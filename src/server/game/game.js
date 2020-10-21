@@ -9,6 +9,9 @@ import Snake from './snake.js'
 import MakeAllFood from './food.js'
 import {snakeUpdate} from '../../client/input.js'
 import {snakeDraw,foodDraw} from '../../client/drawer.js'
+import {foodDraw} from '../../client/drawer.js'
+import {collision_border} from '../game/collision.js'
+import {collision_food} from '../game/collision.js'
 
 let mySnake = null
 let gameMap = null
@@ -40,7 +43,7 @@ export default class Game {
 		// mySnake.addToBody(0,50);
 		myFood = new MakeAllFood(75,75,0.5)
 		gameMap = document.getElementById("game-map")
-		
+    
 		/**
 		 * Tells the browser that we want to animate something on the screen before
 		 * the next repaint (normally 60 repaints per second), so the browser stalls
@@ -50,14 +53,6 @@ export default class Game {
 		 */
 		window.requestAnimationFrame(clientGameLoop)
 	}
-	
-	/* 
-	hasFoodBeenFound() {
-		for each elements in myFood.foodAll array:
-		if myFood.foodall.currentFoodLocation == mySnake.getsnakeheadlcoaiton :
-		mySnake.ateFood()
-	} */
-	
 }
 
 let timeSincelastRender = 0 // variable to keep track of the time since the last render, initially 0
@@ -119,9 +114,12 @@ function clientGameLoop(timeSinceOrigin) {
 function update(){
 	snakeUpdate(mySnake)
 	mySnake.die()
+  collision_border(mySnake)
+	collision_food(mySnake,myFood)
 }
 
 function draw(){
+	gameMap.innerHTML = ''
 	snakeDraw(mySnake,gameMap)
 	foodDraw(myFood,gameMap)
 
