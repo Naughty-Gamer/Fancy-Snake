@@ -1,43 +1,57 @@
 
-        
-let direction = ""     
+
+let direction = ""
+let val = true
   
 document.addEventListener("keydown", keyDownHandler);
 
 function keyDownHandler(e) {
-    if(e.key == "d" || e.key == "ArrowRight") {
-        if(direction == "left"){
-            direction = direction
-        }else{
-            direction = "right";
+    const delay = 60
+    if(val){
+        if(e.key == "d" || e.key == "ArrowRight") {
+            //ONLY WHEN DIRECTION IS NOT LEFT
+            if(direction != "left"){
+                direction = "right"
+                val = false
+                setTimeout(()=>{
+                    val = true
+                },delay)
+            }
         }
-       
-    }
-    else if(e.key == "a" || e.key == "ArrowLeft") {
-        if(direction == "right"){
-            direction = direction
-        }else{
-            direction = "left";
+        else if(e.key == "a" || e.key == "ArrowLeft") {
+            //ONLY WHEN DIRECTION IS NOT RIGHT
+            if(direction != "right"){
+                direction = "left"
+                val = false
+                setTimeout(()=>{
+                    val = true
+                },delay)
+            }
         }
-    }
-    else if(e.key == "w" || e.key == "ArrowUp") {
-        if(direction == "down"){
-            direction  = direction
-        }else{
-            direction = "up";
-        }  
-    }
-    else if(e.key == "s" || e.key == "ArrowDown") {
-        if(direction == "up"){
-            direction = direction
-        }else{
-            direction = "down";
+        else if(e.key == "w" || e.key == "ArrowUp") {
+            //ONLY WHEN DIRECTION IS NOT DOWN
+            if(direction != "down"){
+                direction = "up"
+                val = false
+                setTimeout(()=>{
+                    val = true
+                },delay)
+            } 
         }
-
+        else if(e.key == "s" || e.key == "ArrowDown") {
+            //ONLY WHEN DIRECTION IS NOT UP
+            if(direction != "up"){
+                direction = "down"
+                val = false
+                setTimeout(()=>{
+                    val = true
+                },delay)
+            }
+        }
     }
 }
 
-function getinputDirection(){    
+function getinputDirection(){
     return direction
 }
 
@@ -46,5 +60,7 @@ function getinputDirection(){
  * @param snake The snake that will be updated
  */
 export function snakeUpdate(snake){
-    snake.move(getinputDirection())
+    if (getinputDirection() != "") {
+        snake.move(getinputDirection())
+    }
 }    

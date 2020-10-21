@@ -3,9 +3,11 @@ import MakeAllFood from './food.js'
 import {snakeUpdate} from '../../client/input.js'
 import {snakeDraw} from '../../client/drawer.js'
 import {foodDraw} from '../../client/drawer.js'
+import {collision_border} from '../game/collision.js'
+import {collision_food} from '../game/collision.js'
 
 let lastRender = 0 // to keep track of the lastRender.
-const snake_speed = 15 // The speed of the snake. (How many times the snake is going to move per sec.)
+const snake_speed = 12 // The speed of the snake. (How many times the snake is going to move per sec.)
 let mySnake = null
 let gameMap = null
 let myFood = null
@@ -18,16 +20,9 @@ export default class Game {
 		mySnake.addToBody(18,50);
 		myFood = new MakeAllFood(75,75,0.5)
 		gameMap = document.getElementById("game-map")
+		
 		window.requestAnimationFrame(render) // to start rendering for the first time.
 	}
-
-	/* 
-	hasFoodBeenFound() {
-		for each elements in myFood.foodAll array:
-			if myFood.foodall.currentFoodLocation == mySnake.getsnakeheadlcoaiton :
-				mySnake.ateFood()
-	} */
-
 }
 
 /**
@@ -51,10 +46,13 @@ function render(Time){
 
 function update(){
 	snakeUpdate(mySnake)
-	// hasFoodBeenFound()
+	collision_border(mySnake)
+	collision_food(mySnake,myFood)
+
 }
 
 function draw(){
+	gameMap.innerHTML = ''
 	snakeDraw(mySnake,gameMap)
 	foodDraw(myFood,gameMap)
 
