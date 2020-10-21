@@ -106,7 +106,10 @@ export default class Snake {
         }
         console.log("update tail:")
         console.log(n)
-        console.log(" ")
+        console.log(" UP PART")
+        console.log(this.tailIndex)
+        console.log(this.body[this.tailIndex][y])
+        console.log(this.body[this.tailIndex][x])
         this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
         this.tailIndex += n;
     }
@@ -130,7 +133,10 @@ export default class Snake {
         const y = 1
         console.log("Move")
         console.log(this.tailIndex)
-        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y])
+        console.log(this.body[this.tailIndex-1][y])
+        console.log(this.body[this.tailIndex-1][x])
+        
+        this.setLastTailLocation(this.body[this.tailIndex-1][x], this.body[this.tailIndex-1][y])
 
         for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
             //console.log("Inside for loop");
