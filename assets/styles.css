@@ -10,13 +10,12 @@ body {
 
 #game-map {
     background-color: #000000; /* Sets the base color for the map */
-
+    border: 0.25vmin solid rgb(221, 6, 6);
     /* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
     width: 90vmin;
     height: 90vmin;
 
     display: grid;
-
     /* By specifying how many rows and columns we want
        for our game map, no matter what size the browser
        or screen size is, the game will always be a 75x75 grid */
@@ -24,12 +23,16 @@ body {
     grid-template-columns: repeat(75,1fr);
 }
 
+
+
 .snake {
     background-color: #1b2d53; /* Sets the default color for the snake */
-    border: 0;
+    border: 0.05vmin solid white;
+    border-radius: 0.4vmin;
 }
 
 .food {
-    background-color: #FCA311; /* Sets the default color for the food */
-    border: 0;
+    background-color: green; /* Sets the default color for the snake */
+    border: 0.25vmin solid green;
+    border-radius: 0.5vmin;
 }
