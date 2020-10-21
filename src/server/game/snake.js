@@ -77,12 +77,15 @@ class Snake {
 } */
 
 // ABOVE IS LINKED LIST VERSION, NOW NOT IN USE ANYMORE, BOTTOM IS DYNAMIC ARRAY VERSION
+import {collidedWithSelf} from './collisionWithSelf.js'
 
 export default class Snake {
+
+
     constructor(x, y) { // takes argument X and Y for starting coordinates seperately
         this.body = [[x,y]]; // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
-        this.headLocation = this.getHeadLocation; // location of head of snake
-        this.tailIndex = 0; // index for tail of snake, also used for size (by adding 1)
+        this.headLocation = this.getHeadLocation(); // location of head of snake
+        this.tailIndex = 0; // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
         this.lastTailLocation = [-1,-1]; // keeps track of the last position the tail of the snake was on, for purpose of growing.
         this.directionHeading = null; // current direction the snake is moving. (CURRENTLY NULL???)
     }
@@ -101,35 +104,36 @@ export default class Snake {
     updateTail(n) { // extends tail of snake by n
         const x = 0
         const y = 1
-        for (var i = 0; i < this.body.length; i++) {
-            console.log(this.body[i])
-        }
-        console.log("update tail:")
-        console.log(n)
-        console.log(" ")
-        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
+        const previousTailPosition = this.body[this.tailIndex]
+
+        console.log(this.body)
+
+        this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y])
+
         this.tailIndex += n;
+        console.log("Tail extended by",n)
+        console.log("New tail location:",this.body[this.tailIndex])
     }
     setLastTailLocation(x, y) {
-        console.log("update last location")
-        console.log(" ")
+        console.log("Last tail location was [",x,",",y,"]")
         this.lastTailLocation = [x,y];
     }
     setdirectionHeading(direction) {
         this.directionHeading = direction;
     }
     addToBody(x, y) {
-        console.log("Add to body");
-        console.log(" ");
         this.body.push([x,y]);
         this.updateTail(1);
+
+        console.log("Now the snake is",this.body.length,"parts long")
+
     }
 
     move(direction) {
         const x = 0
         const y = 1
-        console.log("Move")
-        console.log(this.tailIndex)
+        console.log("Now moving...")
+        console.log("Tail position:",this.tailIndex,"parts from head")
         this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y])
 
         for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
@@ -139,7 +143,7 @@ export default class Snake {
         }
         if (direction == "up" && this.directionHeading == "down") {
             console.log("OPPOSITE DIRECTIONS")
-        } // WHY DOES THIS NEVER PASS???????????????????
+        } // WHY DOES THIS NEVER PASS??????????????????? cuz its handled in input.js, direction and directionHeading are never opposites when move() is called
 
         switch (direction) {
             case "up" || 'w':
@@ -160,8 +164,7 @@ export default class Snake {
                 break;
         }
         this.setdirectionHeading(direction);
-        console.log(this.body[0])
-        console.log(this.directionHeading)
+        console.log("Snake's head is at",this.body[0])
     }
 
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -173,6 +176,12 @@ export default class Snake {
     }
     ateFood(n) { // player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
         this.increaseLength(n);
+    }
+
+    die(){
+        if (collidedWithSelf(this)) {
+            alert("You died")
+        }
     }
 }
 
