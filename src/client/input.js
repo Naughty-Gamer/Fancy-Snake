@@ -3,7 +3,7 @@ import Queue from '../shared/utils/queue.js'
 let direction = ""
 let canInteract = true
 let q = new Queue()
-const delay = 65
+const delay = 55
 
   
 document.addEventListener("keydown", keyDownHandler);
@@ -14,33 +14,33 @@ function keyDownHandler(e) {
             //ONLY WHEN DIRECTION IS NOT LEFT
             if(direction != "left"){
                 direction = "right"
-                setDelay()
+                setInputDelay()
             }
         }
         else if(e.key == "a" || e.key == "ArrowLeft") {
             //ONLY WHEN DIRECTION IS NOT RIGHT
             if(direction != "right"){
                 direction = "left"
-                setDelay()
+                setInputDelay()
             }
         }
         else if(e.key == "w" || e.key == "ArrowUp") {
             //ONLY WHEN DIRECTION IS NOT DOWN
             if(direction != "down"){
                 direction = "up"
-                setDelay()
+                setInputDelay()
             } 
         }
         else if(e.key == "s" || e.key == "ArrowDown") {
             //ONLY WHEN DIRECTION IS NOT UP
             if(direction != "up"){
                 direction = "down"
-                setDelay()
+                setInputDelay()
             }
         }
     }
 }
-function setDelay(){
+function setInputDelay(){
     canInteract = false
     setTimeout(()=>{
         canInteract = true
