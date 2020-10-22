@@ -24,6 +24,7 @@
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
-    "live-server": "^1.2.1"
+    "live-server": "^1.2.1",
+    "reload": "^3.1.1"
   }
 }
