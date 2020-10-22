@@ -1,17 +1,13 @@
 
 
-
-export function collision_border(snake){
+export function collidedWithBorder(snake){
     if(snake.getHeadLocation()[0]>75 || snake.getHeadLocation()[0]<1){
-        window.location.reload();
-        return alert("You Die")
+        return true
         
-    } else if(snake.getHeadLocation()[1]>75 || snake.getHeadLocation()[1]<1){
-        window.location.reload();   
-        return alert("You Die")
+    } else if(snake.getHeadLocation()[1]>75 || snake.getHeadLocation()[1]<1){ 
+        return true
     }
 }
-
 
 
 export function collision_food(snake,food){
@@ -28,4 +24,16 @@ export function collision_food(snake,food){
         }
         //x++;
     });
+}
+
+
+export function collidedWithSelf(snake){
+    const x = 0
+    const y = 1
+    for (var bodyPartIndex = 1; bodyPartIndex < snake.getTailIndex(); bodyPartIndex++) {
+        if (snake.getHeadLocation()[x] == snake.body[bodyPartIndex][x] && snake.getHeadLocation()[y] == snake.body[bodyPartIndex][y]) {
+            return true
+        }  
+    }
+    return false
 }
