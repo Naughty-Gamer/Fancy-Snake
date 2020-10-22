@@ -1,7 +1,6 @@
-import {collidedWithSelf} from './collisionWithSelf.js'
+import {collidedWithSelf,collidedWithBorder} from './collision.js'
 
 export default class Snake {
-
 
     constructor(x, y) { // takes argument X and Y for starting coordinates seperately
         this.body = [[x,y]]; // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
@@ -32,13 +31,14 @@ export default class Snake {
         for (var i = 0; i < this.body.length; i++) {
             console.log(this.body[i])
         }
+
         console.log("update tail:")
         console.log(n)
         console.log(" UP PART")
         console.log(this.tailIndex)
         console.log(this.body[this.tailIndex][y])
         console.log(this.body[this.tailIndex][x])
-        this.setLastTailLocation(this.body[this.tailIndex][x], this.body[this.tailIndex][y]);
+        this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y]);
 
         this.tailIndex += n;
         console.log("Tail extended by",n)
@@ -65,19 +65,14 @@ export default class Snake {
         console.log("Now moving...")
         console.log("Tail position:",this.tailIndex,"parts from head")
         console.log(this.tailIndex)
-        console.log(this.body[this.tailIndex-1][y])
-        console.log(this.body[this.tailIndex-1][x])
         
-        this.setLastTailLocation(this.body[this.tailIndex-1][x], this.body[this.tailIndex-1][y])
+        // this.setLastTailLocation(this.body[this.tailIndex-1][x], this.body[this.tailIndex-1][y]) // Doesn't do anything -- ask Luke
 
         for (var i = this.tailIndex - 1; i >= 0; i--) { // from tail, to 1 (not 0 or head)
             //console.log("Inside for loop");
             //console.log(i);
             this.body[i+1] = {...this.body[i]};
         }
-        if (direction == "up" && this.directionHeading == "down") {
-            console.log("OPPOSITE DIRECTIONS")
-        } // WHY DOES THIS NEVER PASS??????????????????? cuz its handled in input.js, direction and directionHeading are never opposites when move() is called
 
         switch (direction) {
             case "up" || 'w':
@@ -104,8 +99,8 @@ export default class Snake {
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
         for (var i = 0; i < n; i++) {
             // adds element to Snake making it longer by 1, by pushing the last position the tail of the snake was on
-            this.body.push(this.body.lastTailLocation);
             this.updateTail(1);
+            this.body.push(this.lastTailLocation);
         }
     }
     ateFood(n) { // player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -114,7 +109,10 @@ export default class Snake {
 
     die(){
         if (collidedWithSelf(this)) {
-            alert("You died")
+            alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
+        } else if (collidedWithBorder(this)) {
+            window.location.reload()
+            alert("Now you really fucked up")
         }
     }
 }
