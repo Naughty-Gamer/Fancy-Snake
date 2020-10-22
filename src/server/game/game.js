@@ -9,7 +9,6 @@ import Snake from './snake.js'
 import MakeAllFood from './food.js'
 import {snakeUpdate} from '../../client/input.js'
 import {snakeDraw,foodDraw} from '../../client/drawer.js'
-import {collision_border} from '../game/collision.js'
 import {collision_food} from '../game/collision.js'
 
 let mySnake = null
@@ -20,16 +19,16 @@ export default class Game {
 	constructor(){
 		//players = [], declare new snake for each player but thats for multiplayer, do it later
 		mySnake = new Snake(20,50)
-		mySnake.addToBody(19,50);
-		mySnake.addToBody(18,50);
-		mySnake.addToBody(17,50);
-		mySnake.addToBody(16,50);
-		mySnake.addToBody(15,50);
-		mySnake.addToBody(14,50);
-		mySnake.addToBody(13,50);
-		mySnake.addToBody(12,50);
-		mySnake.addToBody(11,50);
-		mySnake.addToBody(10,50);
+		// mySnake.addToBody(19,50);
+		// mySnake.addToBody(18,50);
+		// mySnake.addToBody(17,50);
+		// mySnake.addToBody(16,50);
+		// mySnake.addToBody(15,50);
+		// mySnake.addToBody(14,50);
+		// mySnake.addToBody(13,50);
+		// mySnake.addToBody(12,50);
+		// mySnake.addToBody(11,50);
+		// mySnake.addToBody(10,50);
 		// mySnake.addToBody(9,50);
 		// mySnake.addToBody(8,50);
 		// mySnake.addToBody(7,50);
@@ -39,8 +38,7 @@ export default class Game {
 		// mySnake.addToBody(3,50);
 		// mySnake.addToBody(2,50);
 		// mySnake.addToBody(1,50);
-		// mySnake.addToBody(0,50);
-		myFood = new MakeAllFood(75,75,0.5)
+		myFood = new MakeAllFood(75,75,0.75)
 		gameMap = document.getElementById("game-map")
     
 		/**
@@ -113,7 +111,6 @@ function clientGameLoop(timeSinceOrigin) {
 function update(){
 	snakeUpdate(mySnake)
 	mySnake.die()
-  collision_border(mySnake)
 	collision_food(mySnake,myFood)
 }
 

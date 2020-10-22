@@ -19,6 +19,7 @@ class FoodGreen {
 // class to hold array of all our foods on the map
 // takes X and Y for size of map
 export default class MakeAllFood {
+
     constructor(x, y,percentage) {
         this.mapXMax = x;
         this.mapYMax = y;
@@ -27,6 +28,7 @@ export default class MakeAllFood {
         this.addFood(x ,y, this.amountOfFood); // adds all food to array imediately in constructor
         console.log(this.foodAll) // should == 1
     }
+
     getFoodAll() { // returns array of food items
         return this.foodAll;
     }
@@ -38,7 +40,7 @@ export default class MakeAllFood {
     // takes argument x and y for size of map
     // takes argument amountOfFood for number of food items to add into foodAll array
     addFood(x, y, amountOfFood) {
-        for (var n = 0; n < amountOfFood; n++) { // Run code bellow, to make amountOfFood number of food items succesfully
+        for (var n = 0; n < amountOfFood; n++) { // Run code below, to make amountOfFood number of food items succesfully
             // only making Green Food for now ---------------------------------------!!!
             let newFoodLocation = this.createRandomLocation(x, y);
             let newFoodItem = new FoodGreen(newFoodLocation);
@@ -50,7 +52,7 @@ export default class MakeAllFood {
         let looping = null;
         let newFoodLocation = null;
         do { // create a new location for a new food item randomly within range of map size
-            // if this location is already occupied by another food item, then and try again
+            // if this location is already occupied by another food item, then try again
             looping = false;
             newFoodLocation = [Math.floor(Math.random() * x)+1,Math.floor(Math.random() * y)+1]
             for (var i = 0; i < this.foodAll.length; i++) { // for each food item in the array of all food
