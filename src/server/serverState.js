@@ -18,6 +18,12 @@ function manageState(server){
         console.log('testing if we recieve this from the player');
 
     }​​);
+    // disconnect event listener
+    clientSocket.on('disconnect', () => {​​​​
+        
+        // Print to the server's terminal that a user disconnected
+        console.log('user disconnected');
+    }​​​​);
 }
 
 exports.manageState = manageState
