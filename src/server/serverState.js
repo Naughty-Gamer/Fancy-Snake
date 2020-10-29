@@ -12,7 +12,12 @@ function manageState(server){
         // Print to the server's terminal that a user connected
         console.log('A user connected with ID:'+clientSocket.id);
     }​​);
-    
+
+    clientSocket.on('test', () => {​​
+
+        console.log('testing if we recieve this from the player');
+
+    }​​);
 }
 
 exports.manageState = manageState

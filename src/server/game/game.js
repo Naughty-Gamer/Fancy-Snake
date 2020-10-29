@@ -10,6 +10,7 @@ import MakeAllFood from './food.js'
 import {snakeUpdate} from '../../client/input.js'
 import {snakeDraw,foodDraw} from '../../client/drawer.js'
 import {collision_food} from '../game/collision.js'
+import { Socket } from 'socket.io-client'
 
 let mySnake = null
 let gameMap = null
@@ -17,6 +18,12 @@ let myFood = null
 export default class Game {
 	
 	constructor(){
+       // temporary, should be in clientState.js 
+
+	   var socket = io() // Establishes a websocket connection with the server
+
+	   socket.emit("testing") // Immediately sends a message to the server
+
 		//players = [], declare new snake for each player but thats for multiplayer, do it later
 		mySnake = new Snake(20,50)
 		// mySnake.addToBody(19,50);
