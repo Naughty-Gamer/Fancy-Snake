@@ -59,11 +59,5 @@ function getinputDirection(){
 export function snakeUpdate(snake){
     if (getinputDirection() != "") {
         snake.move(getinputDirection())
-        // setTimeout(()=>{
-        //     if (!q.isEmpty()) {
-        //         q.dequeue()
-        //     }
-        // },1000)
-        // q.enqueue(snake.move(getinputDirection()))
     }
 }    

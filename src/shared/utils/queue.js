@@ -26,18 +26,7 @@ export default class Queue {
     }
     
     enqueue(e) {
-        this.Q[this.rear] = e;
+        this.Q[this.rear] = e
         this.rear = this.rear+1
     }
-
-	// public String toString(){
-	// 	StringBuffer buf = new StringBuffer("[");
-	// 	if(size() > 0)
-	// 		buf.append(Q[f]);
-	// 	for(int i = 1; i < size();i++){
-	// 		buf.append(", " + Q[f + i % capacity]);
-	// 	}
-	// 	buf.append("]");
-	// 	return buf.toString();
-	// }
 }
