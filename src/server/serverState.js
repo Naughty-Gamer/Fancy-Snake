@@ -5,25 +5,28 @@ const IO = require("socket.io")
 function manageState(server){
     
     const io = IO(server,{})
+    
+    n_players = 0
 
     // connect event listener
-
-    io.sockets.on('connection', clientSocket => {​​
+    io.sockets.on('connection', clientSocket => {
+        ​​
         // Print to the server's terminal that a user connected
-        console.log('A user connected with ID:'+clientSocket.id);
-    }​​);
+        console.log(`Player ${n_players++} connected with ID: ` + clientSocket.id)
+
+    }​​)
 
     clientSocket.on('test', () => {​​
+        console.log('testing if we recieve this from the player')
+    }​​)
 
-        console.log('testing if we recieve this from the player');
-
-    }​​);
     // disconnect event listener
     clientSocket.on('disconnect', () => {​​​​
         
         // Print to the server's terminal that a user disconnected
         console.log('user disconnected');
-    }​​​​);
+
+    }​​​​)
 }
 
 exports.manageState = manageState
