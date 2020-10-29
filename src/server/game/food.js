@@ -1,3 +1,4 @@
+
 // Green food has value 1    
 // just 1 for now
 class FoodGreen {
@@ -103,3 +104,4 @@ for (var i = 0; i < myFood.getAmountOfFood; i++) { // for all food items
     myFood.foodAll[i].getFoodLocation();
 }
 */
+
