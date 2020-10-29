@@ -1,1 +1,0 @@
-// This directory will handle game rendering, player input and state management with the server
