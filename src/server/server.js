@@ -16,5 +16,5 @@ app.use('/src',express.static('src'))
 app.get('/', (req,res) => {
 	res.sendFile(path.resolve("index.html"))
 })
-
+state.manageState(server)
 // reload(app)
