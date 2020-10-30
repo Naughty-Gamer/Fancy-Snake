@@ -16,6 +16,39 @@ let gameMap = null
 let myFood = null
 export default class Game {
 
+	// temporary
+	handleSockets(){
+
+		/**
+		 * Joins the websocket connection that the HTTP server has established.
+		 * More precisely, it connects the client to the "default namespace" connection.
+		 * - You can think of it as joining in on an on-going conference call
+		 * - Returned `Socket` object assigned to `socket` so that we may do things with/to the connection
+		 */
+		var socket = io()
+		
+		socket.on('CONN_ACK', msg => {
+			
+			console.log(msg)
+			
+			let num_clicks = 0
+
+			document.addEventListener("click",()=>{
+				socket.emit('test',{
+					id:socket.id,
+					clicks: ++num_clicks,
+					connected:socket.connected,
+					disconnected:socket.disconnected,
+				}) // Emitting a test message
+			})
+			
+		})
+
+		socket.on('TEST_ACK', msg => {
+			console.log(msg)
+		})
+	}
+	
 	constructor(){
 
 		// temporary
@@ -121,5 +154,4 @@ function draw(){
 	gameMap.innerHTML = ''
 	snakeDraw(mySnake,gameMap)
 	foodDraw(myFood,gameMap)
-
 }
