@@ -15,12 +15,11 @@ let mySnake = null
 let gameMap = null
 let myFood = null
 export default class Game {
-	
+
 	constructor(){
-		
-       // temporary, should be in clientState.js 
-	   var socket = io() // Establishes a websocket connection with the server
-	   socket.emit("testing") // Immediately sends a message to the server
+
+		// temporary
+		this.handleSockets()
 
 		//players = [], declare new snake for each player but thats for multiplayer, do it later
 		mySnake = new Snake(20,50)
@@ -59,8 +58,7 @@ export default class Game {
 
 let timeSincelastRender = 0 // variable to keep track of the time since the last render, initially 0
 
-// rename to fps?
-const snake_speed = 15 // How many times the snake moves per second; it's just the FPS cuz the snake moves once per frame
+const fps = 15 // Snake moves once per frame
 
  /**
   * Updates the game and animates it before every repaint of the screen
@@ -80,7 +78,7 @@ function clientGameLoop(timeSinceOrigin) {
 	window.requestAnimationFrame(clientGameLoop)
 	
 	const secondsSinceLastRender = (Math.round(timeSinceOrigin - timeSincelastRender))/1000 // To get how many seconds its taking between each render.
-	const minimumTimeToRender = Math.round(( 1/snake_speed )*1000)/1000
+	const minimumTimeToRender = Math.round(( 1/fps )*1000)/1000
 
 	// console.log("")
 	// console.log("Time since last render:",timeSinceOrigin - timeSincelastRender,"ms")
