@@ -48,7 +48,7 @@ function setInputDelay(){
 }
 
 function getinputDirection(){
-    console.log("Input direction:",direction)
+    // console.log("Input direction:",direction)
     return direction
 }
 

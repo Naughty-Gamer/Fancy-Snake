@@ -32,20 +32,20 @@ export default class Snake {
             console.log(this.body[i])
         }
 
-        console.log("update tail:")
-        console.log(n)
-        console.log(" UP PART")
-        console.log(this.tailIndex)
-        console.log(this.body[this.tailIndex][y])
-        console.log(this.body[this.tailIndex][x])
+        // console.log("update tail:")
+        // console.log(n)
+        // console.log(" UP PART")
+        // console.log(this.tailIndex)
+        // console.log(this.body[this.tailIndex][y])
+        // console.log(this.body[this.tailIndex][x])
         this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y]);
 
         this.tailIndex += n;
-        console.log("Tail extended by",n)
-        console.log("New tail location:",this.body[this.tailIndex])
+        // console.log("Tail extended by",n)
+        // console.log("New tail location:",this.body[this.tailIndex])
     }
     setLastTailLocation(x, y) {
-        console.log("Last tail location was [",x,",",y,"]")
+        // console.log("Last tail location was [",x,",",y,"]")
         this.lastTailLocation = [x,y];
     }
     setdirectionHeading(direction) {
@@ -55,16 +55,16 @@ export default class Snake {
         this.body.push([x,y]);
         this.updateTail(1);
 
-        console.log("Now the snake is",this.body.length,"parts long")
+        // console.log("Now the snake is",this.body.length,"parts long")
 
     }
 
     move(direction) {
         const x = 0
         const y = 1
-        console.log("Now moving...")
-        console.log("Tail position:",this.tailIndex,"parts from head")
-        console.log(this.tailIndex)
+        // console.log("Now moving...")
+        // console.log("Tail position:",this.tailIndex,"parts from head")
+        // console.log(this.tailIndex)
         
         // this.setLastTailLocation(this.body[this.tailIndex-1][x], this.body[this.tailIndex-1][y]) // Doesn't do anything -- ask Luke
 
@@ -93,7 +93,7 @@ export default class Snake {
                 break;
         }
         this.setdirectionHeading(direction);
-        console.log("Snake's head is at",this.body[0])
+        // console.log("Snake's head is at",this.body[0])
     }
 
     increaseLength(n) { // increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n

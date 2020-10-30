@@ -7,7 +7,7 @@ export function snakeDraw(snake,gameMap){
     const x = 0
     const y = 1
 
-    console.log(snake.body)
+    // console.log(snake.body)
     snake.body.forEach(part => {
         const currentSnake = document.createElement('div'); // makes a div for our snake
         currentSnake.style.gridRowStart = part[y]; // creates snake at part[1]

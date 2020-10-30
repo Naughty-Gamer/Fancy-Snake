@@ -27,7 +27,6 @@ export default class MakeAllFood {
         this.foodAll = []; // array to hold all food items
         this.amountOfFood = Math.floor(((x * y)/100) * percentage); // amount of food = percentage of map area
         this.addFood(x ,y, this.amountOfFood); // adds all food to array imediately in constructor
-        console.log(this.foodAll) // should == 1
     }
 
     getFoodAll() { // returns array of food items
