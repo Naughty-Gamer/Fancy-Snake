@@ -33,7 +33,7 @@ setInterval(function(){
     for (let socket_index in socket_list){ 
         let socket = socket_list[socket_index]
         let snake = socket.snake
-        snake.body[0][1] -= 1
+        snake.body[0][1] -= 1 //testing
         pack.push(
             {
                 snake: snake
