@@ -31,21 +31,6 @@ export default class Game {
 			
 			console.log(msg)
 			
-			let num_clicks = 0
-
-			document.addEventListener("click",()=>{
-				socket.emit('test',{
-					id:socket.id,
-					clicks: ++num_clicks,
-					connected:socket.connected,
-					disconnected:socket.disconnected,
-				}) // Emitting a test message
-			})
-			
-		})
-
-		socket.on('TEST_ACK', msg => {
-			console.log(msg)
 		})
 	}
 	
