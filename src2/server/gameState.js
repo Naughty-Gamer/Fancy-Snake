@@ -1,9 +1,8 @@
 // Server needs to send data about the state of the game back to the players
-const Snake = require("./game/snake.js") //mahmoud
+const Snake = require("./game/snake.js")
 let socket_list = {} // associative array of <id>:<socket>
 
 function manageState(io){
-    
     
     // Event listener for every time someone joins the websocket connection
     io.sockets.on('connection', function (clientSocket){
