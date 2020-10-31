@@ -5,8 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch via NPM",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "debug"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Node",
-            "program": "${workspaceFolder}/src/server/server.js",
+            "program": "${workspaceFolder}/src2/server/server.js",
             "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
