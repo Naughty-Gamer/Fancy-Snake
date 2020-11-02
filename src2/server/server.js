@@ -10,22 +10,30 @@ const express_app = Express() // Creating an Express application
 const express_server = Http.createServer(express_app) // Spinning up the Express server
 
 express_server.listen(port, function () {
-    console.log(`\nListening on port ${port}\n`)
+    console.log(`\nExpress server listening on port ${port}\n`)
 })
 
 express_app.use('/src2',Express.static('src2'))
 
-express_app.get('/', function (req,res) {
-	res.sendFile(Path.resolve("index.html"))
+express_app.get('/', function (_,res) {
+	res.sendFile(Path.resolve("index-mp.html"))
 })
 
-/**
- * Spins up a websocket server that works with the Express server
- * - You can think of it as starting a conference call alone
- * - Listens to the default namespace `/` and connects to it by default
- * - `/` has nothing to do with the URL—it is just a name
- * - `io` handles the namespace connection which allows us to work with that connection
- */
-const io = WebSocketServer(express_server)
+const serverStartedPromise = new Promise(startManagingState => {
 
-GameState.manageState(io)
+    /**
+     * Spins up a websocket server that works with the Express server
+     * - You can think of it as starting a conference call alone
+     * - Listens to the default namespace `'/'` and connects to it by default
+     * - `'/'` has nothing to do with the URL—it is just a name
+     * - `io` handles the namespace connection which allows us to communicate with the client
+     */
+    var io = WebSocketServer(express_server)
+    startManagingState(io)
+})
+
+serverStartedPromise.then(io => {
+    console.log("Websocket server started")
+    GameState.manageState(io)
+})
+    
