@@ -45,7 +45,7 @@ function getNewGame(){
     return new Game(socket_list)
 }
 
-function terminatePlayer(clientSocket){ //temporary name
+function terminatePlayer(clientSocket){
     
     // Print to the server's terminal that a user disconnected
     console.log("Player with ID:",clientSocket.id,"disconnected")
@@ -53,7 +53,7 @@ function terminatePlayer(clientSocket){ //temporary name
 
 }
 
-function initPlayer(clientSocket){ //temporary name
+function initPlayer(clientSocket){
 
     // Print to the server's terminal that a player connected
     console.log("Player with ID:",clientSocket.id,"connected")
