@@ -6,23 +6,22 @@ export default class Game {
 
         /**
          * Joins the websocket connection that the HTTP server has established.
-         * More precisely, it connects the client to the "default namespace" connection.
+         * More precisely, it connects the client to the default namespace `'/'`
          * - You can think of it as joining in on an on-going conference call
          */
         var socket = io()
 
         socket.on('CONN_ACK', msg => {
             console.log(msg)
-            this.onConnect(socket)
+            this.initGame(socket)
         })
     }
     
     /**
-     * Tasks to complete when the player succesfully joins the websocket connection
-     * - Only runs after receiving confirmation from the server
-     * @param {Socket} socket used for doing things with the connection
+     * Initialises the game on the browser
+     * @param {SocketIO.Socket} socket Used for communicating with the server
      */
-    onConnect(socket){
+    initGame(socket){
 
         socket.on('new_pos', snakes =>{
 

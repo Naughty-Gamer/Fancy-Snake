@@ -2,8 +2,8 @@
 let gameMap = document.getElementById("game-map")
 
 /**
- * This function is going to be used to draw the updated snake on the map.
- * @param snake The snake that will be drawn
+ * Draws a snake on the map
+ * @param {[BigInteger[]]} snake_body The body of the snake that will be drawn
  */
 function snakeDraw(snake_body){
     const x = 0
@@ -18,6 +18,10 @@ function snakeDraw(snake_body){
     })
 }
 
+/**
+ * Draws every snake on the map
+ * @param {JSON[]} snakes List of snakes that will be drawn
+ */
 export function drawEverySnake(snakes){
     snakes.forEach(snake => {
         let snake_body = snake["snake"].body
