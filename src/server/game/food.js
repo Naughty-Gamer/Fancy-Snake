@@ -65,9 +65,9 @@ export default class MakeAllFood {
     }
 
     foodRespawn(x, y) {
-        console.log("Repsawning food:")
-        console.log(x)
-        console.log(y)
+        // console.log("Repsawning food:")
+        // console.log(x)
+        // console.log(y)
         for (var n = 0; n < this.amountOfFood; n++) {
             if(x == this.foodAll[n].getFoodLocation()[0]){
                 if(y == this.foodAll[n].getFoodLocation()[1]){

@@ -26,10 +26,10 @@ export default class Snake {
         const y = 1
         const previousTailPosition = this.body[this.tailIndex]
 
-        console.log(this.body)
+        // console.log(this.body)
       
         for (var i = 0; i < this.body.length; i++) {
-            console.log(this.body[i])
+            // console.log(this.body[i])
         }
 
         // console.log("update tail:")
@@ -77,19 +77,19 @@ export default class Snake {
         switch (direction) {
             case "up" || 'w':
                 this.body[0][y] -= 1
-                console.log("Moving UP")
+                // console.log("Moving UP")
                 break;
             case "down" || 's':
                 this.body[0][y] += 1
-                console.log("Moving DOWN")
+                // console.log("Moving DOWN")
                 break;
             case "left" || 'a':
                 this.body[0][x] -= 1
-                console.log("Moving LEFT")
+                // console.log("Moving LEFT")
                 break;
             case "right" || 'd':
                 this.body[0][x] += 1
-                console.log("Moving RIGHT")
+                // console.log("Moving RIGHT")
                 break;
         }
         this.setdirectionHeading(direction);
@@ -109,10 +109,10 @@ export default class Snake {
 
     die(){
         if (collidedWithSelf(this)) {
-            alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
+            alert("You just ate yourself. We would send you to a game over screen but we haven't made that yet so you can keep on playing")
         } else if (collidedWithBorder(this)) {
             window.location.reload()
-            alert("Now you really fucked up")
+            alert("Now you really messed up")
         }
     }
 }

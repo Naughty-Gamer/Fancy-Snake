@@ -17,7 +17,7 @@ export function collision_food(snake,food){
         //console.log(x)
         if(snake.getHeadLocation()[0] == foodLocation.getFoodLocation()[0]){
             if(snake.getHeadLocation()[1] == foodLocation.getFoodLocation()[1]){
-                console.log("EAT")
+                // console.log("EAT")
                 snake.ateFood(1)
                 food.foodRespawn(foodLocation.getFoodLocation()[0], foodLocation.getFoodLocation()[1])
             }
