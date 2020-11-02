@@ -1,3 +1,3 @@
-import Game from './client/clientGame.js'
+import Game from "./client/clientGame.js"
 
 new Game()

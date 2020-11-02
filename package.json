@@ -1,27 +1,27 @@
 {
-  "name": "snake-game",
-  "version": "1.0.0",
-  "description": "2D Multiplayer browser snake game",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon ./src2/server/server.js",
-    "old": "nodemon ./src/server/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game.git"
-  },
-  "author": "F28WP-Dubai-Fancy-Snake",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game/issues"
-  },
-  "homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "socket.io": "^2.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.6"
-  }
+	"name": "snake-game",
+	"version": "1.0.0",
+	"description": "2D Multiplayer browser snake game",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon ./src2/server/server.js",
+		"old": "nodemon ./src/server/server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game.git"
+	},
+	"author": "F28WP-Dubai-Fancy-Snake",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game/issues"
+	},
+	"homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"socket.io": "^2.3.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.6"
+	}
 }

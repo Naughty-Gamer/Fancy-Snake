@@ -1,9 +1,7 @@
-import {drawEverySnake} from './drawer.js'
+import { drawEverySnake } from "./drawer.js"
 
 export default class Game {
-
-    constructor(){
-
+    constructor() {
         /**
          * Joins the websocket connection that the HTTP server has established.
          * More precisely, it connects the client to the default namespace `'/'`
@@ -11,22 +9,20 @@ export default class Game {
          */
         var socket = io()
 
-        socket.on('CONN_ACK', msg => {
+        socket.on("CONN_ACK", (msg) => {
             console.log(msg)
             this.initGame(socket)
         })
     }
-    
+
     /**
      * Initialises the game on the browser
      * @param {SocketIO.Socket} socket Used for communicating with the server
      */
-    initGame(socket){
-
-        socket.on('new_pos', snakes =>{
-
+    initGame(socket) {
+        socket.on("new_pos", (snakes) => {
             // Clears the map before drawing every frame
-            document.getElementById("game-map").innerHTML = ''
+            document.getElementById("game-map").innerHTML = ""
             drawEverySnake(snakes)
         })
     }
