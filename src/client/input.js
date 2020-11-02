@@ -3,12 +3,17 @@ import Queue from '../shared/utils/queue.js'
 let direction = ""
 let canInteract = true
 let q = new Queue()
-const delay = 55
-
+const delay = 0
+let timeSinceLast = 0
   
 document.addEventListener("keydown", keyDownHandler);
 
 function keyDownHandler(e) {
+    let timeSinceOrigin = Date.now()
+    let diff = timeSinceOrigin - timeSinceLast
+    console.log(diff)
+    timeSinceLast = timeSinceOrigin
+    
     if(canInteract){
         if(e.key == "d" || e.key == "ArrowRight") {
             //ONLY WHEN DIRECTION IS NOT LEFT
@@ -47,17 +52,13 @@ function setInputDelay(){
     },delay)
 }
 
-function getinputDirection(){
-    // console.log("Input direction:",direction)
-    return direction
-}
 
 /**
  * This function is going to update the snake's position
  * @param snake The snake that will be updated
  */
 export function snakeUpdate(snake){
-    if (getinputDirection() != "") {
-        snake.move(getinputDirection())
+    if (direction != "") {
+        snake.move(direction)
     }
 }    

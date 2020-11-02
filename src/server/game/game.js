@@ -7,37 +7,19 @@
 
 import Snake from './snake.js'
 import MakeAllFood from './food.js'
-import {snakeUpdate} from '../../client/input.js'
+import {snakeUpdate} from '../../client/input.js' // can be changed to input2.js for alternate input functionality
 import {snakeDraw,foodDraw} from '../../client/drawer.js'
 import {collision_food} from '../game/collision.js'
 
-let mySnake = null
+/**
+ * @type {Snake}
+ */
+export let mySnake = null
 let gameMap = null
 let myFood = null
 export default class Game {
-
-	// temporary
-	handleSockets(){
-
-		/**
-		 * Joins the websocket connection that the HTTP server has established.
-		 * More precisely, it connects the client to the "default namespace" connection.
-		 * - You can think of it as joining in on an on-going conference call
-		 * - Returned `Socket` object assigned to `socket` so that we may do things with/to the connection
-		 */
-		var socket = io()
-		
-		socket.on('CONN_ACK', msg => {
-			
-			console.log(msg)
-			
-		})
-	}
 	
 	constructor(){
-
-		// temporary
-		this.handleSockets()
 
 		//players = [], declare new snake for each player but thats for multiplayer, do it later
 		mySnake = new Snake(20,50)
