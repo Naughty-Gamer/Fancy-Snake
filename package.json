@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src2/server/server.js",
-    "live": "live-server"
+    "old": "nodemon ./src/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,12 +19,9 @@
   "homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "queue": "^6.0.1",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "live-server": "^1.2.1",
     "nodemon": "^2.0.6"
   }
 }
