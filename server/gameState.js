@@ -32,22 +32,38 @@ function manageState(server) {
 	})
 }
 
+/**
+ * Carries out tasks related to terminating a game session
+ * @param {SocketIO.Server} server
+ * @param {Game} game
+ */
 function terminateGame(server, game) {
 	delete game
 	// server.close()
 	// console.log("\nWebsocket server closed\n")
 }
 
+/**
+ * @returns {Game} a new game instance
+ */
 function getNewGame() {
 	return new Game(socket_list)
 }
 
+/**
+ * Carries out tasks related to terminating a player from a game
+ * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
+ */
 function terminatePlayer(clientSocket) {
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
 	delete socket_list[clientSocket.id]
 }
 
+/**
+ * Carrying out tasks related to initialising a player into the game
+ * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
+ */
 function initPlayer(clientSocket) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected")
@@ -60,4 +76,4 @@ function initPlayer(clientSocket) {
 	socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 }
 
-module.exports = manageState
+module.exports.manageState = manageState
