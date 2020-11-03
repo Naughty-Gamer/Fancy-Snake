@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon -e js,json,html ./server/server.js",
-		"old": "nodemon -e js,json,html ./src/server/server.js"
+		"old": "nodemon -e js,json,html ./single-player/server/server.js"
 	},
 	"repository": {
 		"type": "git",

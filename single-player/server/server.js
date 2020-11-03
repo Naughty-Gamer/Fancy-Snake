@@ -10,8 +10,8 @@ express_server.listen(port, function () {
 	console.log(`\nListening on port ${port}\n`)
 })
 
-express_app.use("/src", Express.static("src"))
+express_app.use("/single-player", Express.static("single-player"))
 
 express_app.get("/", function (req, res) {
-	res.sendFile(Path.resolve("src/index.html"))
+	res.sendFile(Path.resolve("single-player/index.html"))
 })

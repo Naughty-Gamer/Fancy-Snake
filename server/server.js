@@ -8,21 +8,20 @@ const port = process.env.PORT || 3000 // Will use the host's PORT environment va
 const express_app = Express() // Creating an Express application
 const express_server = Http.createServer(express_app) // Spinning up the Express server
 
-express_server.listen(port, function () {
-	console.log(`\nExpress server listening on port ${port}\n`)
-})
-
 /**
- * Telling the browser that it's version of root directory is actually "/client/"
+ * Serving the directory with all the static files + index.html
  */
-express_app.use("/", Express.static("client"))
+express_app.use(Express.static("client"))
 
 /**
- * - Making a route to the root directory
- * - Everytime someone tries to access '/' they will be sent this HTML file
+ * - Making a route for the root directory
  */
 express_app.get("/", function (_, res) {
-	res.sendFile(Path.resolve("client/index-mp.html"))
+	res.sendFile(Path.resolve("client/index.html"))
+})
+
+express_server.listen(port, function () {
+	console.log(`\nExpress server listening on port ${port}\n`)
 })
 
 const serverStartedPromise = new Promise((startManagingState) => {
