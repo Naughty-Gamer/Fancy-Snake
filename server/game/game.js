@@ -5,7 +5,7 @@ class Game {
 			for (let socket_id in player_list) {
 				let snake = player_list[socket_id]
 				// let snake = socket.snake
-				let direction = 'up'
+				// let direction = 'up'
 				snake.move(direction)
 				snakes.push({
 					snake: snake,

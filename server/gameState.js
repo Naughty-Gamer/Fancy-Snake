@@ -21,7 +21,12 @@ function manageState(server) {
 			playGame()
 		}
 
-		initPlayer(clientSocket)
+		let snake = initPlayer(clientSocket)
+
+		clientSocket.on('keyDown',data => {
+			snake.setdirectionHeading(data.dir)
+			console.log(data)
+		})
 
 		// handleInput(clientSocket)
 
@@ -35,12 +40,12 @@ function manageState(server) {
 	})
 }
 
-function handleInput(socket_id,snake){
-	socket_list[socket_id].on('keyDown',data => {
-		snake.move(data.dir)
-		console.log(data)
-	})
-}
+// function handleInput(socket_id,snake){
+// 	clientSocket.on('keyDown',data => {
+// 		snake.move(data.dir)
+// 		console.log(data)
+// 	})
+// }
 
 // /**
 //  * Carries out tasks related to terminating a game session
@@ -82,10 +87,17 @@ function initPlayer(clientSocket) {
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
 	let my_snake = new Snake(20, 74, clientSocket.id)
+	my_snake.addToBody(19,74)
+	my_snake.addToBody(18,74)
+	my_snake.addToBody(17,74)
+	my_snake.addToBody(16,74)
+	my_snake.addToBody(15,74)
 	// clientSocket.snake = my_snake
 
 	socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 	player_list[clientSocket.id] = my_snake
+	
+	return my_snake 
 }
 
 function playGame() {
@@ -94,7 +106,7 @@ function playGame() {
 		for (let socket_id in player_list) {
 			let snake = player_list[socket_id]
 			// let snake = socket.snake
-			handleInput(socket_id,snake)
+			snake.move()
 			snakes.push({
 				snake: snake,
 			})
@@ -104,7 +116,7 @@ function playGame() {
 			let socket = socket_list[socket_id]
 			socket.emit("new_pos", snakes)
 		}
-	}, 1000)
+	}, 1000/25)
 }
 
 module.exports.manageState = manageState

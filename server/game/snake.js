@@ -67,7 +67,7 @@ class Snake {
         // console.log("Now the snake is",this.body.length,"parts long")
     }
 
-    move(direction) {
+    move() {
         const x = 0
         const y = 1
         // console.log("Now moving...")
@@ -83,16 +83,16 @@ class Snake {
             this.body[i + 1] = { ...this.body[i] }
         }
 
-        if(direction == "right")
+        if(this.directionHeading == "right")
         this.body[0][x] += this.snake_speed;
-        if(direction == "left")
+        if(this.directionHeading == "left")
             this.body[0][x]  -= this.snake_speed;
-        if(direction == "down")
+        if(this.directionHeading == "down")
             this.body[0][y]  += this.snake_speed;	
-        if(direction == "up")
+        if(this.directionHeading == "up")
             this.body[0][y]  -= this.snake_speed;	
 
-        this.setdirectionHeading(direction)
+        // this.setdirectionHeading(direction) 
         // console.log("Snake's head is at",this.body[0])
     }
 
