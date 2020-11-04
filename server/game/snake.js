@@ -2,12 +2,14 @@
 
 class Snake {
     // takes argument X and Y for starting coordinates seperately
-    constructor(x, y) {
+    constructor(x, y, id) {
         this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
         this.headLocation = this.getHeadLocation() // location of head of snake
         this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
         this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
         this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
+        this.snake_speed = 1
+        this.socketid = id
     }
     // return x,y coordinates of the head of the snake
     getHeadLocation() {
@@ -81,24 +83,15 @@ class Snake {
             this.body[i + 1] = { ...this.body[i] }
         }
 
-        switch (direction) {
-            case "up" || "w":
-                this.body[0][y] -= 1
-                console.log("Moving UP")
-                break
-            case "down" || "s":
-                this.body[0][y] += 1
-                console.log("Moving DOWN")
-                break
-            case "left" || "a":
-                this.body[0][x] -= 1
-                console.log("Moving LEFT")
-                break
-            case "right" || "d":
-                this.body[0][x] += 1
-                console.log("Moving RIGHT")
-                break
-        }
+        if(direction == "right")
+        this.body[0][x] += this.snake_speed;
+        if(direction == "left")
+            this.body[0][x]  -= this.snake_speed;
+        if(direction == "down")
+            this.body[0][y]  += this.snake_speed;	
+        if(direction == "up")
+            this.body[0][y]  -= this.snake_speed;	
+
         this.setdirectionHeading(direction)
         // console.log("Snake's head is at",this.body[0])
     }
