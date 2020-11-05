@@ -4,12 +4,12 @@ const Express = require("express") // Module for spinning up a powerful HTTP ser
 const WebSocketServer = require("socket.io") // Module for spinning up a websocket server
 const { manageState } = require("./gameState") // function to handle the state of the game
 
-const port = process.env.PORT || 3000 // Will use the host's PORT environment variable or 3000 for development purposes
+const port = process.env.PORT || 80 // Will use the host's PORT environment variable or 3000 for development purposes
 const express_app = Express() // Creating an Express application
 const express_server = Http.createServer(express_app) // Spinning up the Express server
 
 /**
- * Serving the directory with all the static files + index.html
+ * Telling Express that all our static files are found in 'client/'
  */
 express_app.use(Express.static("client"))
 

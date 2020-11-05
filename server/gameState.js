@@ -15,15 +15,13 @@ let player_list = {}
 function manageState(server) {
 	// Event listener for every time someone joins the websocket connection
 	server.sockets.on("connection", function (clientSocket) {
-		let newgame = null
-
 		if (Object.keys(socket_list).length == 0) {
 			playGame()
 		}
 
 		let snake = initPlayer(clientSocket)
 
-		clientSocket.on('keyDown',data => {
+		clientSocket.on("keyDown", (data) => {
 			snake.setdirectionHeading(data.dir)
 			console.log(data)
 		})
@@ -87,17 +85,17 @@ function initPlayer(clientSocket) {
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
 	let my_snake = new Snake(20, 74, clientSocket.id)
-	my_snake.addToBody(19,74)
-	my_snake.addToBody(18,74)
-	my_snake.addToBody(17,74)
-	my_snake.addToBody(16,74)
-	my_snake.addToBody(15,74)
+	my_snake.addToBody(19, 74)
+	my_snake.addToBody(18, 74)
+	my_snake.addToBody(17, 74)
+	my_snake.addToBody(16, 74)
+	my_snake.addToBody(15, 74)
 	// clientSocket.snake = my_snake
 
 	socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 	player_list[clientSocket.id] = my_snake
-	
-	return my_snake 
+
+	return my_snake
 }
 
 function playGame() {
@@ -116,7 +114,7 @@ function playGame() {
 			let socket = socket_list[socket_id]
 			socket.emit("new_pos", snakes)
 		}
-	}, 1000/25)
+	}, 1000 / 10)
 }
 
 module.exports.manageState = manageState
