@@ -45,20 +45,20 @@ function manageState(server) {
 // 	})
 // }
 
-// /**
-//  * Carries out tasks related to terminating a game session
-//  * @param {SocketIO.Server} server
-//  * @param {Game} game
-//  */
+/**
+ * Carries out tasks related to terminating a game session
+ * @param {SocketIO.Server} server
+ * @param {Game} game
+ */
 // function terminateGame(server, game) {
 // 	delete game
-// 	// server.close()
-// 	// console.log("\nWebsocket server closed\n")
+// server.close()
+// console.log("\nWebsocket server closed\n")
 // }
 
-// /**
-//  * @returns {Game} a new game instance
-//  */
+/**
+ * @returns {Game} a new game instance
+ */
 // function getNewGame() {
 // 	return new Game(player_list,socket_list)
 // }
