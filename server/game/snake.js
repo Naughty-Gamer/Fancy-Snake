@@ -1,4 +1,5 @@
-// import {collidedWithSelf,collidedWithBorder} from './collision.js'
+const Collision = require("./collision.js")
+
 
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
@@ -10,6 +11,7 @@ class Snake {
 		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
 		this.snake_speed = 1
 		this.socketid = id
+		Snake.player_list[this.socketid] = this
 	}
 	// return x,y coordinates of the head of the snake
 	getHeadLocation() {
@@ -83,8 +85,7 @@ class Snake {
 			this.body[i + 1] = { ...this.body[i] }
 		}
 
-		if (this.directionHeading == "right")
-			this.body[0][x] += this.snake_speed
+		if (this.directionHeading == "right") this.body[0][x] += this.snake_speed
 		if (this.directionHeading == "left") this.body[0][x] -= this.snake_speed
 		if (this.directionHeading == "down") this.body[0][y] += this.snake_speed
 		if (this.directionHeading == "up") this.body[0][y] -= this.snake_speed
@@ -106,14 +107,21 @@ class Snake {
 		this.increaseLength(n)
 	}
 
-	// die(){
-	//     if (collidedWithSelf(this)) {
-	//         alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
-	//     } else if (collidedWithBorder(this)) {
-	//         window.location.reload()
-	//         alert("Now you really fucked up")
-	//     }
-	// }
+	isDead(){
+	    if (Collision.collidedWithSelf(this)) {
+			console.log("WithSelf")
+	        // alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
+		}else if (Collision.collidedWithBorder(this)) {
+			console.log("WithBorder")
+	        // window.location.reload()
+	        // alert("Now you really fucked up")
+	    }
+	}
+	
+	update(){
+		this.move() // We will have to move it somewhere outside, because we dont have to put in a loop because its not checking anything. It only changes the values of x and y. (move it to onKeyPress)
+		this.isDead()
+	}
 }
 
 module.exports = Snake

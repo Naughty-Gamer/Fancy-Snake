@@ -1,4 +1,6 @@
 const Snake = require("./game/snake.js")
+const AllFood = require("./game/food.js")
+const Collision = require("./game/collision.js")
 // const Game = require("./game/game.js")
 
 /**
@@ -6,7 +8,7 @@ const Snake = require("./game/snake.js")
  * @type {"Socket.id : Socket"}
  */
 let socket_list = {}
-let player_list = {}
+Snake.player_list = {}
 
 /**
  * Manages the state of the game
@@ -15,21 +17,16 @@ let player_list = {}
 function manageState(server) {
 	// Event listener for every time someone joins the websocket connection
 	server.sockets.on("connection", function (clientSocket) {
+
 		if (Object.keys(socket_list).length == 0) {
-			playGame()
+			updateClient()
 		}
 
-		let snake = initPlayer(clientSocket)
-
-		clientSocket.on("keyDown", (data) => {
-			snake.setdirectionHeading(data.dir)
-			console.log(data)
-		})
-
-		// handleInput(clientSocket)
+		Snake.onConnect(clientSocket)
 
 		clientSocket.on("disconnect", function () {
-			terminatePlayer(clientSocket)
+			delete socket_list[clientSocket.id]
+			Snake.onDisconnect(clientSocket)
 
 			// if (Object.keys(socket_list).length == 0) {
 			// 	terminateGame(server, newgame)
@@ -37,13 +34,6 @@ function manageState(server) {
 		})
 	})
 }
-
-// function handleInput(socket_id,snake){
-// 	clientSocket.on('keyDown',data => {
-// 		snake.move(data.dir)
-// 		console.log(data)
-// 	})
-// }
 
 /**
  * Carries out tasks related to terminating a game session
@@ -67,54 +57,86 @@ function manageState(server) {
  * Carries out tasks related to terminating a player from a game
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
-function terminatePlayer(clientSocket) {
+Snake.onDisconnect = function (clientSocket) {
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
-	delete socket_list[clientSocket.id]
-	delete player_list[clientSocket.id]
+	delete Snake.player_list[clientSocket.id]
 }
 
 /**
  * Carrying out tasks related to initialising a player into the game
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
-function initPlayer(clientSocket) {
+Snake.onConnect = function (clientSocket) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected")
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
-	let my_snake = new Snake(20, 74, clientSocket.id)
-	my_snake.addToBody(19, 74)
-	my_snake.addToBody(18, 74)
-	my_snake.addToBody(17, 74)
-	my_snake.addToBody(16, 74)
-	my_snake.addToBody(15, 74)
-	// clientSocket.snake = my_snake
+	let snake = new Snake(20, 74, clientSocket.id)
+	snake.addToBody(19, 74)
+	snake.addToBody(18, 74)
+	snake.addToBody(17, 74)
+	snake.addToBody(16, 74)
+	snake.addToBody(15, 74)
+	
+	// const tickrate = 1000/16.667
+	// setInterval( function () {
+		clientSocket.on("keyDown", (data) => {
+			snake.setdirectionHeading(data.dir) // move this inside update
+			// snake.move()
+			console.log(data)
+		})
+	// },tickrate)
 
 	socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
-	player_list[clientSocket.id] = my_snake
-
-	return my_snake
+	// player_list[clientSocket.id] = snake // ADD IT TO SNAKE.
 }
 
-function playGame() {
-	setInterval(function () {
-		let snakes = []
-		for (let socket_id in player_list) {
-			let snake = player_list[socket_id]
-			// let snake = socket.snake
-			snake.move()
-			snakes.push({
-				snake: snake,
-			})
-		}
+// const tickrate = 1000/10
+// function tick(snake) {
+// 	setInterval( function () {
+// 		snake.move()
+// 	},tickrate)
+// }
 
+Snake.updateGame = function () {
+	let snakes = []
+	for (let socket_id in Snake.player_list) {
+		let snake = Snake.player_list[socket_id]
+		// let snake = socket.snake
+		snake.update()
+		snakes.push({ // This updates the client on the position of the snake (x and y)
+			snake: snake,
+		})
+	}
+	return snakes
+}
+
+let food = new AllFood(75,75,0.75)
+
+function updateClient() {
+	// tick(snake)
+	setInterval(function () {
+
+		Collision.updateFood(Snake.player_list,food)
+		let pack = {
+			snakes:Snake.updateGame(),
+			food:food.getFoodAll(),
+		}
 		for (let socket_id in socket_list) {
 			let socket = socket_list[socket_id]
-			socket.emit("new_pos", snakes)
+			socket.emit("new_pos", pack)
 		}
 	}, 1000 / 10)
 }
 
 module.exports.manageState = manageState
+
+
+
+
+
+//Our snake should move continuously so it should be inside a setinterval which will make it move continuously. Which will make the speed of the snake the speed of the setInterval.
+
+
