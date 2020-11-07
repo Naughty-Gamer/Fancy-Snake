@@ -1,1 +1,0 @@
-// For storing constants that will be used in both /client/ and /server/
