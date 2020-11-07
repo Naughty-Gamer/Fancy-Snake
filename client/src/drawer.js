@@ -28,20 +28,19 @@ export function drawEverySnake(snakes) {
 	})
 }
 
-// /**
-//  * This function is going to be used to draw the updated food on the map.
-//  * @param myFood The snake that will be drawn
-//  * @param gameMap The map element that the snake will be drawn in
-//  */
-// export function foodDraw(myFood,gameMap){
-//     const x = 0
-//     const y = 1
+/**
+ * This function is going to be used to draw the updated food on the map.
+ * @param food The food that will be drawn
+ */
+export function foodDraw(food){
+    const x = 0
+    const y = 1
 
-//     myFood.foodAll.forEach(food => {
-//         const currentFood = document.createElement('div'); // makes a div for our food
-//         currentFood.style.gridRowStart = food.getFoodLocation()[y]; // creates food at getFoodLocation()[1]
-//         currentFood.style.gridColumnStart = food.getFoodLocation()[x]; // creates food at getFoodLocation()[0]
-//         currentFood.classList.add('food'); // this adds the stylings to our food div
-//         gameMap.appendChild(currentFood); // this adds a food div as a child node
-//     })
-// }
+    food.forEach(foods => {
+        const currentFood = document.createElement('div'); // makes a div for our food
+        currentFood.style.gridRowStart = foods.foodLocation[y]; // creates food at getFoodLocation()[1]
+        currentFood.style.gridColumnStart = foods.foodLocation[x]; // creates food at getFoodLocation()[0]
+        currentFood.classList.add('food'); // this adds the stylings to our food div
+        gameMap.appendChild(currentFood); // this adds a food div as a child node
+    })
+}

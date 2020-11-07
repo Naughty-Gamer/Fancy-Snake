@@ -1,4 +1,4 @@
-import { drawEverySnake } from "./drawer.js"
+import { drawEverySnake , foodDraw } from "./drawer.js"
 let socket = null
 export default class Game {
 	constructor() {
@@ -25,10 +25,11 @@ export default class Game {
 	 * @param {SocketIO.Socket} socket Used for communicating with the server
 	 */
 	initGame() {
-		socket.on("new_pos", (snakes) => {
+		socket.on("new_pos", (data) => {
 			// Clears the map before drawing every frame
 			document.getElementById("game-map").innerHTML = ""
-			drawEverySnake(snakes)
+			drawEverySnake(data.snakes)
+			foodDraw(data.food)
 		})
 	}
 
