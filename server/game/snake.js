@@ -99,11 +99,12 @@ class Snake {
 		}
 	}
 	eat(n) {
+		console.log("yum")
 		// player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
 		this.increaseLength(n)
 	}
 
-	isDead() {
+	die() {
 		if (Collision.isCollidingWithSelf(this)) {
 			console.log("Colliding with self")
 			// alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
@@ -116,7 +117,7 @@ class Snake {
 
 	update() {
 		this.move() // We will have to move it somewhere outside, because we dont have to put in a loop because its not checking anything. It only changes the values of x and y. (move it to onKeyPress)
-		this.isDead()
+		this.die()
 	}
 }
 

@@ -21,7 +21,7 @@ function collidedWithFood(snake, food, foodLocation) {
 function updateFood(snakes, food) {
 	for (let socket_id in snakes) {
 		let snake = snakes[socket_id]
-		food.foodAll.forEach((foodLocation) => {
+		food.allFood.forEach((foodLocation) => {
 			if (snake.getHeadLocation()[x] == foodLocation.getFoodLocation()[x]) {
 				if (
 					snake.getHeadLocation()[y] == foodLocation.getFoodLocation()[y]
