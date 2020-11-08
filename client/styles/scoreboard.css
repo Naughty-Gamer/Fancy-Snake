@@ -1,0 +1,39 @@
+#scoreboard {
+	background-color: #000000; /* Sets the base color for the map */
+	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
+	width: 30vmin;
+	height: 45vmin;
+}
+
+table {
+	width: 100%;
+	grid-template-areas: "scorebaord";
+}
+
+th {
+	color: rgb(255, 255, 255);
+}
+
+td {
+	text-align: center;
+	color: white;
+}
+
+th,
+td {
+	padding: 2%;
+	border: 1px solid rgb(255, 255, 255);
+	border-collapse: collapse;
+}
+
+/* Make the length of the username lower than 18 */
+
+.firstPlace {
+	background-color: gold;
+}
+.secondPlace {
+	background-color: red;
+}
+.thirdPlace {
+	background-color: salmon;
+}

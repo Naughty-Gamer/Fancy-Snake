@@ -1,36 +1,41 @@
 body {
-    height: 100vh; /* 100% of viewport height */
-    width: 100vw; /* 100% of viewport width */
-    display: flex; /* Establishes a flex formatting context */
-    justify-content: center; /* Centers the game map horizontally */
-    align-items: center; /* Centers the game map vertically */
-    margin: 0; /* Sets no margins for the game map */
-    background-color: #e5e5e5; /* Background color surrounding the game map */
+	height: 100vh; /* 100% of viewport height */
+	width: 100vw; /* 100% of viewport width */
+	display: flex; /* Establishes a flex formatting context */
+	justify-content: center; /*Centers the game map horizontally */
+	align-items: center; /*Centers the game map vertically */
+	/* justify-content: space-around; LEAVE THIS FOR NOW */
+	margin: 0; /* Sets no margins for the game map */
+	background-color: #e5e5e5; /* Background color surrounding the game map */
+	/* grid-template-columns: 72% auto;
+	grid-template-rows: 5% auto 5%;
+	grid-template-areas: "hd hd" "game scoreboard"; */
 }
 
 #game-map {
-    background-color: #000000; /* Sets the base color for the map */
-    border: 0.25vmin solid rgb(221, 6, 6);
-    /* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
-    width: 90vmin;
-    height: 90vmin;
+	background-color: #000000; /* Sets the base color for the map */
+	border: 0.25vmin solid rgb(221, 6, 6);
+	justify-self: right;
+	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
+	width: 90vmin;
+	height: 90vmin;
 
-    display: grid;
-    /* By specifying how many rows and columns we want
+	display: grid;
+	/* By specifying how many rows and columns we want
        for our game map, no matter what size the browser
        or screen size is, the game will always be a 75x75 grid */
-    grid-template-rows: repeat(75, 1fr);
-    grid-template-columns: repeat(75, 1fr);
+	grid-template-rows: repeat(75, 1fr);
+	grid-template-columns: repeat(75, 1fr);
 }
 
 .snake {
-    background-color: #1b2d53; /* Sets the default color for the snake */
-    border: 0.05vmin solid white;
-    border-radius: 0.25vmin;
+	background-color: #1b2d53; /* Sets the default color for the snake */
+	border: 0.05vmin solid white;
+	border-radius: 0.25vmin;
 }
 
 .food {
-    background-color: green; /* Sets the default color for the snake */
-    border: 0.25vmin solid green;
-    border-radius: 0.5vmin;
+	background-color: green; /* Sets the default color for the snake */
+	border: 0.25vmin solid green;
+	border-radius: 0.5vmin;
 }
