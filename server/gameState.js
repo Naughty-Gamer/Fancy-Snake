@@ -93,20 +93,29 @@ Snake.onConnect = function (clientSocket) {
 	// player_list[clientSocket.id] = snake // ADD IT TO SNAKE.
 }
 
-// const tickrate = 1000/10
-// function tick(snake) {
-// 	setInterval( function () {
-// 		snake.move()
-// 	},tickrate)
-// }
+let allFood = new AllFood(75, 75, 0.75)
 
-Snake.updateGame = function () {
+function startUpdatingGame() {
+	const game_speed = 30
+	const delayBetweenTicksInMs = 1000 / game_speed
+	gameUpdateID = setInterval(function () {
+		for (let socket_id in Snake.player_list) {
+			let snake = Snake.player_list[socket_id]
+			snake.update()
+		}
+		Collision.updateFood(Snake.player_list, allFood)
+		// snake.move()
+	}, delayBetweenTicksInMs)
+}
+
+Snake.getUpdatedSnakes = function () {
 	let snakes = []
 	for (let socket_id in Snake.player_list) {
 		let snake = Snake.player_list[socket_id]
 		// let snake = socket.snake
-		snake.update()
-		snakes.push({ // This updates the client on the position of the snake (x and y)
+		// snake.update() //! This is updating the snakes, NOT checking for updates. Fix this.
+		snakes.push({
+			// This updates the client on the position of the snake (x and y)
 			snake: snake,
 		})
 	}
