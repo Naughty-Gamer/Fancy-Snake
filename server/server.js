@@ -3,6 +3,7 @@ const Http = require("http") // Module for building/creating HTTP servers
 const Express = require("express") // Module for spinning up a powerful HTTP server
 const WebSocketServer = require("socket.io") // Module for spinning up a websocket server
 const { manageState } = require("./gameState") // function to handle the state of the game
+const { exit } = require("process")
 
 const port = process.env.PORT || 80 // Will use the host's PORT environment variable or 3000 for development purposes
 const express_app = Express() // Creating an Express application
@@ -22,6 +23,11 @@ express_app.get("/", function (_, res) {
 
 express_server.listen(port, function () {
 	console.log(`\nExpress server listening on port ${port}\n`)
+})
+
+express_server.on("error", (err) => {
+	console.log(err.message)
+	exit(0)
 })
 
 const serverStartedPromise = new Promise((startManagingState) => {
