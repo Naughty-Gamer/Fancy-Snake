@@ -36,15 +36,35 @@ function manageState(server) {
 }
 
 /**
- * Carries out tasks related to terminating a game session
+ * Carries out tasks related to terminating a websocket server connection
  * @param {SocketIO.Server} server
  * @param {Game} game
  */
-// function terminateGame(server, game) {
-// 	delete game
-// server.close()
-// console.log("\nWebsocket server closed\n")
-// }
+function terminateConnection(server) {
+	let terminateGamePromise = new Promise((log) => {
+		/**
+		 * * When both setIntervals are closed, the Express server shuts down,
+		 * * but I can choose to only terminate only one of them
+		 * TODO: Keep Express server running
+		 */
+		clearInterval(gameUpdateID)
+		clearInterval(sendingUpdateID)
+		log()
+	})
+
+	let terminateConnectionPromise = new Promise((log) => {
+		server.close()
+		log()
+	})
+
+	terminateGamePromise.then((_) => {
+		console.log("\nGame terminated")
+	})
+
+	terminateConnectionPromise.then((_) => {
+		console.log("\nWebsocket server closed")
+	})
+}
 
 /**
  * @returns {Game} a new game instance
