@@ -1,45 +1,54 @@
+const x = 0
+const y = 1
 
-
-function collidedWithBorder(snake){
-    if(snake.getHeadLocation()[0]>75 || snake.getHeadLocation()[0]<1){
-        return true
-        
-    } else if(snake.getHeadLocation()[1]>75 || snake.getHeadLocation()[1]<1){ 
-        return true
-    }
+function isCollidingWithBorder(snake) {
+	if (snake.getHeadLocation()[0] > 75 || snake.getHeadLocation()[0] < 1) {
+		return true
+	} else if (snake.getHeadLocation()[1] > 75 || snake.getHeadLocation()[1] < 1) {
+		return true
+	}
 }
 
+function collidedWithFood(snake, food, foodLocation) {
+	const growth = 1
+	snake.eat(growth)
+	food.respawn(
+		foodLocation.getFoodLocation()[x],
+		foodLocation.getFoodLocation()[y]
+	)
+}
 
-function updateFood(snakes,food){
-    for (let socket_id in snakes) {
+function updateFood(snakes, food) {
+	for (let socket_id in snakes) {
 		let snake = snakes[socket_id]
-        if(snake != null){
-            food.foodAll.forEach(foodLocation => {
-                //console.log("For Loop if FOOD FOUND")
-                //console.log(x)
-                if(snake.getHeadLocation()[0] == foodLocation.getFoodLocation()[0]){
-                    if(snake.getHeadLocation()[1] == foodLocation.getFoodLocation()[1]){
-                        // console.log("EAT")
-                        snake.ateFood(1)
-                        food.foodRespawn(foodLocation.getFoodLocation()[0], foodLocation.getFoodLocation()[1])
-                    }
-                }   
-            });
-        }
-    }
+		food.foodAll.forEach((foodLocation) => {
+			if (snake.getHeadLocation()[x] == foodLocation.getFoodLocation()[x]) {
+				if (
+					snake.getHeadLocation()[y] == foodLocation.getFoodLocation()[y]
+				) {
+					collidedWithFood(snake, food, foodLocation)
+				}
+			}
+		})
+	}
 }
 
-function collidedWithSelf(snake){
-    const x = 0
-    const y = 1
-    for (var bodyPartIndex = 1; bodyPartIndex < snake.getTailIndex(); bodyPartIndex++) {
-        if (snake.getHeadLocation()[x] == snake.body[bodyPartIndex][x] && snake.getHeadLocation()[y] == snake.body[bodyPartIndex][y]) {
-            return true
-        }  
-    }
-    return false
+function isCollidingWithSelf(snake) {
+	for (
+		var bodyPartIndex = 1;
+		bodyPartIndex < snake.getTailIndex();
+		bodyPartIndex++
+	) {
+		if (
+			snake.getHeadLocation()[x] == snake.body[bodyPartIndex][x] &&
+			snake.getHeadLocation()[y] == snake.body[bodyPartIndex][y]
+		) {
+			return true
+		}
+	}
+	return false
 }
 
-module.exports.collidedWithSelf = collidedWithSelf
-module.exports.collidedWithBorder = collidedWithBorder
+module.exports.isCollidingWithSelf = isCollidingWithSelf
+module.exports.isCollidingWithBorder = isCollidingWithBorder
 module.exports.updateFood = updateFood
