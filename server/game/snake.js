@@ -1,6 +1,5 @@
 const Collision = require("./collision.js")
 
-
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
 	constructor(x, y, id) {
@@ -46,10 +45,7 @@ class Snake {
 		// console.log(this.tailIndex)
 		// console.log(this.body[this.tailIndex][y])
 		// console.log(this.body[this.tailIndex][x])
-		this.setLastTailLocation(
-			previousTailPosition[x],
-			previousTailPosition[y]
-		)
+		this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y])
 
 		this.tailIndex += n
 		// console.log("Tail extended by",n)
@@ -102,23 +98,23 @@ class Snake {
 			this.body.push(this.lastTailLocation)
 		}
 	}
-	ateFood(n) {
+	eat(n) {
 		// player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
 		this.increaseLength(n)
 	}
 
-	isDead(){
-	    if (Collision.collidedWithSelf(this)) {
-			console.log("WithSelf")
-	        // alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
-		}else if (Collision.collidedWithBorder(this)) {
-			console.log("WithBorder")
-	        // window.location.reload()
-	        // alert("Now you really fucked up")
-	    }
+	isDead() {
+		if (Collision.isCollidingWithSelf(this)) {
+			console.log("Colliding with self")
+			// alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
+		} else if (Collision.isCollidingWithBorder(this)) {
+			console.log("Colliding with border")
+			// window.location.reload()
+			// alert("Now you really fucked up")
+		}
 	}
-	
-	update(){
+
+	update() {
 		this.move() // We will have to move it somewhere outside, because we dont have to put in a loop because its not checking anything. It only changes the values of x and y. (move it to onKeyPress)
 		this.isDead()
 	}
