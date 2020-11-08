@@ -23,6 +23,7 @@ function manageState(server) {
 	// Event listener for every time someone joins the websocket connection
 	server.sockets.on("connection", function (clientSocket) {
 		if (Object.keys(socket_list).length == 0) {
+			console.log("\nNew game starting up")
 			startUpdatingGame()
 			startSendingUpdates()
 		}
@@ -33,7 +34,7 @@ function manageState(server) {
 			Snake.onDisconnect(clientSocket)
 
 			if (Object.keys(socket_list).length == 0) {
-				terminateConnection(server)
+				// terminateConnection(server)
 			}
 		})
 	})
@@ -49,8 +50,9 @@ function terminateConnection(server) {
 		 * * When both setIntervals are closed, the Express server shuts down,
 		 * * but I can choose to only terminate only one of them
 		 * TODO: Keep Express server running
+		 * * Possible fix: have multiple rooms
 		 */
-		// clearInterval(gameUpdateID)
+		clearInterval(gameUpdateID)
 		clearInterval(sendingUpdateID)
 		log()
 	})

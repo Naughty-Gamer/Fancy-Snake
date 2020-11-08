@@ -106,10 +106,10 @@ class Snake {
 
 	die() {
 		if (Collision.isCollidingWithSelf(this)) {
-			console.log("Colliding with self")
+			// * console.log("Colliding with self")
 			// alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
 		} else if (Collision.isCollidingWithBorder(this)) {
-			console.log("Colliding with border")
+			// * console.log("Colliding with border")
 			// window.location.reload()
 			// alert("Now you really fucked up")
 		}
