@@ -50,7 +50,7 @@ function terminateConnection(server) {
 		 * * but I can choose to only terminate only one of them
 		 * TODO: Keep Express server running
 		 */
-		clearInterval(gameUpdateID)
+		// clearInterval(gameUpdateID)
 		clearInterval(sendingUpdateID)
 		log()
 	})
