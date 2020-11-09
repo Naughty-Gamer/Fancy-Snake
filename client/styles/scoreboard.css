@@ -7,7 +7,7 @@
 
 table {
 	width: 100%;
-	grid-template-areas: "scorebaord";
+	grid-template-areas: "scoreboard";
 }
 
 th {
@@ -32,8 +32,8 @@ td {
 	background-color: gold;
 }
 .secondPlace {
-	background-color: red;
+	background-color: silver;
 }
 .thirdPlace {
-	background-color: salmon;
+	background-color: brown;
 }
