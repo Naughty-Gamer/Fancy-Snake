@@ -3,13 +3,14 @@ const Collision = require("./collision.js")
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
 	constructor(x, y, id) {
+		this.socketid = id
 		this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
 		this.headLocation = this.getHeadLocation() // location of head of snake
 		this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
 		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
 		this.snake_speed = 1
-		this.socketid = id
+		this.isDead = false
 		Snake.player_list[this.socketid] = this
 	}
 	// return x,y coordinates of the head of the snake
@@ -85,7 +86,6 @@ class Snake {
 		if (this.directionHeading == "left") this.body[0][x] -= this.snake_speed
 		if (this.directionHeading == "down") this.body[0][y] += this.snake_speed
 		if (this.directionHeading == "up") this.body[0][y] -= this.snake_speed
-
 		// this.setdirectionHeading(direction)
 		// console.log("Snake's head is at",this.body[0])
 	}
@@ -99,19 +99,14 @@ class Snake {
 		}
 	}
 	eat(n) {
-		console.log("yum")
+		console.log(this.socketid, "ate food")
 		// player at food, so increase length of snake by n. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
 		this.increaseLength(n)
 	}
 
 	die() {
-		if (Collision.isCollidingWithSelf(this)) {
-			// * console.log("Colliding with self")
-			// alert("You just ate yourself like a retard. We would send you to a game over screen but we haven't made that yet so you can keep on playing like shit")
-		} else if (Collision.isCollidingWithBorder(this)) {
-			// * console.log("Colliding with border")
-			// window.location.reload()
-			// alert("Now you really fucked up")
+		if (Collision.isCollidingWithBorder(this)) {
+			this.isDead = true
 		}
 	}
 

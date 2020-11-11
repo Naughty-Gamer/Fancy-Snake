@@ -31,7 +31,7 @@ function manageState(server) {
 		Snake.onConnect(clientSocket)
 
 		clientSocket.on("disconnect", function () {
-			Snake.onDisconnect(clientSocket)
+			Snake.disconnect(clientSocket)
 
 			if (Object.keys(socket_list).length == 0) {
 				// terminateConnection(server)
@@ -82,11 +82,12 @@ function terminateConnection(server) {
  * Carries out tasks related to terminating a player from a game
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
-Snake.onDisconnect = function (clientSocket) {
+Snake.disconnect = function (clientSocket) {
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
-	delete Snake.player_list[clientSocket.id]
 	delete socket_list[clientSocket.id]
+	delete Snake.player_list[clientSocket.id]
+	removepack.snakes.push(clientSocket.id)
 }
 
 /**
@@ -99,12 +100,17 @@ Snake.onConnect = function (clientSocket) {
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
-	let snake = new Snake(20, 74, clientSocket.id)
-	snake.addToBody(19, 74)
-	snake.addToBody(18, 74)
-	snake.addToBody(17, 74)
-	snake.addToBody(16, 74)
-	snake.addToBody(15, 74)
+	let snake = new Snake(
+		Math.floor(Math.random() * 74),
+		Math.floor(Math.random() * 74),
+		clientSocket.id
+	)
+	initpack.snakes.push(snake)
+	// snake.addToBody(19, 74)
+	// snake.addToBody(18, 74)
+	// snake.addToBody(17, 74)
+	// snake.addToBody(16, 74)
+	// snake.addToBody(15, 74)
 
 	// const tickrate = 1000/16.667
 	// setInterval( function () {
@@ -128,10 +134,12 @@ function startUpdatingGame() {
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id]
 			snake.update()
+			// if (snake.isDead) {
+			// 	Snake.disconnect(socket_id)
+			// }
 		}
 		Collision.updateFood(Snake.player_list, allFood)
 		Collision.collision_with_enemies(Snake.player_list)
-		// snake.move()
 	}, delayBetweenTicksInMs)
 }
 
@@ -140,7 +148,6 @@ Snake.getUpdatedSnakes = function () {
 	for (let socket_id in Snake.player_list) {
 		let snake = Snake.player_list[socket_id]
 		// let snake = socket.snake
-		// snake.update() //! This is updating the snakes, NOT checking for updates. Fix this.
 		snakes.push({
 			// This updates the client on the position of the snake (x and y)
 			snake: snake,
@@ -149,19 +156,30 @@ Snake.getUpdatedSnakes = function () {
 	return snakes
 }
 
+let initpack = { snakes: [] }
+let removepack = { snakes: [] }
+
 function startSendingUpdates() {
 	const tickrate = 30
 	const delayBetweenTicksInMs = 1000 / tickrate
 	sendingUpdateID = setInterval(function () {
-		let pack = {
+		let snakepack = {
 			snakes: Snake.getUpdatedSnakes(),
+		}
+
+		let foodpack = {
 			food: allFood.getAllFood(),
 		}
 
 		for (let socket_id in socket_list) {
 			let socket = socket_list[socket_id]
-			socket.emit("new_pos", pack)
+			socket.emit("init", initpack)
+			socket.emit("update", snakepack)
+			socket.emit("food", foodpack)
+			socket.emit("remove", removepack)
 		}
+		initpack.snakes = []
+		removepack.snakes = []
 	}, delayBetweenTicksInMs)
 }
 

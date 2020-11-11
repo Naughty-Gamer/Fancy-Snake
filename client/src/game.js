@@ -1,23 +1,30 @@
-import { drawEverySnake, foodDraw, drawScoreBoard } from "./drawer.js";
-let socket = null;
+import { drawEverySnake, foodDraw, drawScoreBoard } from "./drawer.js"
+import Snake from "./models/snake.js"
+// import AllFood from "./models/food.js"
+// import Food from "./models/food.js"
+
+let socket = null
+
+Snake.player_list = {}
+
 export default class Game {
 	constructor() {
-		this.canInteract = true;
-		this.direction = "";
-		this.delay = 55;
-		document.addEventListener("keydown", this.keyDownHandler);
+		this.canInteract = true
+		this.direction = ""
+		this.delay = 55
+		document.addEventListener("keydown", this.keyDownHandler)
 
 		/**
 		 * Joins the websocket connection that the HTTP server has established.
 		 * More precisely, it connects the client to the default namespace `'/'`
 		 * - You can think of it as joining in on an on-going conference call
 		 */
-		socket = io();
+		socket = io()
 
 		socket.on("CONN_ACK", (msg) => {
-			console.log(msg);
-			this.initGame();
-		});
+			console.log(msg)
+			this.initGame()
+		})
 	}
 
 	/**
@@ -25,40 +32,83 @@ export default class Game {
 	 * @param {SocketIO.Socket} socket Used for communicating with the server
 	 */
 	initGame() {
-		socket.on("new_pos", (data) => {
+		socket.on("init", (data) => {
+			data.snakes.forEach((snake) => {
+				new Snake(snake)
+			})
+
+			// data.allfood.forEach((foodlocation) => {
+			// 	new AllFood(foodlocation)
+			// })
+		})
+
+		socket.on("update", (data) => {
+			data.snakes.forEach((snake) => {
+				let pack = snake
+				let s = Snake.player_list[pack.socketid]
+				if (s) {
+					if (pack.headLocation !== undefined) {
+						s.body = pack.body // naive implementation -- could just send head and tail
+					}
+				}
+			})
+
+			// data.allfood.forEach((foodlocation) => {
+			// 	let pack = foodlocation
+			// })
+		})
+
+		socket.on("remove", (data) => {
+			data.snakes.forEach((snake) => {
+				delete Snake.player_list[snake.socketid]
+			})
+		})
+
+		this.render()
+
+		// naive implementation -- need to have state for food
+		socket.on("food", (data) => {
 			// Clears the map before drawing every frame
-			document.getElementById("game-map").innerHTML = "";
-			drawEverySnake(data.snakes);
-			foodDraw(data.food);
-			drawScoreBoard(data.snakes);
-		});
+			// drawEverySnake(data.snakes)
+			foodDraw(data.food)
+		})
+	}
+
+	render() {
+		const fps = 60
+		const delayBetweenFramesInMs = 1000 / fps
+		setInterval(() => {
+			// document.getElementById("game-map").innerHTML = ""
+			drawEverySnake(Snake.player_list)
+			// drawScoreBoard(Snake.player_list)
+		}, delayBetweenFramesInMs)
 	}
 
 	keyDownHandler(e) {
-		var key = e.key || e.keyCode || e.key;
+		var key = e.key || e.keyCode || e.key
 		if (e.key === 68 || e.key == "d" || e.key == "ArrowRight") {
 			//d
 			if (this.direction != "left") {
-				this.direction = "right";
-				socket.emit("keyDown", { dir: this.direction });
+				this.direction = "right"
+				socket.emit("keyDown", { dir: this.direction })
 			}
 		} else if (key === 83 || e.key == "s" || e.key == "ArrowDown") {
 			//s
 			if (this.direction != "up") {
-				this.direction = "down";
-				socket.emit("keyDown", { dir: this.direction });
+				this.direction = "down"
+				socket.emit("keyDown", { dir: this.direction })
 			}
 		} else if (key === 65 || e.key == "a" || e.key == "ArrowLeft") {
 			//a
 			if (this.direction != "right") {
-				this.direction = "left";
-				socket.emit("keyDown", { dir: this.direction });
+				this.direction = "left"
+				socket.emit("keyDown", { dir: this.direction })
 			}
 		} else if (key === 87 || e.key == "w" || e.key == "ArrowUp") {
 			// w
 			if (this.direction != "down") {
-				this.direction = "up";
-				socket.emit("keyDown", { dir: this.direction });
+				this.direction = "up"
+				socket.emit("keyDown", { dir: this.direction })
 			}
 		}
 	}
