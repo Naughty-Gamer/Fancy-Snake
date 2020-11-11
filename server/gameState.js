@@ -178,6 +178,7 @@ function startSendingUpdates() {
 			socket.emit("food", foodpack)
 			socket.emit("remove", removepack)
 		}
+
 		initpack.snakes = []
 		removepack.snakes = []
 	}, delayBetweenTicksInMs)

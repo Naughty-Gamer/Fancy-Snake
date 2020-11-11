@@ -8,7 +8,6 @@ const y = 1
  * @param {[BigInteger[]]} snake_body The body of the snake that will be drawn
  */
 function snakeDraw(snake_body) {
-	//TODO: NOT FACKING WORKING
 	snake_body.forEach((part) => {
 		const currentSnake = document.createElement("div") // makes a div for our snake
 		currentSnake.style.gridRowStart = part[y] // creates snake at part[1]
@@ -34,7 +33,6 @@ export function drawEverySnake(snakes) {
  * @param food The food that will be drawn
  */
 export function foodDraw(foodList) {
-	document.getElementById("game-map").innerHTML = ""
 	foodList.forEach((food) => {
 		const currentFood = document.createElement("div") // makes a div for our food
 		currentFood.style.gridRowStart = food.foodLocation[y] // creates food at getFoodLocation()[1]

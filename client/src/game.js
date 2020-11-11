@@ -11,7 +11,7 @@ export default class Game {
 	constructor() {
 		this.canInteract = true
 		this.direction = ""
-		this.delay = 55
+		// this.delay = 55
 		document.addEventListener("keydown", this.keyDownHandler)
 
 		/**
@@ -43,12 +43,12 @@ export default class Game {
 		})
 
 		socket.on("update", (data) => {
-			data.snakes.forEach((snake) => {
-				let pack = snake
-				let s = Snake.player_list[pack.socketid]
-				if (s) {
-					if (pack.headLocation !== undefined) {
-						s.body = pack.body // naive implementation -- could just send head and tail
+			data.snakes.forEach((pack) => {
+				let server_snake = pack.snake
+				let client_snake = Snake.player_list[server_snake.socketid]
+				if (client_snake) {
+					if (server_snake.headLocation !== undefined) {
+						client_snake.body = server_snake.body // naive implementation -- could just send head and tail
 					}
 				}
 			})
@@ -68,9 +68,10 @@ export default class Game {
 
 		// naive implementation -- need to have state for food
 		socket.on("food", (data) => {
+			this.food = data.food
 			// Clears the map before drawing every frame
+			// document.getElementById("game-map").innerHTML = ""
 			// drawEverySnake(data.snakes)
-			foodDraw(data.food)
 		})
 	}
 
@@ -78,14 +79,15 @@ export default class Game {
 		const fps = 60
 		const delayBetweenFramesInMs = 1000 / fps
 		setInterval(() => {
-			// document.getElementById("game-map").innerHTML = ""
+			drawScoreBoard(Snake.player_list)
+			document.getElementById("game-map").innerHTML = ""
 			drawEverySnake(Snake.player_list)
-			// drawScoreBoard(Snake.player_list)
+			foodDraw(this.food)
 		}, delayBetweenFramesInMs)
 	}
 
 	keyDownHandler(e) {
-		var key = e.key || e.keyCode || e.key
+		var key = e.key || e.keyCode
 		if (e.key === 68 || e.key == "d" || e.key == "ArrowRight") {
 			//d
 			if (this.direction != "left") {
