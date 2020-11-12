@@ -29,7 +29,7 @@ body {
 
 .snake {
 	background-color: #1b2d53; /* Sets the default color for the snake */
-	border: 0.05vmin solid white;
+	border: 0.05vmin solid rgb(255, 255, 255);
 	border-radius: 0.25vmin;
 }
 

@@ -2,7 +2,7 @@ const Path = require("path") // Module containing utilities for working with fil
 const Http = require("http") // Module for building/creating HTTP servers
 const Express = require("express") // Module for creating and working with an Express application
 const WebSocketServer = require("socket.io") // Module for spinning up a websocket server
-const StateManager = require("./services/StateManager") // class that handles the state of the game
+const GameStateManager = require("./services/GameStateManager") // class that handles the state of the game
 const { exit } = require("process")
 
 const port = process.env.PORT || 80 // Will use the host's PORT environment variable or 3000 for development purposes
@@ -42,7 +42,7 @@ const serverStartedPromise = new Promise((startManagingState) => {
 
 serverStartedPromise.then((io) => {
 	console.log("Websocket server started")
-	new StateManager(io)
+	new GameStateManager(io)
 })
 
 module.exports.express_app = express_app

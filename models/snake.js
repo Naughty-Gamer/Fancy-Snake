@@ -2,14 +2,14 @@ const Collision = require("../services/GameCollision.js")
 
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
-	constructor(x, y, id) {
+	constructor(id, x, y) {
 		this.socketid = id
 		this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
 		this.headLocation = this.getHeadLocation() // location of head of snake
 		this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
 		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
-		this.snake_speed = 1
+		this.snake_speed = 1 // currently can only be 1
 		this.isDead = false
 		Snake.player_list[this.socketid] = this
 	}

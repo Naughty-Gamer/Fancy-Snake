@@ -1,7 +1,5 @@
 import { drawEverySnake, foodDraw, drawScoreBoard } from "./drawer.js"
 import Snake from "./models/snake.js"
-// import AllFood from "./models/food.js"
-// import Food from "./models/food.js"
 
 let socket = null
 
@@ -23,7 +21,7 @@ export default class Game {
 		socket.on("CONN_ACK", (confirmation) => {
 			console.log(confirmation)
 			this.startRendering()
-			registerListeners()
+			this.registerListeners()
 		})
 	}
 
@@ -34,13 +32,14 @@ export default class Game {
 			})
 		})
 
-		socket.on("update", (data) => {
-			data.snakes.forEach((pack) => {
-				let server_snake = pack.snake
+		socket.on("update", (snakepack) => {
+			snakepack.snakes.forEach((server_snake) => {
 				let client_snake = Snake.player_list[server_snake.socketid]
 				if (client_snake) {
 					if (server_snake.headLocation !== undefined) {
 						client_snake.body = server_snake.body // naive implementation -- could just send head and tail
+						client_snake.tailIndex = server_snake.tailIndex
+						// client_snake.socketid = server_snake.socketid
 					}
 				}
 			})
@@ -51,17 +50,14 @@ export default class Game {
 		})
 
 		socket.on("remove", (data) => {
-			data.snakes.forEach((snake) => {
-				delete Snake.player_list[snake.socketid]
+			data.IDs.forEach((socketid) => {
+				delete Snake.player_list[socketid]
 			})
 		})
 
 		// naive implementation -- need to have state for food
 		socket.on("food", (data) => {
-			this.food = data.food
-			// Clears the map before drawing every frame
-			// document.getElementById("game-map").innerHTML = ""
-			// drawEverySnake(data.snakes)
+			this.food = data.food // acting as state for food
 		})
 	}
 

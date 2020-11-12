@@ -2,31 +2,33 @@ const Snake = require("../models/snake.js")
 const AllFood = require("../models/food.js")
 const Collision = require("./GameCollision.js")
 
-class StateManager {
+class GameStateManager {
 	constructor(server) {
 		/**
 		 * @type {"Socket.id : Socket"}
 		 */
-		StateManager.socket_list = {}
+		GameStateManager.socket_list = {}
 
 		/**
 		 * @type {Socket.id : Snake}
 		 */
 		Snake.player_list = {}
 
-		StateManager.sendingUpdateID = 0
-		StateManager.gameUpdateID = 0
+		GameStateManager.game_speed = 30
 
-		StateManager.initpack = { snakes: [] }
-		StateManager.removepack = { snakes: [] }
+		GameStateManager.sendingUpdateID = 0
+		GameStateManager.gameUpdateID = 0
+
+		GameStateManager.initpack = { snakes: [] }
+		GameStateManager.removepack = { IDs: [] }
 
 		// Event listener for every time someone joins the websocket connection
 		server.sockets.on("connection", function (clientSocket) {
-			if (Object.keys(StateManager.socket_list).length == 0) {
+			if (Object.keys(GameStateManager.socket_list).length == 0) {
 				console.log("\nNew game starting up")
-				StateManager.allFood = new AllFood(75, 75, 0.75)
-				StateManager.startUpdatingGame()
-				StateManager.startSendingUpdates()
+				GameStateManager.allFood = new AllFood(75, 75, 0.75)
+				GameStateManager.startUpdatingGame()
+				GameStateManager.startSendingUpdates()
 			}
 
 			Snake.onConnect(clientSocket)
@@ -34,47 +36,46 @@ class StateManager {
 			clientSocket.on("disconnect", function () {
 				Snake.disconnect(clientSocket)
 
-				if (Object.keys(StateManager.socket_list).length == 0) {
-					// StateManager.terminateConnection(server)
+				if (Object.keys(GameStateManager.socket_list).length == 0) {
+					// GameStateManager.terminateConnection(server)
 				}
 			})
 		})
 	}
 }
 
-StateManager.startSendingUpdates = function () {
+GameStateManager.startSendingUpdates = function () {
 	const tickrate = 30
 	const delayBetweenTicksInMs = 1000 / tickrate
-	StateManager.sendingUpdateID = setInterval(function () {
+	GameStateManager.sendingUpdateID = setInterval(function () {
 		let snakepack = {
 			snakes: Snake.getUpdatedSnakes(),
 		}
 
 		let foodpack = {
-			food: StateManager.allFood.getAllFood(),
+			food: GameStateManager.allFood.getAllFood(),
 		}
 
-		for (let socket_id in StateManager.socket_list) {
-			let socket = StateManager.socket_list[socket_id]
-			socket.emit("init", StateManager.initpack) // if nobody new joins, then this just sends an empty object
+		for (let socket_id in GameStateManager.socket_list) {
+			let socket = GameStateManager.socket_list[socket_id]
+			socket.emit("init", GameStateManager.initpack) // if nobody new joins, then this just sends an empty object
 			socket.emit("update", snakepack)
 			socket.emit("food", foodpack)
-			socket.emit("remove", StateManager.removepack) // if nobody leaves, then this just sends an empty object
+			socket.emit("remove", GameStateManager.removepack) // if nobody leaves, then this just sends an empty object
 		}
-		StateManager.initpack.snakes = []
-		StateManager.removepack.snakes = []
+		GameStateManager.initpack.snakes = []
+		GameStateManager.removepack.IDs = []
 	}, delayBetweenTicksInMs)
 }
 
-StateManager.startUpdatingGame = function () {
-	const game_speed = 15
-	const delayBetweenTicksInMs = 1000 / game_speed
+GameStateManager.startUpdatingGame = function () {
+	const delayBetweenTicksInMs = 1000 / GameStateManager.game_speed
 	gameUpdateID = setInterval(function () {
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id]
 			snake.update()
 		}
-		Collision.updateFood(Snake.player_list, StateManager.allFood)
+		Collision.updateFood(Snake.player_list, GameStateManager.allFood)
 		Collision.collision_with_enemies(Snake.player_list)
 	}, delayBetweenTicksInMs)
 }
@@ -83,7 +84,7 @@ StateManager.startUpdatingGame = function () {
  * Carries out tasks related to terminating a websocket server connection
  * @param {SocketIO.Server} server
  */
-StateManager.terminateConnection = function (server) {
+GameStateManager.terminateConnection = function (server) {
 	let terminateGamePromise = new Promise((log) => {
 		/**
 		 * * When both setIntervals are closed, the Express server shuts down,
@@ -91,8 +92,8 @@ StateManager.terminateConnection = function (server) {
 		 * TODO: Keep Express server running
 		 * * Possible fix: have multiple rooms
 		 */
-		clearInterval(StateManager.gameUpdateID)
-		clearInterval(StateManager.sendingUpdateID)
+		clearInterval(GameStateManager.gameUpdateID)
+		clearInterval(GameStateManager.sendingUpdateID)
 		log()
 	})
 
@@ -117,9 +118,9 @@ StateManager.terminateConnection = function (server) {
 Snake.disconnect = function (clientSocket) {
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
-	delete StateManager.socket_list[clientSocket.id]
+	delete GameStateManager.socket_list[clientSocket.id]
 	delete Snake.player_list[clientSocket.id]
-	StateManager.removepack.snakes.push(clientSocket.id)
+	GameStateManager.removepack.IDs.push(clientSocket.id)
 }
 
 /**
@@ -133,11 +134,12 @@ Snake.onConnect = function (clientSocket) {
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
 	let snake = new Snake(
+		clientSocket.id,
 		Math.floor(Math.random() * 74),
-		Math.floor(Math.random() * 74),
-		clientSocket.id
+		Math.floor(Math.random() * 74)
 	)
-	StateManager.initpack.snakes.push(snake)
+
+	GameStateManager.initpack.snakes.push(snake)
 	// snake.addToBody(19, 74)
 	// snake.addToBody(18, 74)
 	// snake.addToBody(17, 74)
@@ -150,7 +152,18 @@ Snake.onConnect = function (clientSocket) {
 		console.log(data)
 	})
 
-	StateManager.socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
+	clientSocket.emit("init", { snakes: Snake.getInitSnakes() })
+
+	GameStateManager.socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
+}
+
+Snake.getInitSnakes = function () {
+	let snakepack = []
+	for (const socketid in Snake.player_list) {
+		const snake = Snake.player_list[socketid]
+		snakepack.push(snake)
+	}
+	return snakepack
 }
 
 Snake.getUpdatedSnakes = function () {
@@ -158,14 +171,11 @@ Snake.getUpdatedSnakes = function () {
 	for (let socket_id in Snake.player_list) {
 		let snake = Snake.player_list[socket_id]
 		// let snake = socket.snake
-		snakes.push({
-			// This updates the client on the position of the snake (x and y)
-			snake: snake,
-		})
+		snakes.push(snake)
 	}
 	return snakes
 }
 
-module.exports = StateManager
+module.exports = GameStateManager
 
 //Our snake should move continuously so it should be inside a setinterval which will make it move continuously. Which will make the speed of the snake the speed of the setInterval.
