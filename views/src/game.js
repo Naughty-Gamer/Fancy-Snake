@@ -9,7 +9,6 @@ Snake.player_list = {}
 
 export default class Game {
 	constructor() {
-		this.canInteract = true
 		this.direction = ""
 		// this.delay = 55
 		document.addEventListener("keydown", this.keyDownHandler)
@@ -21,49 +20,48 @@ export default class Game {
 		 */
 		socket = io()
 
-		socket.on("CONN_ACK", (msg) => {
-			console.log(msg)
+		socket.on("CONN_ACK", (confirmation) => {
+			console.log(confirmation)
 			this.startRendering()
+			registerListeners()
+		})
+	}
 
-			socket.on("init", (data) => {
-				data.snakes.forEach((snake) => {
-					new Snake(snake)
-				})
-
-				// data.allfood.forEach((foodlocation) => {
-				// 	new AllFood(foodlocation)
-				// })
+	registerListeners() {
+		socket.on("init", (data) => {
+			data.snakes.forEach((snake) => {
+				new Snake(snake)
 			})
+		})
 
-			socket.on("update", (data) => {
-				data.snakes.forEach((pack) => {
-					let server_snake = pack.snake
-					let client_snake = Snake.player_list[server_snake.socketid]
-					if (client_snake) {
-						if (server_snake.headLocation !== undefined) {
-							client_snake.body = server_snake.body // naive implementation -- could just send head and tail
-						}
+		socket.on("update", (data) => {
+			data.snakes.forEach((pack) => {
+				let server_snake = pack.snake
+				let client_snake = Snake.player_list[server_snake.socketid]
+				if (client_snake) {
+					if (server_snake.headLocation !== undefined) {
+						client_snake.body = server_snake.body // naive implementation -- could just send head and tail
 					}
-				})
-
-				// data.allfood.forEach((foodlocation) => {
-				// 	let pack = foodlocation
-				// })
+				}
 			})
 
-			socket.on("remove", (data) => {
-				data.snakes.forEach((snake) => {
-					delete Snake.player_list[snake.socketid]
-				})
-			})
+			// data.allfood.forEach((foodlocation) => {
+			// 	let pack = foodlocation
+			// })
+		})
 
-			// naive implementation -- need to have state for food
-			socket.on("food", (data) => {
-				this.food = data.food
-				// Clears the map before drawing every frame
-				// document.getElementById("game-map").innerHTML = ""
-				// drawEverySnake(data.snakes)
+		socket.on("remove", (data) => {
+			data.snakes.forEach((snake) => {
+				delete Snake.player_list[snake.socketid]
 			})
+		})
+
+		// naive implementation -- need to have state for food
+		socket.on("food", (data) => {
+			this.food = data.food
+			// Clears the map before drawing every frame
+			// document.getElementById("game-map").innerHTML = ""
+			// drawEverySnake(data.snakes)
 		})
 	}
 
@@ -71,7 +69,6 @@ export default class Game {
 		const fps = 60
 		const delayBetweenFramesInMs = 1000 / fps
 		setInterval(() => {
-			// document.body.innerHTML = ""
 			drawScoreBoard(Snake.player_list)
 			document.getElementById("game-map").innerHTML = ""
 			drawEverySnake(Snake.player_list)

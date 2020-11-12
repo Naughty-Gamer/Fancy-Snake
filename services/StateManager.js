@@ -1,6 +1,6 @@
-const Snake = require("./game/snake.js")
-const AllFood = require("./game/food.js")
-const Collision = require("./game/collision.js")
+const Snake = require("../models/snake.js")
+const AllFood = require("../models/food.js")
+const Collision = require("./GameCollision.js")
 
 class StateManager {
 	constructor(server) {

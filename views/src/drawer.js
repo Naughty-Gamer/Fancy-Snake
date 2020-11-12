@@ -17,10 +17,6 @@ function snakeDraw(snake_body) {
 	})
 }
 
-/**
- * Draws every snake on the map
- * @param {JSON[]} snakes List of snakes that will be drawn
- */
 export function drawEverySnake(snakes) {
 	for (const socketid in snakes) {
 		let snake_body = snakes[socketid].body
@@ -30,7 +26,7 @@ export function drawEverySnake(snakes) {
 
 /**
  * This function is going to be used to draw the updated food on the map.
- * @param food The food that will be drawn
+ * @param foodList list of the food that will be drawn
  */
 export function foodDraw(foodList) {
 	foodList.forEach((food) => {
@@ -56,6 +52,7 @@ export function drawScoreBoard(snakes) {
 	hLength.innerHTML = "Length"
 	for (const socketid in snakes) {
 		let snake = snakes[socketid]
+		console.log(snake.socketid, snake.tailIndex)
 		rows.push({
 			username: snake.socketid,
 			score: snake.tailIndex,
@@ -63,9 +60,7 @@ export function drawScoreBoard(snakes) {
 	}
 
 	let sortedPlayers = rows.sort((a, b) => b.score - a.score)
-	console.log(sortedPlayers)
 
-	let cell = document.createElement("td")
 	sortedPlayers.forEach((player) => {
 		let row = scoreboard.insertRow()
 		let rank = row.insertCell(0)

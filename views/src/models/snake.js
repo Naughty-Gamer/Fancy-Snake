@@ -9,13 +9,4 @@ export default class Snake {
 		this.isDead = initpack.isDead
 		Snake.player_list[this.socketid] = this
 	}
-
-	// move() {
-	// 	const x = 0
-	// 	const y = 1
-
-	// 	for (var i = this.tailIndex - 1; i >= 0; i--) {
-	// 		this.body[i + 1] = { ...this.body[i] }
-	// 	}
-	// }
 }

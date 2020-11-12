@@ -1,4 +1,4 @@
-const Collision = require("./collision.js")
+const Collision = require("../services/GameCollision.js")
 
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
