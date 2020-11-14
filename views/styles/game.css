@@ -19,7 +19,7 @@ body {
 	width: 90vmin;
 	height: 90vmin;
 
-	display: grid;
+	display: none; /*Change this into grid when u want to display it.*/
 	/* By specifying how many rows and columns we want
        for our game map, no matter what size the browser
        or screen size is, the game will always be a 75x75 grid */

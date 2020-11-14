@@ -1,4 +1,4 @@
-/* *
+/*
 {
     margin: 0;
     padding: 0;
@@ -10,12 +10,12 @@ body
     background-position: center;
     font-family: sans-serif;
 } */
-.login-page {
+.menu-page {
+	position: absolute;
+	display: none;
 	width: 48%;
 	padding: 10% 0 0;
 	margin: auto;
-}
-.form {
 	position: center;
 	background: #4a4a4a;
 	width: 90%;
@@ -24,18 +24,8 @@ body
 	padding: 45px;
 	text-align: center;
 }
-.form input {
-	outline: none;
-	background: white;
-	width: 100%;
-	border: 0;
-	margin: 0 0 15px;
-	padding: 15px;
-	box-sizing: border-box;
-	font-size: 14px;
-}
 
-.form button {
+.menuBtn {
 	text-transform: uppercase;
 	outline: 0;
 	background: grey;
@@ -44,32 +34,13 @@ body
 	border: 0;
 	padding: 40px;
 	color: black;
-	font-size: 40px;
+	font-size: 30px;
 	cursor: pointer;
 	transition: 0.5s;
 }
 
-.form button:hover,
-.form button:active {
+.menuBtn:hover,
+.menuBtn:active {
 	border: none;
 	background: green;
-}
-.form message {
-	margin: 15px 0 0;
-	color: #fff;
-	font-size: 12px;
-}
-.form message a {
-	color: orange;
-	text-decoration: none;
-}
-
-.msg {
-	font-size: 90px;
-	padding-top: 8%;
-}
-
-.msg1 {
-	font-size: 0.1px;
-	padding-top: 10.5%;
 }
