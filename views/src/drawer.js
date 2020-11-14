@@ -5,7 +5,7 @@ const y = 1
 
 /**
  * Draws a snake on the map
- * @param {[BigInteger[]]} snake_body The body of the snake that will be drawn
+ * @param {[number[]]} snake_body The body of the snake that will be drawn
  */
 function snakeDraw(snake_body) {
 	snake_body.forEach((part) => {

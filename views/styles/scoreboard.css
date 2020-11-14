@@ -1,13 +1,16 @@
 #scoreboard {
 	background-color: #000000; /* Sets the base color for the map */
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
-	width: 30vmin;
+	width: 38vmin;
 	height: 45vmin;
+	margin-left: 5%;
 }
 
 table {
+	position: left;
+	table-layout: auto;
 	width: 100%;
-	grid-template-areas: "scoreboard";
+	/* grid-template-areas: "scoreboard"; */
 }
 
 th {

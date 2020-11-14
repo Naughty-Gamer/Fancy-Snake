@@ -14,8 +14,6 @@ class GameStateManager {
 		 */
 		Snake.player_list = {}
 
-		GameStateManager.game_speed = 30
-
 		GameStateManager.sendingUpdateID = 0
 		GameStateManager.gameUpdateID = 0
 
@@ -27,7 +25,9 @@ class GameStateManager {
 			if (Object.keys(GameStateManager.socket_list).length == 0) {
 				console.log("\nNew game starting up")
 				GameStateManager.allFood = new AllFood(75, 75, 0.75)
-				GameStateManager.startUpdatingGame()
+				// clearInterval(GameStateManager.sendingUpdateID)
+				// clearInterval(GameStateManager.gameUpdateID)
+				GameStateManager.startGame()
 				GameStateManager.startSendingUpdates()
 			}
 
@@ -37,15 +37,14 @@ class GameStateManager {
 				Snake.disconnect(clientSocket)
 
 				if (Object.keys(GameStateManager.socket_list).length == 0) {
-					// GameStateManager.terminateConnection(server)
+					GameStateManager.terminateConnection(server)
 				}
 			})
 		})
 	}
 }
 
-GameStateManager.startSendingUpdates = function () {
-	const tickrate = 30
+GameStateManager.startSendingUpdates = function (tickrate = 30) {
 	const delayBetweenTicksInMs = 1000 / tickrate
 	GameStateManager.sendingUpdateID = setInterval(function () {
 		let snakepack = {
@@ -68,15 +67,20 @@ GameStateManager.startSendingUpdates = function () {
 	}, delayBetweenTicksInMs)
 }
 
-GameStateManager.startUpdatingGame = function () {
-	const delayBetweenTicksInMs = 1000 / GameStateManager.game_speed
-	gameUpdateID = setInterval(function () {
+GameStateManager.startGame = function (game_speed = 15) {
+	const delayBetweenTicksInMs = 1000 / game_speed
+	GameStateManager.gameUpdateID = setInterval(function () {
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id]
 			snake.update()
 		}
 		Collision.updateFood(Snake.player_list, GameStateManager.allFood)
-		Collision.collision_with_enemies(Snake.player_list)
+		// Collision.collision_with_enemies(Snake.player_list)
+		console.log(
+			"Currently",
+			Object.keys(GameStateManager.socket_list).length,
+			"players"
+		)
 	}, delayBetweenTicksInMs)
 }
 
@@ -157,11 +161,28 @@ Snake.onConnect = function (clientSocket) {
 	GameStateManager.socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 }
 
+/**
+ * @param {Snake} snake the snake being packed
+ * @param {boolean} isInit is the snake being initialised?
+ */
+Snake.pack = function (snake, isInit = false) {
+	let pack = {
+		socketid: snake.socketid,
+		headLocation: snake.headLocation,
+		tailIndex: snake.tailIndex,
+		tailLocation: snake.tailLocation,
+	}
+	if (isInit) pack.body = snake.body
+
+	return pack
+}
+
 Snake.getInitSnakes = function () {
 	let snakepack = []
 	for (const socketid in Snake.player_list) {
 		const snake = Snake.player_list[socketid]
-		snakepack.push(snake)
+		let snake_lite = Snake.pack(snake, true)
+		snakepack.push(snake_lite)
 	}
 	return snakepack
 }
@@ -170,8 +191,8 @@ Snake.getUpdatedSnakes = function () {
 	let snakes = []
 	for (let socket_id in Snake.player_list) {
 		let snake = Snake.player_list[socket_id]
-		// let snake = socket.snake
-		snakes.push(snake)
+		let snake_lite = Snake.pack(snake, true)
+		snakes.push(snake_lite)
 	}
 	return snakes
 }

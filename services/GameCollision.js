@@ -35,13 +35,13 @@ function updateFood(snakes, food) {
 
 // function isCollidingWithSelf(snake) {
 // 	for (
-// 		var bodyPartIndex = 1;
-// 		bodyPartIndex < snake.getTailIndex();
-// 		bodyPartIndex++
+// 		var enemy_bodyPartIndex = 1;
+// 		enemy_bodyPartIndex < snake.getTailIndex();
+// 		enemy_bodyPartIndex++
 // 	) {
 // 		if (
-// 			snake.getHeadLocation()[x] == snake.body[bodyPartIndex][x] &&
-// 			snake.getHeadLocation()[y] == snake.body[bodyPartIndex][y]
+// 			snake.getHeadLocation()[x] == snake.body[enemy_bodyPartIndex][x] &&
+// 			snake.getHeadLocation()[y] == snake.body[enemy_bodyPartIndex][y]
 // 		) {
 // 			return true
 // 		}
@@ -56,26 +56,24 @@ function get_body(bodyPartIndex, snake) {
 	}
 }
 
-//1,2,3,4,5
-//snake1.body[index][x]
-//snake2.body[index][x]
-function collision_with_enemies(snakes) {
+function isCollidingWithSnake(snakes) {
 	for (let socket_id in snakes) {
-		let snake1 = snakes[socket_id]
-		// let snake1_bodyPart = get_body(bodyPartIndex,snake1)
+		let snake = snakes[socket_id]
+		// let snake_bodyPart = get_body(enemy_bodyPartIndex,snake)
 		for (let socket_id in snakes) {
-			let snake2 = snakes[socket_id]
+			let enemy = snakes[socket_id]
 			for (
-				let bodyPartIndex = 1;
-				bodyPartIndex < snake2.tailIndex;
-				bodyPartIndex++
+				let enemy_bodyPartIndex = 1;
+				enemy_bodyPartIndex < enemy.tailIndex;
+				enemy_bodyPartIndex++
 			) {
-				let snake2_bodyPart = get_body(bodyPartIndex, snake2)
+				let enemy_bodyPart = get_body(enemy_bodyPartIndex, enemy)
 				if (
-					snake1.getHeadLocation()[x] == snake2_bodyPart.x &&
-					snake1.getHeadLocation()[y] == snake2_bodyPart.y
+					snake.getHeadLocation()[x] == enemy_bodyPart.x &&
+					snake.getHeadLocation()[y] == enemy_bodyPart.y
 				) {
-					snake1.isDead = true
+					return true
+					// snake.die()
 				}
 			}
 		}
@@ -85,4 +83,4 @@ function collision_with_enemies(snakes) {
 // module.exports.isCollidingWithSelf = isCollidingWithSelf
 module.exports.isCollidingWithBorder = isCollidingWithBorder
 module.exports.updateFood = updateFood
-module.exports.collision_with_enemies = collision_with_enemies
+module.exports.isCollidingWithSnake = isCollidingWithSnake

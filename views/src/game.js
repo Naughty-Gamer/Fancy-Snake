@@ -37,6 +37,10 @@ export default class Game {
 				let client_snake = Snake.player_list[server_snake.socketid]
 				if (client_snake) {
 					if (server_snake.headLocation !== undefined) {
+						// client_snake.updateBody(
+						// 	server_snake.headLocation,
+						// 	server_snake.tailLocation
+						// )
 						client_snake.body = server_snake.body // naive implementation -- could just send head and tail
 						client_snake.tailIndex = server_snake.tailIndex
 						// client_snake.socketid = server_snake.socketid

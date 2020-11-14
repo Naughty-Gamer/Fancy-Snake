@@ -9,12 +9,13 @@ const port = process.env.PORT || 80 // Will use the host's PORT environment vari
 const express_app = Express() // Creating an Express application
 const express_server = Http.createServer(express_app) // Building the Express server
 
-/**
- * Express.static() returns a handler which serves every file in "views/"
- * whenever use() registers a request of any type (POST/GET)
- */
-express_app.use(Express.static("views"))
+/** Executes a handler with no mount path for any type of HTTP request */
+express_app.use(
+	/** Built in middleware function that serves static files */
+	Express.static("views")
+)
 
+/** Executes a handler for GET requests to the `/` path */
 express_app.get("/", function (_, res) {
 	res.sendFile(Path.resolve("views/index.html"))
 })
@@ -24,8 +25,8 @@ express_server.listen(port, function () {
 })
 
 express_server.on("error", (err) => {
-	console.log(err.message)
-	exit(0)
+	console.error(err.stack)
+	exit(1)
 })
 
 const serverStartedPromise = new Promise((startManagingState) => {

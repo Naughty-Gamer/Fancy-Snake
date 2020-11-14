@@ -8,8 +8,8 @@ class Snake {
 		this.headLocation = this.getHeadLocation() // location of head of snake
 		this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
+		this.tailLocation = this.body[this.body.length - 1]
 		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
-		this.snake_speed = 1 // currently can only be 1
 		this.isDead = false
 		Snake.player_list[this.socketid] = this
 	}
@@ -49,6 +49,8 @@ class Snake {
 		this.setLastTailLocation(previousTailPosition[x], previousTailPosition[y])
 
 		this.tailIndex += n
+
+		// this.tailLocation = this.lastTailLocation
 		// console.log("Tail extended by",n)
 		// console.log("New tail location:",this.body[this.tailIndex])
 	}
@@ -82,12 +84,13 @@ class Snake {
 			this.body[i + 1] = { ...this.body[i] }
 		}
 
-		if (this.directionHeading == "right") this.body[0][x] += this.snake_speed
-		if (this.directionHeading == "left") this.body[0][x] -= this.snake_speed
-		if (this.directionHeading == "down") this.body[0][y] += this.snake_speed
-		if (this.directionHeading == "up") this.body[0][y] -= this.snake_speed
+		if (this.directionHeading == "right") this.body[0][x] += 1
+		if (this.directionHeading == "left") this.body[0][x] -= 1
+		if (this.directionHeading == "down") this.body[0][y] += 1
+		if (this.directionHeading == "up") this.body[0][y] -= 1
 		// this.setdirectionHeading(direction)
 		// console.log("Snake's head is at",this.body[0])
+		console.log(this.socketid + "'s tail is at", this.tailLocation)
 	}
 
 	// increases length of snake by n by adding blocks to it's tail. NOT YET IMPLEMENTED NEGATIVE VALUES FOR n
@@ -105,14 +108,18 @@ class Snake {
 	}
 
 	die() {
-		if (Collision.isCollidingWithBorder(this)) {
-			this.isDead = true
-		}
+		this.isDead = true
+		console.log(this.socketid, "is dead")
 	}
 
 	update() {
 		this.move() // We will have to move it somewhere outside, because we dont have to put in a loop because its not checking anything. It only changes the values of x and y. (move it to onKeyPress)
-		this.die()
+		if (
+			Collision.isCollidingWithBorder(this) ||
+			Collision.isCollidingWithSnake(Snake.player_list)
+		) {
+			this.die()
+		}
 	}
 }
 
