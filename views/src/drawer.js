@@ -8,6 +8,7 @@ const y = 1
  * @param {[number[]]} snake_body The body of the snake that will be drawn
  */
 function snakeDraw(snake_body) {
+	console.log(snake_body)
 	snake_body.forEach((part) => {
 		const currentSnake = document.createElement("div") // makes a div for our snake
 		currentSnake.style.gridRowStart = part[y] // creates snake at part[1]
@@ -52,7 +53,6 @@ export function drawScoreBoard(snakes) {
 	hLength.innerHTML = "Length"
 	for (const socketid in snakes) {
 		let snake = snakes[socketid]
-		console.log(snake.socketid, snake.tailIndex)
 		rows.push({
 			username: snake.socketid,
 			score: snake.tailIndex,
