@@ -30,7 +30,7 @@ class GameStateManager {
 				// clearInterval(GameStateManager.sendingUpdateID)
 				// clearInterval(GameStateManager.gameUpdateID)
 				GameStateManager.startGame();
-				GameStateManager.startSendingUpdates();
+				GameStateManager.startSendingUpdates(60);
 			}
 
 			Snake.onConnect(clientSocket);
@@ -182,8 +182,8 @@ Snake.getUpdatedSnakes = function () {
 		let snakes = [];
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id];
-			let snake_lite = Snake.pack(snake, true);
-			snakes.push(snake_lite);
+			let snake_lite = Snake.pack(snake);
+			snakes.push(snake_lite, true);
 		}
 		return snakes;
 	}

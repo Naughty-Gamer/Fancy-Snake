@@ -4,7 +4,6 @@
 	width: 38vmin;
 	height: 45vmin;
 	margin-left: 5%;
-
 	display: none;
 }
 
@@ -12,7 +11,6 @@ table {
 	position: left;
 	table-layout: auto;
 	width: 100%;
-	/* grid-template-areas: "scoreboard"; */
 }
 
 th {

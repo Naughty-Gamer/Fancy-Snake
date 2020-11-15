@@ -6,8 +6,8 @@
 		<title>FANCY SNAKE</title>
 		<link rel="stylesheet" type="text/css" href="./styles/game.css" />
 		<link rel="stylesheet" type="text/css" href="./styles/scoreboard.css" />
-		<link rel="stylesheet" type="text/css" href="./styles/IndexCss.css" />
-		<link rel="stylesheet" type="text/css" href="./styles/MenuCss.css" />
+		<link rel="stylesheet" type="text/css" href="./styles/signin.css" />
+		<link rel="stylesheet" type="text/css" href="./styles/menu.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 		<script src="./src/index.js" defer type="module"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -26,23 +26,23 @@
 		<div id="signinmodal" class="login-page">
 			<div class="form">
 				<form class="register-form">
-					<input type="text" placeholder="User Name" />
-					<input type="password" placeholder="password" />
+					<input type="text" placeholder="Username" />
+					<input type="password" placeholder="Password" />
 					<button id="registerbtn" type="button">Register</button>
-					<p class="msg">Already Registered ? <a href="#">Login</a></p>
+					<p class="msg">Already Registered? <a class="msg" href="#">Login</a></p>
 				</form>
 				<form class="login-form">
-					<input type="text" placeholder="User Name" />
-					<input type="password" placeholder="password" />
+					<input type="text" placeholder="Username" />
+					<input type="password" placeholder="Password" />
 					<button id="loginbtn" type="button">Login</button>
-					<p class="msg">Not Registered ? <a href="#">Register</a></p>
+					<p class="msg">Not Registered? <a class="msg" href="#">Register</a></p>
 				</form>
 			</div>
 		</div>
 
 		<script>
 			$(".message a").click(function () {
-				$("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
+				$("form").animate({ height: "toggle", opacity: "toggle" },"slow");
 			});
 		</script>
 
