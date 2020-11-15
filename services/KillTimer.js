@@ -1,4 +1,4 @@
-const MAX_SECONDS = 7; // Delay it 2 or 3 seconds because it starts immediatly after player >= max_players
+const MAX_SECONDS = 7; // Delay it 2 or 3 seconds because it starts immediatly after player >= max_players (Change it after finishing testing)
 
 let secondsUntilDeath = MAX_SECONDS;
 let timeInSeconds = 0;
@@ -25,10 +25,10 @@ function startKillTimer(snakes) {
 		if (secondsUntilDeath == 0) {
 			if (Object.keys(snakes).length !== 1) {
 				// kills the smallest snake
-				// snakes[smallestPlayer.id].die();
+				snakes[smallestPlayer.id].die();
 				// console.log(snakes[smallestPlayer.id], "got killed by the timer");
 			}
-			secondsUntilDeath = 5;
+			secondsUntilDeath = 5; //change it to 30 after finishing testing.
 		}
 	}, 1000);
 
