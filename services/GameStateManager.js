@@ -112,7 +112,7 @@ Snake.disconnect = function (clientSocket) {
 Snake.onConnect = function (clientSocket) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected")
-	// numPlayer++
+	numPlayer++
 	// console.log("num of players", numPlayer)
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
@@ -127,9 +127,9 @@ Snake.onConnect = function (clientSocket) {
 
 	clientSocket.on("keyDown", (data) => {
 		// added this to fix the bug were direction of the player changes, because they were able to send data over,whilst the game wasn't started.
-		// if (numPlayer >= MAX_PLAYER) {
-		snake.setdirectionHeading(data.dir)
-		// }
+		if (numPlayer >= MAX_PLAYER) {
+			snake.setdirectionHeading(data.dir)
+		}
 		console.log(data)
 	})
 
@@ -167,16 +167,16 @@ Snake.getInitSnakes = function () {
 
 Snake.getUpdatedSnakes = function () {
 	// added this if statments.
-	// if (numPlayer >= MAX_PLAYER) {
-	// checks if the players are sufficent to start the game or not.
-	let snakes = []
-	for (let socket_id in Snake.player_list) {
-		let snake = Snake.player_list[socket_id]
-		let snake_lite = Snake.pack(snake)
-		snakes.push(snake_lite, true)
+	if (numPlayer >= MAX_PLAYER) {
+		// checks if the players are sufficent to start the game or not.
+		let snakes = []
+		for (let socket_id in Snake.player_list) {
+			let snake = Snake.player_list[socket_id]
+			let snake_lite = Snake.pack(snake)
+			snakes.push(snake_lite, true)
+		}
+		return snakes
 	}
-	return snakes
-	// }
 }
 
 module.exports = GameStateManager
