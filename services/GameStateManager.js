@@ -1,7 +1,7 @@
 const Snake = require("../models/snake.js");
 const AllFood = require("../models/food.js");
 const Collision = require("./GameCollision.js");
-const MAX_PLAYER = 2;
+const MAX_PLAYER = 3;
 let numPlayer = 0;
 
 class GameStateManager {
@@ -39,7 +39,7 @@ class GameStateManager {
 				Snake.disconnect(clientSocket);
 
 				if (Object.keys(GameStateManager.socket_list).length == 0) {
-					GameStateManager.terminateConnection(server);
+					GameStateManager.terminateGame(server);
 				}
 			});
 		});
@@ -49,6 +49,7 @@ class GameStateManager {
 GameStateManager.startSendingUpdates = function (tickrate = 30) {
 	const delayBetweenTicksInMs = 1000 / tickrate;
 	GameStateManager.sendingUpdateID = setInterval(function () {
+		console.log("Sending updates to client");
 		let snakepack = {
 			snakes: Snake.getUpdatedSnakes(),
 		};
@@ -86,32 +87,11 @@ GameStateManager.startGame = function (game_speed = 15) {
  * Carries out tasks related to terminating a websocket server connection
  * @param {SocketIO.Server} server
  */
-GameStateManager.terminateConnection = function (server) {
-	let terminateGamePromise = new Promise((log) => {
-		/**
-		 * * When both setIntervals are closed, the Express server shuts down,
-		 * * but I can choose to only terminate only one of them
-		 * TODO: Keep Express server running
-		 * * Possible fix: have multiple rooms
-		 */
-		clearInterval(GameStateManager.gameUpdateID);
-		clearInterval(GameStateManager.sendingUpdateID);
-		log();
-	});
-
-	let terminateConnectionPromise = new Promise((log) => {
-		// server.close();
-		numPlayer = 0;
-		log();
-	});
-
-	terminateGamePromise.then((_) => {
-		console.log("\nGame terminated");
-	});
-
-	terminateConnectionPromise.then((_) => {
-		console.log("\nWebsocket server closed");
-	});
+GameStateManager.terminateGame = function (server) {
+	clearInterval(GameStateManager.gameUpdateID);
+	clearInterval(GameStateManager.sendingUpdateID);
+	numPlayer = 0;
+	console.log("\nGame terminated");
 };
 
 /**
@@ -119,6 +99,9 @@ GameStateManager.terminateConnection = function (server) {
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
 Snake.disconnect = function (clientSocket) {
+	if (numPlayer !== MAX_PLAYER) {
+		numPlayer--;
+	}
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected");
 	delete GameStateManager.socket_list[clientSocket.id];
@@ -133,7 +116,6 @@ Snake.disconnect = function (clientSocket) {
 Snake.onConnect = function (clientSocket) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected");
-	numPlayer++;
 	console.log("num of players", numPlayer);
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected");
@@ -141,6 +123,9 @@ Snake.onConnect = function (clientSocket) {
 	let snake = new Snake(clientSocket.id, Math.floor(Math.random() * 74), Math.floor(Math.random() * 74));
 
 	GameStateManager.initpack.snakes.push(snake);
+	if (numPlayer !== MAX_PLAYER) {
+		numPlayer++;
+	}
 	// snake.addToBody(19, 74)
 	// snake.addToBody(18, 74)
 	// snake.addToBody(17, 74)
@@ -148,12 +133,13 @@ Snake.onConnect = function (clientSocket) {
 	// snake.addToBody(15, 74)
 
 	clientSocket.on("keyDown", (data) => {
+		console.log("Received:", data);
 		// added this to fix the bug were direction of the player changes, because they were able to send data over,whilst the game wasn't started.
-		if (numPlayer >= MAX_PLAYER) {
+		if (numPlayer == MAX_PLAYER) {
 			snake.setdirectionHeading(data.dir); // move this inside update
+			console.log(clientSocket.id, "moving", data.dir);
 			// snake.move()
 		}
-		console.log(data);
 	});
 
 	clientSocket.emit("init", { snakes: Snake.getInitSnakes() });
@@ -190,7 +176,8 @@ Snake.getInitSnakes = function () {
 
 Snake.getUpdatedSnakes = function () {
 	// added this if statments.
-	if (numPlayer >= MAX_PLAYER) {
+	if (numPlayer == MAX_PLAYER) {
+		console.log("Getting updated snakes");
 		// checks if the players are sufficent to start the game or not.
 		let snakes = [];
 		for (let socket_id in Snake.player_list) {
