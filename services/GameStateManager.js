@@ -1,11 +1,14 @@
 const Snake = require("../models/snake.js");
 const AllFood = require("../models/food.js");
 const Collision = require("./GameCollision.js");
-const MAX_PLAYER = 3;
+const KillTimer = require("./KillTimer.js");
+const MAX_PLAYER = 2; //Change it later on to 5 players (2 is for testing).
 let numPlayer = 0;
+let timer = 3;
 
 class GameStateManager {
 	constructor(server) {
+		// this.server = server;
 		/**
 		 * @type {"Socket.id : Socket"}
 		 */
@@ -18,6 +21,7 @@ class GameStateManager {
 
 		GameStateManager.sendingUpdateID = 0;
 		GameStateManager.gameUpdateID = 0;
+		GameStateManager.killTimerID = 0;
 
 		GameStateManager.initpack = { snakes: [] };
 		GameStateManager.removepack = { IDs: [] };
@@ -30,7 +34,7 @@ class GameStateManager {
 				// clearInterval(GameStateManager.sendingUpdateID)
 				// clearInterval(GameStateManager.gameUpdateID)
 				GameStateManager.startGame();
-				GameStateManager.startSendingUpdates(60);
+				GameStateManager.startSendingUpdates();
 			}
 
 			Snake.onConnect(clientSocket);
@@ -49,7 +53,7 @@ class GameStateManager {
 GameStateManager.startSendingUpdates = function (tickrate = 30) {
 	const delayBetweenTicksInMs = 1000 / tickrate;
 	GameStateManager.sendingUpdateID = setInterval(function () {
-		console.log("Sending updates to client");
+		// console.log("Sending updates to client");
 		let snakepack = {
 			snakes: Snake.getUpdatedSnakes(),
 		};
@@ -76,9 +80,14 @@ GameStateManager.startGame = function (game_speed = 15) {
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id];
 			snake.update();
+			if (snake.isDead) {
+				Snake.disconnect(GameStateManager.socket_list[socket_id]);
+				//re direct him into you died screen.
+			}
 		}
 		Collision.updateFood(Snake.player_list, GameStateManager.allFood);
 		// Collision.collision_with_enemies(Snake.player_list)
+
 		// console.log("Currently", Object.keys(GameStateManager.socket_list).length, "players");
 	}, delayBetweenTicksInMs);
 };
@@ -90,6 +99,7 @@ GameStateManager.startGame = function (game_speed = 15) {
 GameStateManager.terminateGame = function (server) {
 	clearInterval(GameStateManager.gameUpdateID);
 	clearInterval(GameStateManager.sendingUpdateID);
+	clearInterval(GameStateManager.killTimerID);
 	numPlayer = 0;
 	console.log("\nGame terminated");
 };
@@ -120,22 +130,33 @@ Snake.onConnect = function (clientSocket) {
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected");
 
+	if (numPlayer <= MAX_PLAYER) {
+		numPlayer++;
+	}
+
+	GameStateManager.socket_list[clientSocket.id] = clientSocket; // adding each socket connection to an associative array
+
+	if (numPlayer >= MAX_PLAYER) {
+		let countdownID = setInterval(() => {
+			for (let socket_id in GameStateManager.socket_list) {
+				let socket = GameStateManager.socket_list[socket_id];
+				socket.emit("countdown", { time: timer });
+			}
+			timer--;
+			console.log("///////////////", timer, "//////////////");
+			if (timer <= 0) clearInterval(countdownID);
+		}, 1000);
+		GameStateManager.killTimerID = KillTimer.startKillTimer(Snake.player_list);
+	}
+
 	let snake = new Snake(clientSocket.id, Math.floor(Math.random() * 74), Math.floor(Math.random() * 74));
 
 	GameStateManager.initpack.snakes.push(snake);
-	if (numPlayer !== MAX_PLAYER) {
-		numPlayer++;
-	}
-	// snake.addToBody(19, 74)
-	// snake.addToBody(18, 74)
-	// snake.addToBody(17, 74)
-	// snake.addToBody(16, 74)
-	// snake.addToBody(15, 74)
 
 	clientSocket.on("keyDown", (data) => {
 		console.log("Received:", data);
 		// added this to fix the bug were direction of the player changes, because they were able to send data over,whilst the game wasn't started.
-		if (numPlayer == MAX_PLAYER) {
+		if (timer <= 0) {
 			snake.setdirectionHeading(data.dir); // move this inside update
 			console.log(clientSocket.id, "moving", data.dir);
 			// snake.move()
@@ -143,8 +164,6 @@ Snake.onConnect = function (clientSocket) {
 	});
 
 	clientSocket.emit("init", { snakes: Snake.getInitSnakes() });
-
-	GameStateManager.socket_list[clientSocket.id] = clientSocket; // adding each socket connection to an associative array
 };
 
 /**
@@ -176,14 +195,14 @@ Snake.getInitSnakes = function () {
 
 Snake.getUpdatedSnakes = function () {
 	// added this if statments.
-	if (numPlayer == MAX_PLAYER) {
-		console.log("Getting updated snakes");
+	if (numPlayer >= MAX_PLAYER) {
+		// console.log("Getting updated snakes");
 		// checks if the players are sufficent to start the game or not.
 		let snakes = [];
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id];
-			let snake_lite = Snake.pack(snake);
-			snakes.push(snake_lite, true);
+			let snake_lite = Snake.pack(snake, true);
+			snakes.push(snake_lite);
 		}
 		return snakes;
 	}

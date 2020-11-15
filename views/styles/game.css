@@ -38,3 +38,19 @@ body {
 	border: 0.25vmin solid green;
 	border-radius: 0.5vmin;
 }
+
+#waiting-box {
+	background-color: #000000;
+	justify-self: right;
+	display: none;
+	width: 90vmin;
+	height: 90vmin;
+	align-items: center;
+	justify-content: center;
+}
+
+#waiting-text {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 4vmin;
+	color: whitesmoke;
+}

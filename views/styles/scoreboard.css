@@ -11,6 +11,7 @@ table {
 	position: left;
 	table-layout: auto;
 	width: 100%;
+	font-size: 1.5vmin;
 }
 
 th {
