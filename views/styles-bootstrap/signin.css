@@ -26,10 +26,11 @@ body {
 }
 
 #signin-modal {
-	background-color: #8a2be2;
+	background-color: rgb(138, 43, 226);
 	-ms-flex: 0 0 500px;
 	flex: 0 0 500px;
 	min-width: 500px;
+	box-shadow: 0 0 150px 0 #892be28c;
 }
 
 .form {
@@ -61,11 +62,13 @@ body {
 	color: black;
 	font-size: 14px;
 	cursor: pointer;
-	transition: 0.5s;
+	transition: 0.3s;
 }
 
 .form button:hover,
 .form button:active {
+	transform: scale(1.02);
+	box-shadow: 0 10px 25px 0 #0000008c;
 	border: none;
 	background: #bea0d3;
 }
