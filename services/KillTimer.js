@@ -1,12 +1,15 @@
-const MAX_SECONDS = 7 // Delay it 2 or 3 seconds because it starts immediatly after player >= max_players (Change it after finishing testing)
+let timeWithDelay = 33
+let secondsUntilDeath = timeWithDelay // Delay it 3 seconds because it starts immediatly after player >= max_players (Change it after finishing testing)
+// let timeInSeconds = 7
 
-let secondsUntilDeath = MAX_SECONDS
-let timeInSeconds = 0
-
-function startKillTimer(snakes) {
+function startKillTimer(sockets, snakes) {
 	let killTimerID = setInterval(() => {
-		timeInSeconds++
+		// timeInSeconds--
 		secondsUntilDeath--
+		for (const socketid in sockets) {
+			let socket = sockets[socketid]
+			socket.emit("timetilldead", { seconds: secondsUntilDeath })
+		}
 		let snakeSizes = {}
 		let snakeSizesArray = []
 
@@ -28,7 +31,7 @@ function startKillTimer(snakes) {
 				snakes[smallestPlayer.id].die()
 				// console.log(snakes[smallestPlayer.id], "got killed by the timer");
 			}
-			secondsUntilDeath = 5 //change it to 30 after finishing testing.
+			secondsUntilDeath = timeWithDelay - 3 //change it to 60 after finishing testing.
 		}
 	}, 1000)
 
