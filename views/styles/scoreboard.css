@@ -1,9 +1,11 @@
 #scoreboard {
-	background-color: rgb(12, 59, 4); /* Sets the base color for the map */
+	background-color: rgb(0, 0, 0); /* Sets the base color for the map */
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
+	border: 2px solid white;
 	width: 38vmin;
 	height: 45vmin;
 	margin-left: 5%;
+	box-shadow: 0 0 150px 0 #892be28c;
 	display: none;
 }
 

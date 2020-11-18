@@ -1,24 +1,11 @@
-body {
-	height: 100vh; /* 100% of viewport height */
-	width: 100vw; /* 100% of viewport width */
-	display: flex; /* Establishes a flex formatting context */
-	justify-content: center; /*Centers the game map horizontally */
-	align-items: center; /*Centers the game map vertically */
-	/* justify-content: space-around; LEAVE THIS FOR NOW */
-	margin: 0; /* Sets no margins for the game map */
-	background-color: #e5e5e5; /* Background color surrounding the game map */
-	/* grid-template-columns: 72% auto;
-	grid-template-rows: 5% auto 5%;
-	grid-template-areas: "hd hd" "game scoreboard"; */
-}
-
 #game-map {
 	background-color: #000000; /* Sets the base color for the map */
+	border: 2px solid white;
 	justify-self: right;
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
 	width: 90vmin;
 	height: 90vmin;
-
+	box-shadow: 0 0 150px 0 #892be28c;
 	display: none; /*Change this into grid when u want to display it.*/
 	/* By specifying how many rows and columns we want
        for our game map, no matter what size the browser
@@ -28,7 +15,7 @@ body {
 }
 
 .snake {
-	background-color: #1b2d53; /* Sets the default color for the snake */
+	background-color: #892be28c; /* Sets the default color for the snake */
 	border: 0.05vmin solid rgb(255, 255, 255);
 	border-radius: 0.25vmin;
 }
@@ -47,10 +34,42 @@ body {
 	height: 90vmin;
 	align-items: center;
 	justify-content: center;
+	border: 2px solid white;
+	box-shadow: 0 0 150px 0 #892be28c;
 }
 
 #waiting-text {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 4vmin;
 	color: whitesmoke;
+}
+#container {
+	display: none;
+	justify-self: right;
+	width: 90vmin;
+	height: 90vmin;
+	position: relative;
+}
+
+#game-map,
+#waiting-box {
+	position: absolute;
+}
+
+#back2menuBtn {
+	text-transform: uppercase;
+	color: rgb(255, 255, 255);
+	margin-top: 2%;
+	margin-left: 2%;
+	display: none;
+	padding: 2%;
+	background: #000000;
+	font-size: 10px;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+@media only screen and (min-width: 1000px) {
+}
+@media only screen and (min-width: 768px) {
 }

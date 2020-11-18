@@ -1,15 +1,39 @@
-.login-page {
-	position: relative;
-	width: 360px;
-	padding: 5% 0 0;
-	margin: auto;
+* {
+	font-family: Arial, Helvetica, sans-serif;
 }
+
+html {
+	height: 96%;
+}
+
+body {
+	min-height: 100%; /*100% of viewport height*/
+	/* width: 97.2; 100% of viewport width */
+	display: flex; /* Establishes a flex formatting context */
+	justify-content: center; /*Centers the game map horizontally */
+	align-items: center; /*Centers the game map vertically */
+	/* justify-content: space-around; LEAVE THIS FOR NOW */
+	margin: 0;
+	background-color: black; /* Background color surrounding the game map */
+	border: 19px solid #8a2be2;
+}
+
+#signin-modal {
+	background-color: rgb(138, 43, 226);
+	-ms-flex: 0 0 500px;
+	flex: 0 0 500px;
+	min-width: 500px;
+	box-shadow: 0 0 150px 0 #892be28c;
+	border-left: 15px solid #892be28c;
+	border-right: 15px solid #892be28c;
+}
+
 .form {
-	position: relative;
-	background: #4a4a4a;
-	max-width: 360px;
-	margin: 0 auto 100px;
-	padding: 45px;
+	/* position: relative; */
+	background: #000000;
+	/* max-width: 360px; */
+	/* margin: 0 auto 100px; */
+	padding: 10%;
 	text-align: center;
 }
 .form input {
@@ -26,34 +50,26 @@
 .form button {
 	text-transform: uppercase;
 	outline: 0;
-	background: grey;
+	background: #bea0d3;
 	width: 100%;
-	border: 0;
 	padding: 15px;
-	color: black;
+	color: rgb(0, 0, 0);
 	font-size: 14px;
 	cursor: pointer;
 	transition: 0.5s;
+	border: none;
 }
 
 .form button:hover,
 .form button:active {
+	transform: scale(1.02);
 	border: none;
-	background: green;
+	background: #892be28c;
 }
-.form message {
-	margin: 15px 0 0;
-	color: #fff;
-	font-size: 12px;
-}
-.form message a {
-	color: orange;
-	text-decoration: none;
-}
+
 .register-form {
 	display: none;
 }
-
 .msg {
 	padding-top: 10%;
 	color: #ffffff;
