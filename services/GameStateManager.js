@@ -111,9 +111,10 @@ GameStateManager.terminateGame = function (server) {
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
 Snake.disconnect = function (clientSocket) {
-	if (numPlayer !== MAX_PLAYER) {
+	if (numPlayer >= MAX_PLAYER) {
 		numPlayer--
 	} //Do this.
+	console.log("num of players", numPlayer)
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
 	delete GameStateManager.socket_list[clientSocket.id]
