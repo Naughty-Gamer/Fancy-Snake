@@ -3,6 +3,7 @@ let secondsUntilDeath = timeWithDelay // Delay it 3 seconds because it starts im
 // let timeInSeconds = 7
 
 function startKillTimer(sockets, snakes) {
+	secondsUntilDeath = 33
 	let killTimerID = setInterval(() => {
 		// timeInSeconds--
 		secondsUntilDeath--

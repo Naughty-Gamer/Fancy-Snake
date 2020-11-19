@@ -34,6 +34,7 @@ class GameStateManager {
 				GameStateManager.allFood = new AllFood(75, 75, 0.75)
 				// clearInterval(GameStateManager.sendingUpdateID)
 				// clearInterval(GameStateManager.gameUpdateID)
+				GameStateManager.terminateGame(server)
 				GameStateManager.startGame()
 				GameStateManager.startSendingUpdates()
 			}
@@ -42,10 +43,6 @@ class GameStateManager {
 
 			clientSocket.on("disconnect", function () {
 				Snake.disconnect(clientSocket)
-
-				if (Object.keys(GameStateManager.socket_list).length == 0) {
-					GameStateManager.terminateGame(server)
-				}
 			})
 		})
 	}
@@ -104,6 +101,7 @@ GameStateManager.terminateGame = function (server) {
 	clearInterval(GameStateManager.sendingUpdateID)
 	clearInterval(GameStateManager.killTimerID)
 	numPlayer = 0
+	timer = 3
 	isnewGame = true
 	console.log("\nGame terminated")
 }
@@ -115,7 +113,7 @@ GameStateManager.terminateGame = function (server) {
 Snake.disconnect = function (clientSocket) {
 	if (numPlayer !== MAX_PLAYER) {
 		numPlayer--
-	}
+	} //Do this.
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
 	delete GameStateManager.socket_list[clientSocket.id]
@@ -130,14 +128,14 @@ Snake.disconnect = function (clientSocket) {
 Snake.onConnect = function (clientSocket) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected")
-	console.log("num of players", numPlayer)
 
 	clientSocket.emit("CONN_ACK", "You succesfully connected")
 
 	if (numPlayer <= MAX_PLAYER) {
 		numPlayer++
-	}
+	} // DO THIS.
 
+	console.log("num of players", numPlayer)
 	GameStateManager.socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 
 	if (numPlayer >= MAX_PLAYER) {
@@ -204,17 +202,15 @@ Snake.getInitSnakes = function () {
 
 Snake.getUpdatedSnakes = function () {
 	// added this if statments.
-	if (numPlayer >= MAX_PLAYER) {
-		// console.log("Getting updated snakes");
-		// checks if the players are sufficent to start the game or not.
-		let snakes = []
-		for (let socket_id in Snake.player_list) {
-			let snake = Snake.player_list[socket_id]
-			let snake_lite = Snake.pack(snake, true)
-			snakes.push(snake_lite)
-		}
-		return snakes
+	// console.log("Getting updated snakes");
+	// checks if the players are sufficent to start the game or not.
+	let snakes = []
+	for (let socket_id in Snake.player_list) {
+		let snake = Snake.player_list[socket_id]
+		let snake_lite = Snake.pack(snake, true)
+		snakes.push(snake_lite)
 	}
+	return snakes
 }
 
 module.exports = GameStateManager
