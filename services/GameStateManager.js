@@ -97,7 +97,7 @@ GameStateManager.startGame = function (game_speed = 15) {
  * Carries out tasks related to terminating a websocket server connection
  * @param {SocketIO.Server} server
  */
-GameStateManager.terminateGame = function (server) {
+GameStateManager.terminateGame = function () {
 	clearInterval(GameStateManager.gameUpdateID)
 	clearInterval(GameStateManager.sendingUpdateID)
 	clearInterval(GameStateManager.killTimerID)
@@ -123,7 +123,7 @@ Snake.disconnect = function (clientSocket) {
 	GameStateManager.removepack.IDs.push(clientSocket.id)
 
 	if (Object.keys(GameStateManager.socket_list).length == 0) {
-		GameStateManager.terminateGame(server)
+		GameStateManager.terminateGame()
 	}
 }
 
