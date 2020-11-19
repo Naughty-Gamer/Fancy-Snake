@@ -104,6 +104,7 @@ GameStateManager.terminateGame = function (server) {
 	clearInterval(GameStateManager.sendingUpdateID)
 	clearInterval(GameStateManager.killTimerID)
 	numPlayer = 0
+	isnewGame = true
 	console.log("\nGame terminated")
 }
 
