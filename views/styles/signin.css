@@ -70,7 +70,11 @@ body {
 .register-form {
 	display: none;
 }
+
 .msg {
 	padding-top: 10%;
 	color: #ffffff;
+}
+
+.innerForm {
 }

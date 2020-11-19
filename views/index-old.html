@@ -22,31 +22,31 @@
 
 		<div id="signin-modal">
 			<div class="form">
-				<form class="register-form">
-					<input type="text" placeholder="Username" />
-					<input type="password" placeholder="Password" />
-					<button id="registerbtn" type="button">Register</button>
+				<div class="register-form innerForm">
+					<input id="register-username" type="text" placeholder="Username" />
+					<input id="register-password" type="password" placeholder="Password" />
+					<button id="registerbtn">Register</button>
 					<p class="msg">Already Registered? <a class="msg" style="color: #bea0d3; text-decoration: none" href="#">Login</a></p>
-				</form>
-				<form class="login-form">
-					<input type="text" placeholder="Username" />
-					<input type="password" placeholder="Password" />
-					<button id="loginbtn" type="button">Login</button>
+				</div>
+				<div class="login-form innerForm">
+					<input id="login-username" type="text" placeholder="Username" />
+					<input id="login-password" type="password" placeholder="Password" />
+					<button id="loginbtn">Login</button>
 					<p class="msg">Not Registered? <a class="msg" style="color: #bea0d3; text-decoration: none" href="#">Register</a></p>
-				</form>
+				</div>
 			</div>
 		</div>
 
 		<script>
 			$(".message a").click(function () {
-				$("form").animate({ height: "toggle", opacity: "toggle" }, "slow")
+				$(".innerForm").animate({ height: "toggle", opacity: "toggle" }, "slow")
 			})
 		</script>
 
 		<script>
 			$(document).ready(function () {
 				$("p").click(function () {
-					$("form").toggle(1000)
+					$(".innerForm").toggle(1000)
 				})
 			})
 		</script>
