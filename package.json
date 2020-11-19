@@ -19,6 +19,8 @@
 	},
 	"homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
 	"dependencies": {
+		"mysql": "^2.18.1",
+		"sql-template-strings": "^2.2.2",
 		"express": "^4.17.1",
 		"socket.io": "^2.3.0"
 	},
