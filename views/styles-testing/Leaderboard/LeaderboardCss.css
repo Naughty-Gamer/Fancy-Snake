@@ -1,0 +1,73 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    background-color: #1F1F1F;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+.Leaderboard-page
+{
+    width:48%;
+    padding: 5% 0 0;
+    margin: auto;
+}
+
+.form
+{
+    position: center;
+    z-index: 1;
+    background: #4A4A4A;
+    width: 80%;
+    height: 75%;
+    margin: auto;
+    padding: 45px;
+    text-align: center;
+}
+
+.form button 
+{
+    text-transform: uppercase;
+    outline: 0;
+    background: grey;
+    width: 100%;
+    height: 40%;
+    border: 0;
+    padding: 40px;
+    color: black;
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.5s
+}
+
+.form button:hover, .form button:active 
+{
+    border:none;
+    background: green;
+
+}
+.form message 
+{
+    margin: 15px 0 0;
+    color: #fff;
+    font-size: 12px;
+}
+.form message a 
+{
+    color: orange;
+    text-decoration: none   ;
+}
+
+.msg{
+    font-size: 90px;
+    padding-top: 8%;
+}
+
+.msg1{
+    font-size: 0.1px;
+    padding-top: 10.5%;
+}
