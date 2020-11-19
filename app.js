@@ -5,9 +5,13 @@ const WebSocketServer = require("socket.io") // Module for spinning up a websock
 const GameStateManager = require("./services/GameStateManager") // class that handles the state of the game
 const { exit } = require("process")
 
-const port = process.env.PORT || 80 // Will use the host's PORT environment variable or 3000 for development purposes
+const port = process.env.PORT || 3000 // Will use the host's PORT environment variable or 3000 for development purposes
 const express_app = Express() // Creating an Express application
 const express_server = Http.createServer(express_app) // Building the Express server
+
+//create the database if it doesn't exist
+const createDB = require("./DB/initdb.js")
+createDB()
 
 /** Executes a handler with no mount path for any type of HTTP request */
 express_app.use(
@@ -25,7 +29,7 @@ express_server.listen(port, function () {
 })
 
 express_server.on("error", (err) => {
-	console.error(err.stack)
+	console.error(err.message)
 	exit(1)
 })
 
