@@ -17,7 +17,7 @@ express_app.use(
 
 /** Executes a handler for GET requests to the `/` path */
 express_app.get("/", function (_, res) {
-	res.sendFile(Path.resolve("views/index-bootstrap.html"))
+	res.sendFile(Path.resolve("views/index-old.html"))
 })
 
 express_server.listen(port, function () {

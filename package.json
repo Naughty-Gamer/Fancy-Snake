@@ -4,7 +4,8 @@
 	"description": "2D Multiplayer browser snake game",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon -e js,json,html,css ./app.js",
+		"start": "node ./app.js",
+		"dev": "nodemon -e js,json,html,css ./app.js",
 		"old": "nodemon -e js,json,html,css ./single-player/server/server.js"
 	},
 	"repository": {
@@ -20,6 +21,9 @@
 	"dependencies": {
 		"express": "^4.17.1",
 		"socket.io": "^2.3.0"
+	},
+	"engines": {
+		"node": "12.18.4"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.6"
