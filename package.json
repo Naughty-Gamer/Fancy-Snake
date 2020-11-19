@@ -4,7 +4,7 @@
 	"description": "2D Multiplayer browser snake game",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon -e js,json,html,css ./app.js",
+		"start": "node -e js,json,html,css ./app.js",
 		"old": "nodemon -e js,json,html,css ./single-player/server/server.js"
 	},
 	"repository": {
