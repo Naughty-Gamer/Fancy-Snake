@@ -1,34 +1,26 @@
 import { drawEverySnake, foodDraw, drawScoreBoard } from "./drawer.js"
 import Snake from "./models/snake.js"
 
-let socket = null
-
 Snake.player_list = {}
 
 const waitingText = document.getElementById("waiting-text")
 const waitingBox = document.getElementById("waiting-box")
 const gameMap = document.getElementById("game-map")
-const container = document.getElementById("container")
+// const container = document.getElementById("container")
 const back2menuBtn = document.getElementById("back2menuBtn")
 
 //still not implemented:
-const clock = document.getElementById("clock")
-const numbers = document.getElementById("numbers")
+// const clock = document.getElementById("clock")
+// const numbers = document.getElementById("numbers")
 
 let countdownText = "Waiting for players..."
 
 export default class Game {
-	constructor() {
+	constructor(socket) {
 		this.snakeIsDead = false
 		this.direction = ""
 		// this.delay = 55
-		document.addEventListener("keydown", this.keyDownHandler)
-		/**
-		 * Joins the websocket connection that the HTTP server has established.
-		 * More precisely, it connects the client to the default namespace `'/'`
-		 * - You can think of it as joining in on an on-going conference call
-		 */
-		socket = io()
+		document.addEventListener("keydown", this.keyDownHandler(socket))
 
 		socket.on("countdown", (data) => {
 			countdownText = data.time
@@ -42,11 +34,11 @@ export default class Game {
 		socket.on("CONN_ACK", (confirmation) => {
 			console.log(confirmation)
 			this.startRendering()
-			this.registerListeners()
+			this.registerListeners(socket)
 		})
 	}
 
-	registerListeners() {
+	registerListeners(socket) {
 		socket.on("init", (data) => {
 			data.snakes.forEach((snake) => {
 				new Snake(snake)
@@ -96,15 +88,10 @@ export default class Game {
 				back2menuBtn.style.display = "block"
 				waitingBox.style.opacity = "80%"
 				waitingText.style.marginTop = "35%"
-
-				// socket.emit("dead_ack")
 			} else {
 				if (countdownText <= 1) {
-					// waitingBox.style.display = "None"
 					gameMap.style.display = "grid"
 					gameMap.style.zIndex = 0
-					//still didnt do it properly
-					// clock.style.display = "block"
 					waitingBox.style.display = "block"
 					waitingBox.style.zIndex = 1
 					waitingText.style.fontSize = "10vmin"
@@ -123,31 +110,33 @@ export default class Game {
 		}, delayBetweenFramesInMs)
 	}
 
-	keyDownHandler(e) {
-		var key = e.key || e.keyCode
-		if (key === 68 || key == "d" || key == "ArrowRight") {
-			//d
-			if (this.direction != "left") {
-				this.direction = "right"
-				socket.emit("keyDown", { dir: this.direction })
-			}
-		} else if (key === 83 || key == "s" || key == "ArrowDown") {
-			//s
-			if (this.direction != "up") {
-				this.direction = "down"
-				socket.emit("keyDown", { dir: this.direction })
-			}
-		} else if (key === 65 || key == "a" || key == "ArrowLeft") {
-			//a
-			if (this.direction != "right") {
-				this.direction = "left"
-				socket.emit("keyDown", { dir: this.direction })
-			}
-		} else if (key === 87 || key == "w" || key == "ArrowUp") {
-			// w
-			if (this.direction != "down") {
-				this.direction = "up"
-				socket.emit("keyDown", { dir: this.direction })
+	keyDownHandler(socket) {
+		return function (e) {
+			let key = e.key || e.keyCode
+			if (key === 68 || key == "d" || key == "ArrowRight") {
+				//d
+				if (this.direction != "left") {
+					this.direction = "right"
+					socket.emit("keyDown", { dir: this.direction })
+				}
+			} else if (key === 83 || key == "s" || key == "ArrowDown") {
+				//s
+				if (this.direction != "up") {
+					this.direction = "down"
+					socket.emit("keyDown", { dir: this.direction })
+				}
+			} else if (key === 65 || key == "a" || key == "ArrowLeft") {
+				//a
+				if (this.direction != "right") {
+					this.direction = "left"
+					socket.emit("keyDown", { dir: this.direction })
+				}
+			} else if (key === 87 || key == "w" || key == "ArrowUp") {
+				// w
+				if (this.direction != "down") {
+					this.direction = "up"
+					socket.emit("keyDown", { dir: this.direction })
+				}
 			}
 		}
 	}
