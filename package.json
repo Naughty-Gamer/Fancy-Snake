@@ -21,6 +21,9 @@
 		"express": "^4.17.1",
 		"socket.io": "^2.3.0"
 	},
+	"engines": {
+		"node": "12.18.4"
+	},
 	"devDependencies": {
 		"nodemon": "^2.0.6"
 	}
