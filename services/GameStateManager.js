@@ -34,7 +34,7 @@ class GameStateManager {
 				GameStateManager.allFood = new AllFood(75, 75, 0.75)
 				// clearInterval(GameStateManager.sendingUpdateID)
 				// clearInterval(GameStateManager.gameUpdateID)
-				GameStateManager.terminateGame(server)
+				// GameStateManager.terminateGame(server)
 				GameStateManager.startGame()
 				GameStateManager.startSendingUpdates()
 			}
@@ -79,6 +79,7 @@ GameStateManager.startGame = function (game_speed = 15) {
 			let snake = Snake.player_list[socket_id]
 			snake.update()
 			if (snake.isDead) {
+				numPlayer--
 				// GameStateManager.socket_list[socket_id].on("dead_ack", function () {
 				GameStateManager.socket_list[socket_id].emit("dead")
 				Snake.disconnect(GameStateManager.socket_list[socket_id])
@@ -111,15 +112,19 @@ GameStateManager.terminateGame = function (server) {
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
 Snake.disconnect = function (clientSocket) {
-	if (numPlayer >= MAX_PLAYER) {
-		numPlayer--
-	} //Do this.
+	// if (numPlayer >= MAX_PLAYER) {
+	// 	numPlayer--
+	// } //Do this.
 	console.log("num of players", numPlayer)
 	// Print to the server's terminal that a user disconnected
 	console.log("Player with ID:", clientSocket.id, "disconnected")
 	delete GameStateManager.socket_list[clientSocket.id]
 	delete Snake.player_list[clientSocket.id]
 	GameStateManager.removepack.IDs.push(clientSocket.id)
+
+	if (Object.keys(GameStateManager.socket_list).length == 0) {
+		GameStateManager.terminateGame(server)
+	}
 }
 
 /**
