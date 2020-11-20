@@ -8,16 +8,6 @@
 		"dev": "nodemon -e js,json,html,css ./app.js",
 		"old": "nodemon -e js,json,html,css ./single-player/server/server.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game.git"
-	},
-	"author": "F28WP-Dubai-Fancy-Snake",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game/issues"
-	},
-	"homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
 	"dependencies": {
 		"mysql": "^2.18.1",
 		"sql-template-strings": "^2.2.2",
