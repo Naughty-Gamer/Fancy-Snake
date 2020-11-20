@@ -15,12 +15,12 @@ const createDb = function () {
 		connection.query(mysqlDB, function (err, result) {
 			if (err) throw err
 			if (result.affectedRows !== 0) {
-				console.log("Database has been created")
+				console.log("\nDatabase has been created")
 			} else {
-				console.log("Database has been already created.")
+				console.log("\nDatabase has been already created.")
 			}
 		})
-		//to change database
+		//to change database to snake_game
 		connection.changeUser({ database: "snake_game" }, function (err) {
 			if (err) {
 				console.log("Database change error", err)
