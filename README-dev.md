@@ -1,4 +1,4 @@
-# For contributors and those who wish to host their own game of Fancy Snake!
+### For contributors and those who wish to host their own game of Fancy Snake!
 
 **For contributors:**
 
@@ -30,4 +30,6 @@ module.exports = {
 
 ---
 
-**If you wish to view the source code for the single player sandbox version, stripped of multiplayer functionality, you can find that in `single-player/`**
+**If you wish to view the source code for the single player sandbox version, stripped of multiplayer functionality, you can find that in `single-player/`.**
+
+**You can play it on your browser by running `npm run old`**.
