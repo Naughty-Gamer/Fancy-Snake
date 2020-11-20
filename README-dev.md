@@ -1,5 +1,7 @@
 # For developers and those who wish to host their own game of Fancy Snake!
 
+**For developers:**
+
 `npm install`
 Run this once at the beginning to install required dependancies
 
