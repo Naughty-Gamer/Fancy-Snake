@@ -1,6 +1,6 @@
-# For developers and those who wish to host their own game of Fancy Snake!
+# For contributors and those who wish to host their own game of Fancy Snake!
 
-**For developers:**
+**For contributors:**
 
 `npm install`
 Run this once at the beginning to install required dependancies
@@ -27,3 +27,7 @@ module.exports = {
 ```
 
 3. Run `npm start`
+
+---
+
+**If you wish to view the source code for the single player sandbox version, stripped of multiplayer functionality, you can find that in `single-player/`**
