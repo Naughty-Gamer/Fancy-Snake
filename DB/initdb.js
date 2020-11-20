@@ -1,22 +1,11 @@
-/*
-var SQL = require('sql-template-strings');
-const mysql = require('mysql');
+const Creds = require("./credentials.js")
 
-var pool = mysql.createPool({
-    connectionLimit = 100,
-    host: "localhost",
-    user: "root",
-    password: "root1",
-    database: "snake_game",
-    debug: true
-});
-*/
 const createDb = function () {
 	const mysql = require("mysql")
 	const connection = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "root",
+		host: Creds.host,
+		user: Creds.user,
+		password: Creds.password,
 	})
 
 	connection.connect(function (err) {
