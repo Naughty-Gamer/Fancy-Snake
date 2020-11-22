@@ -1,22 +1,11 @@
-/*
-var SQL = require('sql-template-strings');
-const mysql = require('mysql');
+const Creds = require("./credentials.js")
 
-var pool = mysql.createPool({
-    connectionLimit = 100,
-    host: "localhost",
-    user: "root",
-    password: "root1",
-    database: "snake_game",
-    debug: true
-});
-*/
 const createDb = function () {
 	const mysql = require("mysql")
 	const connection = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "root",
+		host: Creds.host,
+		user: Creds.user,
+		password: Creds.password,
 	})
 
 	connection.connect(function (err) {
@@ -26,12 +15,12 @@ const createDb = function () {
 		connection.query(mysqlDB, function (err, result) {
 			if (err) throw err
 			if (result.affectedRows !== 0) {
-				console.log("Database has been created")
+				console.log("\nDatabase has been created")
 			} else {
-				console.log("Database has been already created.")
+				console.log("\nDatabase has been already created.")
 			}
 		})
-		//to change database
+		//to change database to snake_game
 		connection.changeUser({ database: "snake_game" }, function (err) {
 			if (err) {
 				console.log("Database change error", err)
