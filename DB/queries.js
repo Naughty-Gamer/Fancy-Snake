@@ -1,11 +1,12 @@
 var SQL = require("sql-template-strings")
 const mysql = require("mysql")
+const Creds = require("./credentials.js")
 
 var pool = mysql.createPool({
-	host: "localhost",
-	user: "root",
-	password: "root",
-	database: "snake_game",
+	host: Creds.host,
+	user: Creds.user,
+	password: Creds.password,
+	database: Creds.database,
 	debug: true,
 })
 
