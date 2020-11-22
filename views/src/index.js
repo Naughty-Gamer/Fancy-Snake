@@ -67,6 +67,7 @@ function login() {
 		}
 	})
 }
+
 function register() {
 	socket.emit("register", { username: registerUsernameInput.value, password: registerPasswordInput.value })
 	socket.on("registerResponse", function (data) {
