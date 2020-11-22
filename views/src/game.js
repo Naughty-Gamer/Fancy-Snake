@@ -7,7 +7,7 @@ const waitingText = document.getElementById("waiting-text")
 const waitingBox = document.getElementById("waiting-box")
 const gameMap = document.getElementById("game-map")
 // const container = document.getElementById("container")
-const back2menuBtn = document.getElementById("back2menuBtn")
+const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
 
 //still not implemented:
 // const clock = document.getElementById("clock")
@@ -85,7 +85,7 @@ export default class Game {
 			waitingText.innerText = countdownText
 			if (this.snakeIsDead) {
 				waitingText.innerText = "PATHETIC"
-				back2menuBtn.style.display = "block"
+				back2leaderBoardBtn.style.display = "block"
 				waitingBox.style.opacity = "80%"
 				waitingText.style.marginTop = "35%"
 			} else {

@@ -7,31 +7,52 @@ import Game from "./game.js"
  */
 let socket = io()
 
-//menu
+//menu screen
 const signinModal = document.getElementById("signin-modal")
 const menuModal = document.getElementById("menuModal")
 const joinGameBtn = document.getElementById("joinGameBtn")
 const leaderBoardBtn = document.getElementById("leaderBoardBtn")
-joinGameBtn.addEventListener("click", tryJoiningGame)
 
-//Login-Form
+//Login-Form screen
 const loginbtn = document.getElementById("loginbtn")
 const loginUsernameInput = document.getElementById("login-username")
 const loginPasswordInput = document.getElementById("login-password")
-loginbtn.addEventListener("click", login)
 
-//Register-Form
+//Register-Form screen
 const registerbtn = document.getElementById("registerbtn")
 const registerUsernameInput = document.getElementById("register-username")
 const registerPasswordInput = document.getElementById("register-password")
-registerbtn.addEventListener("click", register)
 
-//game
+//LeaderBoard screen
+const leaderBoard = document.getElementById("Leaderboard")
+const back2menuBtn = document.getElementById("back2menuBtn")
+const signoutbtn = document.getElementById("sign-out-btn")
+
+//game screen
+const gameMap = document.getElementById("game-map")
 const scoreBoard = document.getElementById("scoreboard")
 const waitingBox = document.getElementById("waiting-box")
 const container = document.getElementById("container")
-const back2menuBtn = document.getElementById("back2menuBtn")
-back2menuBtn.addEventListener("click", goBackToMenu)
+const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
+
+//Event Listeners
+
+//menu screen
+joinGameBtn.addEventListener("click", tryJoiningGame)
+leaderBoardBtn.addEventListener("click", getleaderboard)
+
+//Login-Form screen
+loginbtn.addEventListener("click", login)
+
+//Register Form
+registerbtn.addEventListener("click", register)
+
+//Game Screen
+back2leaderBoardBtn.addEventListener("click", back2leaderBoard)
+
+//LeaderBoard Screen
+back2menuBtn.addEventListener("click", goToMenu)
+signoutbtn.addEventListener("click", signOut)
 
 function login() {
 	socket.emit("login", { username: loginUsernameInput.value, password: loginPasswordInput.value })
@@ -39,7 +60,7 @@ function login() {
 		if (data.success) {
 			/** If success, then log them in */
 			signinModal.style.display = "none"
-			menuModal.style.display = "block"
+			menuModal.style.display = "inline-block"
 		} else {
 			/** If not success, give them feedback */
 			alert("Log-in unsuccessul.")
@@ -52,7 +73,7 @@ function register() {
 		if (data.success) {
 			/** If success, then log them in */
 			signinModal.style.display = "none"
-			menuModal.style.display = "block"
+			menuModal.style.display = "inline-block"
 		} else {
 			/** If not success, give them feedback */
 			alert("Registration unsuccessul.")
@@ -60,22 +81,42 @@ function register() {
 	})
 }
 
+function goToMenu() {
+	leaderBoard.style.display = "none"
+	menuModal.style.display = "block"
+	back2menuBtn.style.display = "none"
+}
+
+function getleaderboard() {
+	menuModal.style.display = "none"
+	leaderBoard.style.display = "block"
+	back2menuBtn.style.display = "inline-block"
+}
+
+function signOut() {
+	location.reload()
+}
+
 // function mainMenu() {
 // 	signinModal.style.display = "None"
 // 	menuModal.style.display = "block"
 // }
 
-function goBackToMenu() {
+function back2leaderBoard() {
 	/** Removes CSS for:
 	 * - Game map
 	 * - Waiting box
 	 * - The container holding game map and waiting box
 	 * - The scoreboard
 	 */
-	// gameMap.style.display = "None"
-	// waitingBox.style.display = "None"
-	// container.style.display = "None"
-	// scoreBoard.style.display = "None"
+	gameMap.style.display = "None"
+	waitingBox.style.display = "None"
+	container.style.display = "None"
+	scoreBoard.style.display = "None"
+	back2menuBtn.style.display = "none"
+	leaderBoard.style.display = "block"
+	signoutbtn.style.display = "inline-block"
+
 	// /** Removes the inner HTML of:
 	//  * - Game map
 	//  * - Waiting box (holding menubtn and waitingText)
@@ -87,7 +128,7 @@ function goBackToMenu() {
 	// waitingText.innerHTML = ""
 	// /** Unhides the menu modal */
 	// menuModal.style.display = "block"
-	location.reload()
+	//
 }
 
 // function resetGame() {
@@ -111,6 +152,7 @@ function goBackToMenu() {
 // }
 
 function tryJoiningGame() {
+	back2menuBtn.style.display = "none"
 	container.style.display = "flex"
 	menuModal.style.display = "none"
 	waitingBox.style.display = "flex"
