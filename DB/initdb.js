@@ -55,7 +55,6 @@ const createDb = function () {
 
 		const mysqlLeaderboard =
 			"create table if not exists snake_game.leaderboard(" +
-			"Standing int(5) NOT NULL," +
 			"username varchar(20) NOT NULL," +
 			"wins int(5)," +
 			"FOREIGN KEY (username) REFERENCES snake_game.users(username)" +

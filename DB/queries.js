@@ -99,7 +99,7 @@ function userCreation(user, pwd, callback) {
 }
 
 function ordering(wins, callback) {
-	const order = SQL`SELECT * FROM snake_game.leaderboard WHERE ${wins} ORDERBY DSC;`
+	const order = SQL`SELECT @a:=@a+1 rank, username, wins FROM snake_game.leaderboard, (select @a:=0) as a order by ${wins} DESC;`
 	executeQuery(order, callback)
 	// Result(order, function (err, rows) {
 	// 	if (!err) {
@@ -110,11 +110,23 @@ function ordering(wins, callback) {
 	// })
 }
 
+function LInsert(user,wins,callback){
+	const Lsert = SQL `INSERT INTO snake_game.leaderboard VALUES(${user},${wins});`
+	executeQuery(Lsert,callback)
+}
+
+function updateLeader(user,wins,callback){
+	const updateL = SQL `UPDATE leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
+	executeQuery(updateL,callback)
+}
+
 module.exports = {
 	findUser,
 	getPassword,
 	userCreation,
 	ordering,
+	LInsert,
+	updateLeader
 }
 
 //mysql.exe -u root --password To Run XAMMP TO TEST THE DATABASE.
