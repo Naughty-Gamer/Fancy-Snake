@@ -2,17 +2,21 @@ const Creds = require("./credentials.js")
 
 const createDb = function () {
 	const mysql = require("mysql")
+
+	// creating a connection with the database server
 	const connection = mysql.createConnection({
 		host: Creds.host,
 		user: Creds.user,
 		password: Creds.password,
 	})
 
+	// connecting to the database server
 	connection.connect(function (err) {
 		if (err) throw err
 
-		const mysqlDB = "CREATE DATABASE IF NOT EXISTS snake_game;"
-		connection.query(mysqlDB, function (err, result) {
+		// creating the database if it doesn't exist
+		const createDBQuery = `CREATE DATABASE IF NOT EXISTS ${Creds.database};`
+		connection.query(createDBQuery, function (err, result) {
 			if (err) throw err
 			if (result.affectedRows !== 0) {
 				console.log("\nDatabase has been created")
@@ -20,20 +24,23 @@ const createDb = function () {
 				console.log("\nDatabase has been already created.")
 			}
 		})
-		//to change database to snake_game
-		connection.changeUser({ database: "snake_game" }, function (err) {
+
+		// using the snake_game database
+		connection.changeUser({ database: `${Creds.database}` }, function (err) {
 			if (err) {
 				console.log("Database change error", err)
 				return
 			}
 		})
-		const mysqlUser =
-			"create table if not exists snake_game.users(" +
+
+		// making a "users" table
+		const createUserTableQuery =
+			`create table if not exists ${Creds.database}.users(` +
 			"username varchar(20) NOT NULL," +
 			"password varchar(15) NOT NULL," +
 			"PRIMARY KEY (username)" +
 			");"
-		connection.query(mysqlUser, function (err, result) {
+		connection.query(createUserTableQuery, function (err, result) {
 			if (err) throw err
 			if (result.affectedRows !== 0) {
 				console.log("Users has been created")
@@ -42,13 +49,14 @@ const createDb = function () {
 			}
 		})
 
-		const mysqlLeaderboard =
-			"create table if not exists snake_game.leaderboard(" +
+		// making a "leaderboard" table
+		const createLeaderboardQuery =
+			`create table if not exists ${Creds.database}.leaderboard(` +
 			"username varchar(20) NOT NULL," +
 			"wins int(5)," +
-			"FOREIGN KEY (username) REFERENCES snake_game.users(username)" +
+			`FOREIGN KEY (username) REFERENCES ${Creds.database}.users(username)` +
 			");"
-		connection.query(mysqlLeaderboard, function (err, result) {
+		connection.query(createLeaderboardQuery, function (err, result) {
 			if (err) throw err
 			if (result.affectedRows !== 0) {
 				console.log("Leaderboard has been created")

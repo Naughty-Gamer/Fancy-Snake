@@ -4,20 +4,20 @@ const SQL = require("../DB/queries.js")
 
 let isValidLoginAttempt = function (data, cb) {
 	setTimeout(function () {
-		SQL.getPassword(data.username, data.password, cb)
-	}, 10)
+		SQL.getUserWithPassword(data.username, data.password, cb)
+	}, 100)
 }
 
 let isUsernameTaken = function (data, cb) {
 	setTimeout(function () {
-		SQL.findUser(data.username, cb)
-	}, 10)
+		SQL.getUser(data.username, cb)
+	}, 100)
 }
 
 let addUser = function (data, cb) {
 	setTimeout(function () {
-		SQL.userCreation(data.username, data.password, cb)
-	}, 10)
+		SQL.createUser(data.username, data.password, cb)
+	}, 100)
 }
 
 module.exports.isValidLoginAttempt = isValidLoginAttempt
