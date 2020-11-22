@@ -9,7 +9,7 @@
 	display: none;
 }
 
-table {
+#tableScoreboard {
 	position: left;
 	table-layout: auto;
 	width: 100%;
@@ -34,12 +34,12 @@ td {
 
 /* Make the length of the username lower than 18 */
 
-.firstPlace {
-	background-color: gold;
-}
-.secondPlace {
-	background-color: silver;
-}
-.thirdPlace {
-	background-color: brown;
+@media only screen and (max-width: 1000px) and (orientation: portrait) {
+	#scoreboard {
+		width: 0vmin;
+		margin-left: 0%;
+	}
+	#tableScoreboard {
+		display: none;
+	}
 }

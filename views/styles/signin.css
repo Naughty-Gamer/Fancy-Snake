@@ -20,9 +20,9 @@ body {
 
 #signin-modal {
 	background-color: rgb(138, 43, 226);
-	-ms-flex: 0 0 500px;
-	flex: 0 0 500px;
-	min-width: 500px;
+	-ms-flex: 0 0 25%;
+	flex: 0 0 25%;
+	min-width: 25%;
 	box-shadow: 0 0 150px 0 #892be28c;
 	border-left: 15px solid #892be28c;
 	border-right: 15px solid #892be28c;
@@ -41,10 +41,10 @@ body {
 	background: white;
 	width: 100%;
 	border: 0;
-	margin: 0 0 15px;
-	padding: 15px;
+	margin: 0 0 4%;
+	padding: 4%;
 	box-sizing: border-box;
-	font-size: 14px;
+	font-size: 100%;
 }
 
 .form button {
@@ -52,9 +52,9 @@ body {
 	outline: 0;
 	background: #bea0d3;
 	width: 100%;
-	padding: 15px;
+	padding: 4%;
 	color: rgb(0, 0, 0);
-	font-size: 14px;
+	font-size: 100%;
 	cursor: pointer;
 	transition: 0.5s;
 	border: none;
@@ -76,5 +76,30 @@ body {
 	color: #ffffff;
 }
 
-.innerForm {
+@media only screen and (max-width: 700px) {
+	body {
+		border: 0px solid #8a2be2;
+	}
+
+	#signin-modal {
+		background-color: rgb(138, 43, 226);
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		min-width: 100%;
+		box-shadow: 0 0 0px 0 #0000008c;
+		border-left: 0px solid #892be28c;
+		border-right: 0px solid #892be28c;
+	}
+}
+
+@media only screen and (max-width: 1600px) {
+	body {
+		border: 0px solid #8a2be2;
+	}
+}
+
+@media only screen and (min-width: 3840px) {
+	body {
+		border: 42px solid #8a2be2;
+	}
 }

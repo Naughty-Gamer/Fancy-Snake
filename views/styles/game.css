@@ -56,7 +56,7 @@
 	position: absolute;
 }
 
-#back2menuBtn {
+#back2leaderBoardBtn {
 	text-transform: uppercase;
 	color: rgb(255, 255, 255);
 	margin-top: 2%;
@@ -69,7 +69,19 @@
 	transition: 0.5s;
 }
 
-@media only screen and (min-width: 1000px) {
+#rotate-text {
+	display: none;
 }
-@media only screen and (min-width: 768px) {
+
+@media only screen and (max-width: 1000px) and (orientation: portrait) {
+	#waiting-text {
+		display: none;
+	}
+	#rotate-text {
+		color: whitesmoke;
+		font-size: 4vmin;
+		display: block;
+	}
 }
+/* @media only screen and (max-width: 1000px) and (orientation: landscape) {
+} */
