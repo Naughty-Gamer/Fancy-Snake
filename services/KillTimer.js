@@ -43,15 +43,3 @@ module.exports.startKillTimer = startKillTimer
 
 //Client side: when the countdown == 0, we will start drawing a clock or a timer.
 //Server side: when the countdown == 0, start the timerKill function.
-/**
- * server: 29,30
- * client:27,28
- *
- * {
- * v32dv328d873d32d: snake
- *
- *
- *
- *
- * }
- */
