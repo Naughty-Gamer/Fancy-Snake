@@ -8,55 +8,56 @@
 		<link rel="stylesheet" type="text/css" href="./styles/scoreboard.css" />
 		<link rel="stylesheet" type="text/css" href="./styles/signin.css" />
 		<link rel="stylesheet" type="text/css" href="./styles/menu.css" />
+		<link rel="stylesheet" type="text/css" href="./styles/clock.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 		<script src="./src/index.js" defer type="module"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<!-- <script src="./src/input.js" defer type="module"></script> -->
 	</head>
 	<body>
-		
-		<div id="menuModal" class ="menu-page">
-			<div class ="form">
-					<button id="joinGameBtn" class="menuBtn" type="button">Join Game</button>
-					<p class = "msg">  </a></p>
-					<button id="leaderBoardBtn" class="menuBtn" type="button">Leaderboard</button>
-			</div>
+		<div id="menuModal" class="menu-page">
+			<button id="joinGameBtn" class="menuBtn" type="button">Join Game</button>
+			<button id="leaderBoardBtn" class="menuBtn" type="button">Leaderboard</button>
 		</div>
 
-		<div id="signinmodal" class="login-page">
+		<div id="signin-modal">
 			<div class="form">
-				<form class="register-form">
-					<input type="text" placeholder="Username" />
-					<input type="password" placeholder="Password" />
-					<button id="registerbtn" type="button">Register</button>
-					<p class="msg">Already Registered? <a class="msg" href="#">Login</a></p>
-				</form>
-				<form class="login-form">
-					<input type="text" placeholder="Username" />
-					<input type="password" placeholder="Password" />
-					<button id="loginbtn" type="button">Login</button>
-					<p class="msg">Not Registered? <a class="msg" href="#">Register</a></p>
-				</form>
+				<div class="register-form innerForm">
+					<input id="register-username" type="text" placeholder="Username" />
+					<input id="register-password" type="password" placeholder="Password" />
+					<button id="registerbtn">Register</button>
+					<p class="msg">Already Registered? <a class="msg" style="color: #bea0d3; text-decoration: none" href="#">Login</a></p>
+				</div>
+				<div class="login-form innerForm">
+					<input id="login-username" type="text" placeholder="Username" />
+					<input id="login-password" type="password" placeholder="Password" />
+					<button id="loginbtn">Login</button>
+					<p class="msg">Not Registered? <a class="msg" style="color: #bea0d3; text-decoration: none" href="#">Register</a></p>
+				</div>
 			</div>
 		</div>
 
 		<script>
 			$(".message a").click(function () {
-				$("form").animate({ height: "toggle", opacity: "toggle" },"slow");
-			});
+				$(".innerForm").animate({ height: "toggle", opacity: "toggle" }, "slow")
+			})
 		</script>
 
 		<script>
 			$(document).ready(function () {
 				$("p").click(function () {
-					$("form").toggle(1000);
-				});
-			});
+					$(".innerForm").toggle(1000)
+				})
+			})
 		</script>
-		<div id="waiting-box">
-			<h1 id="waiting-text"></h1>
+
+		<div id="container">
+			<div id="waiting-box">
+				<button id="back2menuBtn" type="button">Main Menu</button>
+				<h1 id="waiting-text"></h1>
+			</div>
+			<div id="game-map"></div>
 		</div>
-		<div id="game-map"></div>
 		<div id="scoreboard">
 			<table></table>
 		</div>

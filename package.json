@@ -4,22 +4,18 @@
 	"description": "2D Multiplayer browser snake game",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon -e js,json,html,css ./app.js",
+		"start": "node ./app.js",
+		"dev": "nodemon -e js,json,html,css ./app.js",
 		"old": "nodemon -e js,json,html,css ./single-player/server/server.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game.git"
-	},
-	"author": "F28WP-Dubai-Fancy-Snake",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game/issues"
-	},
-	"homepage": "https://github.com/F28WP-Dubai-Fancy-Snake/Snake-Game#readme",
 	"dependencies": {
+		"mysql": "^2.18.1",
+		"sql-template-strings": "^2.2.2",
 		"express": "^4.17.1",
 		"socket.io": "^2.3.0"
+	},
+	"engines": {
+		"node": "12.18.4"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.6"
