@@ -1,0 +1,68 @@
+#Leaderboard {
+	background-color: rgb(0, 0, 0); /* Sets the base color for the map */
+	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
+	border: 2px solid white;
+	width: 90vmin;
+	height: 90vmin;
+	box-shadow: 0 0 150px 0 #892be28c;
+	display: none;
+}
+
+#LeaderBoardTable {
+	position: left;
+	table-layout: auto;
+	width: 100%;
+	font-size: 4vmin;
+}
+
+th {
+	color: rgb(255, 255, 255);
+}
+
+td {
+	text-align: center;
+	color: white;
+}
+
+th,
+td {
+	padding: 2%;
+	border: 1px solid rgb(255, 255, 255);
+	border-collapse: collapse;
+}
+
+#sign-out-btn {
+	width: 10vmin;
+	height: 10vmin;
+	align-items: center;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	margin-top: 2%;
+	margin-left: 2%;
+	display: none;
+	background: #000000;
+	font-size: 1.5vmin;
+	cursor: pointer;
+	transition: 0.5s;
+	position: absolute;
+	top: 1%;
+	left: 3%;
+}
+
+#back2menuBtn {
+	width: 10vmin;
+	height: 10vmin;
+	align-items: center;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	margin-top: 2%;
+	margin-left: 2%;
+	display: none;
+	background: #000000;
+	font-size: 1.5vmin;
+	cursor: pointer;
+	transition: 0.5s;
+	position: absolute;
+	top: 1%;
+	left: 3%;
+}
