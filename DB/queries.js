@@ -56,18 +56,23 @@ function getOrderedLeaderboard(callback) {
 	executeQuery(query, callback)
 }
 
-function insertToLeaderboard(user, wins, callback) {
-	const query = SQL`INSERT INTO leaderboard VALUES(${user},${wins});`
+function getWinsbyPlayer(username, callback) {
+	const query = SQL`SELECT wins from leaderboard where username = ${username};`
 	executeQuery(query, callback)
 }
+
+// function insertToLeaderboard(user, wins, callback) {
+// 	const query = SQL`INSERT INTO leaderboard VALUES(${user},${wins});`
+// 	executeQuery(query, callback)
+// }
+
+// function updateLeaderboard(user, wins, callback) {
+// 	const query = SQL`UPDATE leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
+// 	executeQuery(query, callback)
+// }
 
 function updateLeaderboard(user, wins, callback) {
-	const query = SQL`UPDATE leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
-	executeQuery(query, callback)
-}
-
-function updateLeaderboard2(user, wins, callback){
-	const query = SQL `INSERT INTO leaderboard VALUES(${user},${wins}) on duplicate key update wins = ${wins}`
+	const query = SQL`INSERT INTO leaderboard VALUES(${user},${wins}) on duplicate key update wins = ${wins}`
 	executeQuery(query, callback)
 }
 
@@ -76,7 +81,6 @@ module.exports = {
 	getUserWithPassword,
 	createUser,
 	getOrderedLeaderboard,
-	insertToLeaderboard,
 	updateLeaderboard,
-	updateLeaderboard2
+	getWinsbyPlayer,
 }
