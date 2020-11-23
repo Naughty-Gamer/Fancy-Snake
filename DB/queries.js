@@ -8,7 +8,8 @@ var pool = mysql.createPool({
 	user: Creds.user,
 	password: Creds.password,
 	database: Creds.database,
-	debug: true,
+	connectionLimit: 100,
+	debug: false,
 })
 
 /**
