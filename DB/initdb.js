@@ -78,6 +78,15 @@ const createDb = function (callback) {
 			}
 		})
 	})
+
+	connection.on("error", function (err) {
+		console.error(err)
+		if (err.code === "PROTOCOL_CONNECTION_LOST") {
+			createDb(callback)
+		} else {
+			callback()
+		}
+	})
 }
 
 module.exports = createDb
