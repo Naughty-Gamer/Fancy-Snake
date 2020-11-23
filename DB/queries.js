@@ -6,7 +6,7 @@ const Creds = require("./credentials.js")
 var pool = mysql.createPool({
 	host: Creds.host,
 	user: Creds.user,
-	password: Creds.password,
+	// password: Creds.password,
 	database: Creds.database,
 	debug: true,
 })
@@ -36,32 +36,32 @@ function executeQuery(query, callback) {
 }
 
 function getUser(user, callback) {
-	const query = SQL`SELECT * FROM ${Creds.database}.users WHERE username = ${user};`
+	const query = SQL`SELECT * FROM users WHERE username = ${user};`
 	executeQuery(query, callback)
 }
 
 function getUserWithPassword(user, pwd, callback) {
-	const query = SQL`SELECT * FROM ${Creds.database}.users WHERE username = ${user} and password = ${pwd};`
+	const query = SQL`SELECT * FROM users WHERE username = ${user} and password = ${pwd};`
 	executeQuery(query, callback)
 }
 
 function createUser(user, pwd, callback) {
-	const query = SQL`INSERT INTO ${Creds.database}.users VALUES (${user}, ${pwd});`
+	const query = SQL`INSERT INTO users VALUES (${user}, ${pwd});`
 	executeQuery(query, callback)
 }
 
 function getOrderedLeaderboard(callback) {
-	const query = SQL`SELECT @a:=@a+1 rank, username, wins FROM ${Creds.database}.leaderboard, (select @a:=0) as a order by wins DESC;`
+	const query = SQL`SELECT @a:=@a+1 rank, username, wins FROM leaderboard, (select @a:=0) as a order by wins DESC;`
 	executeQuery(query, callback)
 }
 
 function insertToLeaderboard(user, wins, callback) {
-	const query = SQL`INSERT INTO ${Creds.database}.leaderboard VALUES(${user},${wins});`
+	const query = SQL`INSERT INTO leaderboard VALUES(${user},${wins});`
 	executeQuery(query, callback)
 }
 
 function updateLeaderboard(user, wins, callback) {
-	const query = SQL`UPDATE ${Creds.database}.leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
+	const query = SQL`UPDATE leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
 	executeQuery(query, callback)
 }
 
