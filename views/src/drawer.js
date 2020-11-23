@@ -2,7 +2,6 @@ let gameMap = document.getElementById("game-map")
 
 const x = 0
 const y = 1
-let rankNum = 1
 
 /**
  * Draws a snake on the map
@@ -40,6 +39,26 @@ export function foodDraw(foodList) {
 	})
 }
 
+export function drawLeaderboard(data) {
+	let rank = 1
+	const leaderBoard = document.getElementById("Leaderboard").querySelector("table")
+	for (var row = 0; row < data.length; row++) {
+		// create a new row
+		var newRow = leaderBoard.insertRow(leaderBoard.length)
+		for (var column = 0; column < 3; column++) {
+			// create a new cell
+			var cell = newRow.insertCell(column)
+			if (column == 0) {
+				cell.innerHTML = rank++
+			} else if (column == 1) {
+				cell.innerHTML = data[row].username
+			} else if (column == 2) {
+				cell.innerHTML = data[row].wins
+			}
+		}
+	}
+}
+
 export function drawScoreBoard(snakes) {
 	let rows = []
 	let scoreboard = document.getElementById("scoreboard").querySelector("table")
@@ -55,7 +74,7 @@ export function drawScoreBoard(snakes) {
 	for (const socketid in snakes) {
 		let snake = snakes[socketid]
 		rows.push({
-			username: snake.socketid,
+			username: snake.username,
 			score: snake.tailIndex,
 		})
 	}
