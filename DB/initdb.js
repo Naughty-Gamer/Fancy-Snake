@@ -52,11 +52,6 @@ const createDb = function (callback) {
 				callback()
 				console.error(err)
 			}
-			if (result.affectedRows !== 0) {
-				console.log("Users has been created")
-			} else {
-				console.log("Users has been already created.")
-			}
 		})
 
 		// making a "leaderboard" table
@@ -64,17 +59,12 @@ const createDb = function (callback) {
 			`create table if not exists ${Creds.database}.leaderboard(` +
 			"username varchar(20) NOT NULL," +
 			"wins int(5)," +
-			`FOREIGN KEY (username) REFERENCES ${Creds.database}.users(username)` +
+			`PRIMARY KEY (username)` +
 			");"
 		connection.query(createLeaderboardQuery, function (err, result) {
 			if (err) {
 				callback()
 				console.error(err)
-			}
-			if (result.affectedRows !== 0) {
-				console.log("Leaderboard has been created")
-			} else {
-				console.log("Leaderboard has been already created.")
 			}
 		})
 	})
