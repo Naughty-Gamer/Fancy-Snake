@@ -89,13 +89,17 @@ function goToMenu() {
 }
 
 function getleaderboard() {
+	requestLeaderboardData()
 	menuModal.style.display = "none"
 	leaderBoard.style.display = "block"
 	back2menuBtn.style.display = "inline-block"
 }
 
-function signOut() {
-	location.reload()
+function requestLeaderboardData() {
+	socket.emit("req_lb_data")
+	socket.on("lb_data_req_ack", (data) => {
+		// data will be in the form of json
+	})
 }
 
 // function mainMenu() {
@@ -104,6 +108,7 @@ function signOut() {
 // }
 
 function back2leaderBoard() {
+	requestLeaderboardData()
 	/** Removes CSS for:
 	 * - Game map
 	 * - Waiting box
@@ -130,6 +135,10 @@ function back2leaderBoard() {
 	// /** Unhides the menu modal */
 	// menuModal.style.display = "block"
 	//
+}
+
+function signOut() {
+	location.reload()
 }
 
 // function resetGame() {

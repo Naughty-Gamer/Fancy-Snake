@@ -20,6 +20,13 @@ let addUser = function (data, cb) {
 	}, 100)
 }
 
+let getLeaderboardData = function (cb) {
+	setTimeout(function () {
+		SQL.getOrderedLeaderboard(cb)
+	}, 100)
+}
+
 module.exports.isValidLoginAttempt = isValidLoginAttempt
 module.exports.isUsernameTaken = isUsernameTaken
 module.exports.addUser = addUser
+module.exports.getLeaderboardData = getLeaderboardData

@@ -54,6 +54,8 @@ class GameStateManager {
 				})
 			})
 
+			clientSocket.on("req_lb_data", function () {})
+
 			clientSocket.on("joinGameRequest", function () {
 				clientSocket.emit("request_ack")
 				if (Object.keys(GameStateManager.socket_list).length == 0) {
