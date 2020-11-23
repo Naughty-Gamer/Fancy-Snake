@@ -66,6 +66,11 @@ function updateLeaderboard(user, wins, callback) {
 	executeQuery(query, callback)
 }
 
+function updateLeaderboard(user, wins, callback){
+	const query = SQL `INSERT INTO leaderboard VALUES(${user},${wins}) on duplicate key update wins = ${wins}`
+	executeQuery(query, callback)
+}
+
 module.exports = {
 	getUser,
 	getUserWithPassword,
