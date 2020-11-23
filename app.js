@@ -56,7 +56,7 @@ express_server.listen(port, function () {
 })
 
 express_server.on("error", (err) => {
-	console.error(err.message)
+	console.error(err)
 	send503()
 })
 
