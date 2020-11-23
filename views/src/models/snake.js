@@ -1,5 +1,6 @@
 export default class Snake {
 	constructor(initpack) {
+		this.username = initpack.username
 		this.socketid = initpack.socketid
 		this.body = initpack.body // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
 		this.headLocation = initpack.headLocation // location of head of snake
