@@ -1,6 +1,6 @@
 const Creds = require("./credentials.js")
 
-const createDb = function () {
+const createDb = function (callback) {
 	const mysql = require("mysql")
 
 	// creating a connection with the database server
@@ -12,12 +12,18 @@ const createDb = function () {
 
 	// connecting to the database server
 	connection.connect(function (err) {
-		if (err) throw err
+		if (err) {
+			callback()
+			throw err
+		}
 
 		// creating the database if it doesn't exist
 		const createDBQuery = `CREATE DATABASE IF NOT EXISTS ${Creds.database};`
 		connection.query(createDBQuery, function (err, result) {
-			if (err) throw err
+			if (err) {
+				callback()
+				throw err
+			}
 			if (result.affectedRows !== 0) {
 				console.log("\nDatabase has been created")
 			} else {
@@ -28,7 +34,8 @@ const createDb = function () {
 		// using the snake_game database
 		connection.changeUser({ database: `${Creds.database}` }, function (err) {
 			if (err) {
-				console.log("Database change error", err)
+				callback()
+				console.log("Database change error:\n", err)
 				return
 			}
 		})
@@ -41,7 +48,10 @@ const createDb = function () {
 			"PRIMARY KEY (username)" +
 			");"
 		connection.query(createUserTableQuery, function (err, result) {
-			if (err) throw err
+			if (err) {
+				callback()
+				throw err
+			}
 			if (result.affectedRows !== 0) {
 				console.log("Users has been created")
 			} else {
@@ -57,7 +67,10 @@ const createDb = function () {
 			`FOREIGN KEY (username) REFERENCES ${Creds.database}.users(username)` +
 			");"
 		connection.query(createLeaderboardQuery, function (err, result) {
-			if (err) throw err
+			if (err) {
+				callback()
+				throw err
+			}
 			if (result.affectedRows !== 0) {
 				console.log("Leaderboard has been created")
 			} else {
