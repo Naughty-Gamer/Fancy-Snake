@@ -1,4 +1,5 @@
 import Game from "./game.js"
+import { drawLeaderboard } from "./drawer.js"
 
 /**
  * Joins the websocket connection that the HTTP server has established.
@@ -6,6 +7,7 @@ import Game from "./game.js"
  * - You can think of it as joining in on an on-going conference call
  */
 let socket = io()
+let username = ""
 
 //menu screen
 const signinModal = document.getElementById("signin-modal")
@@ -58,6 +60,7 @@ function login() {
 	socket.emit("login", { username: loginUsernameInput.value, password: loginPasswordInput.value })
 	socket.on("loginResponse", function (data) {
 		if (data.success) {
+			username = loginUsernameInput.value
 			/** If success, then log them in */
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -72,6 +75,7 @@ function register() {
 	socket.emit("register", { username: registerUsernameInput.value, password: registerPasswordInput.value })
 	socket.on("registerResponse", function (data) {
 		if (data.success) {
+			username = registerUsernameInput.value
 			/** If success, then log them in */
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -98,7 +102,13 @@ function getleaderboard() {
 function requestLeaderboardData() {
 	socket.emit("req_lb_data")
 	socket.on("lb_data_req_ack", (data) => {
-		// data will be in the form of json
+		if (data != null) {
+			// populate the leaderboard with data.response
+			drawLeaderboard(data)
+		} else {
+			// leaderboard currently unavailable
+			console.log(data)
+		}
 	})
 }
 
@@ -168,9 +178,12 @@ function tryJoiningGame() {
 	waitingBox.style.display = "flex"
 	// gameMap.style.display = "grid";
 	scoreBoard.style.display = "block"
-	socket.emit("joinGameRequest")
+	socket.emit("joinGameRequest", { user: username })
 	socket.on("request_ack", () => {
 		new Game(socket)
+	})
+	socket.on("win", () => {
+		console.log("you won lol")
 	})
 }
 

@@ -2,7 +2,8 @@ const Snake = require("../models/snake.js")
 const AllFood = require("../models/food.js")
 const Collision = require("./GameCollision.js")
 const KillTimer = require("./KillTimer.js")
-const Validation = require("./Validation.js")
+const AuthenticationController = require("../controllers/AuthenticationController.js")
+const LeaderboardController = require("../controllers/LeaderboardController.js")
 const MAX_PLAYER = 2 //Change it later on to 5 players (2 is for testing).
 let numPlayer = 0
 let timer = 3
@@ -33,7 +34,7 @@ class GameStateManager {
 		// Event listener for every time someone joins the websocket connection
 		server.sockets.on("connection", function (clientSocket) {
 			clientSocket.on("login", function (data) {
-				Validation.isValidLoginAttempt(data, function (res) {
+				AuthenticationController.isValidLoginAttempt(data, function (res) {
 					if (res.length > 0) {
 						clientSocket.emit("loginResponse", { success: true })
 					} else {
@@ -43,20 +44,30 @@ class GameStateManager {
 			})
 
 			clientSocket.on("register", function (data) {
-				Validation.isUsernameTaken(data, function (res) {
+				AuthenticationController.isUsernameTaken(data, function (res) {
 					if (res.length > 0) {
 						clientSocket.emit("registerResponse", { success: false })
 					} else {
-						Validation.addUser(data, function () {
-							clientSocket.emit("registerResponse", { success: true })
+						AuthenticationController.addUser(data, function () {
+							LeaderboardController.updateLeaderboardData(data.username, 0, function () {
+								clientSocket.emit("registerResponse", { success: true })
+							})
 						})
 					}
 				})
 			})
 
-			clientSocket.on("req_lb_data", function () {})
+			clientSocket.on("req_lb_data", function () {
+				LeaderboardController.getLeaderboardData(function (res) {
+					if (res.length > 0) {
+						clientSocket.emit("lb_data_req_ack", res)
+					} else {
+						clientSocket.emit("lb_data_req_ack", null)
+					}
+				})
+			})
 
-			clientSocket.on("joinGameRequest", function () {
+			clientSocket.on("joinGameRequest", function (data) {
 				clientSocket.emit("request_ack")
 				if (Object.keys(GameStateManager.socket_list).length == 0) {
 					console.log("\nNew game starting up")
@@ -68,7 +79,7 @@ class GameStateManager {
 					GameStateManager.startSendingUpdates()
 				}
 
-				Snake.onConnect(clientSocket)
+				Snake.onConnect(clientSocket, data.user)
 
 				clientSocket.on("disconnect", function () {
 					Snake.disconnect(clientSocket)
@@ -108,16 +119,35 @@ GameStateManager.startGame = function (game_speed = 15) {
 		for (let socket_id in Snake.player_list) {
 			let snake = Snake.player_list[socket_id]
 			snake.update()
-			if (snake.isDead) {
-				numPlayer--
-				// GameStateManager.socket_list[socket_id].on("dead_ack", function () {
-				GameStateManager.socket_list[socket_id].emit("dead")
-				Snake.disconnect(GameStateManager.socket_list[socket_id])
-				// })
-				// })
-				//re direct him into you died screen.
+			if (timer <= 0) {
+				if (Object.keys(Snake.player_list).length == 1) {
+					GameStateManager.socket_list[socket_id].emit("win")
+
+					let username = Snake.player_list[socket_id].username
+
+					// get the winners old 'wins' count
+					LeaderboardController.getWinsbyPlayer(username, function (res) {
+						// update leaderboard with winners new 'wins' count
+						LeaderboardController.updateLeaderboardData(username, res[0].wins + 1, function () {
+							return
+						})
+					})
+
+					Snake.disconnect(GameStateManager.socket_list[socket_id])
+				} else {
+					if (snake.isDead) {
+						numPlayer--
+						// GameStateManager.socket_list[socket_id].on("dead_ack", function () {
+						GameStateManager.socket_list[socket_id].emit("dead")
+						Snake.disconnect(GameStateManager.socket_list[socket_id])
+						// })
+						// })
+						//re direct him into you died screen.
+					}
+				}
 			}
 		}
+
 		Collision.updateFood(Snake.player_list, GameStateManager.allFood)
 		// console.log("Currently", Object.keys(GameStateManager.socket_list).length, "players");
 	}, delayBetweenTicksInMs)
@@ -161,7 +191,7 @@ Snake.disconnect = function (clientSocket) {
  * Carrying out tasks related to initialising a player into the game
  * @param {SocketIO.Socket} clientSocket the websocket connection that the player is communicating on
  */
-Snake.onConnect = function (clientSocket) {
+Snake.onConnect = function (clientSocket, username) {
 	// Print to the server's terminal that a player connected
 	console.log("Player with ID:", clientSocket.id, "connected")
 
@@ -192,7 +222,7 @@ Snake.onConnect = function (clientSocket) {
 		// socket.emit("timetilldead", { seconds: KillTimer.secondsUntilDeath })
 	}
 
-	let snake = new Snake(clientSocket.id, Math.floor(Math.random() * 74), Math.floor(Math.random() * 74))
+	let snake = new Snake(clientSocket.id, Math.floor(Math.random() * 74), Math.floor(Math.random() * 74), username)
 
 	GameStateManager.initpack.snakes.push(snake)
 
@@ -216,6 +246,7 @@ Snake.onConnect = function (clientSocket) {
 
 Snake.pack = function (snake, isInit = false) {
 	let pack = {
+		username: snake.username,
 		socketid: snake.socketid,
 		headLocation: snake.headLocation,
 		tailIndex: snake.tailIndex,
