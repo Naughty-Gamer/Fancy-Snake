@@ -7,7 +7,7 @@ const createDb = function (callback) {
 	const connection = mysql.createConnection({
 		host: Creds.host,
 		user: Creds.user,
-		// password: Creds.password,
+		password: Creds.password,
 	})
 
 	// connecting to the database server

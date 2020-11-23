@@ -6,7 +6,7 @@ const Creds = require("./credentials.js")
 var pool = mysql.createPool({
 	host: Creds.host,
 	user: Creds.user,
-	// password: Creds.password,
+	password: Creds.password,
 	database: Creds.database,
 	debug: true,
 })
