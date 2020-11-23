@@ -23,8 +23,11 @@ module.exports = {
 	host: "<YOUR HOST URL>",
 	user: "<YOUR MYSQL USERNAME>",
 	password: "<YOUR MYSQL PASSWORD>",
+	database: "<YOUR MYSQL DATABASE>",
 }
 ```
+
+**Instead of doing this, you can also just set your environment variables**
 
 3. Run `npm start`
 
