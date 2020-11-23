@@ -7,14 +7,14 @@ const createDb = function (callback) {
 	const connection = mysql.createConnection({
 		host: Creds.host,
 		user: Creds.user,
-		password: Creds.password,
+		// password: Creds.password,
 	})
 
 	// connecting to the database server
 	connection.connect(function (err) {
 		if (err) {
 			callback()
-			throw err
+			console.error(err)
 		}
 
 		// creating the database if it doesn't exist
@@ -22,7 +22,7 @@ const createDb = function (callback) {
 		connection.query(createDBQuery, function (err, result) {
 			if (err) {
 				callback()
-				throw err
+				console.error(err)
 			}
 			if (result.affectedRows !== 0) {
 				console.log("\nDatabase has been created")
@@ -50,7 +50,7 @@ const createDb = function (callback) {
 		connection.query(createUserTableQuery, function (err, result) {
 			if (err) {
 				callback()
-				throw err
+				console.error(err)
 			}
 			if (result.affectedRows !== 0) {
 				console.log("Users has been created")
@@ -69,7 +69,7 @@ const createDb = function (callback) {
 		connection.query(createLeaderboardQuery, function (err, result) {
 			if (err) {
 				callback()
-				throw err
+				console.error(err)
 			}
 			if (result.affectedRows !== 0) {
 				console.log("Leaderboard has been created")
