@@ -1,4 +1,4 @@
-let gameMap = document.getElementById("game-map")
+let gameMap = document.getElementById('game-map')
 
 const x = 0
 const y = 1
@@ -10,10 +10,10 @@ const y = 1
 function snakeDraw(snake_body) {
 	// console.log(snake_body);
 	snake_body.forEach((part) => {
-		const currentSnake = document.createElement("div") // makes a div for our snake
+		const currentSnake = document.createElement('div') // makes a div for our snake
 		currentSnake.style.gridRowStart = part[y] // creates snake at part[1]
 		currentSnake.style.gridColumnStart = part[x] // creates snake at part[0]
-		currentSnake.classList.add("snake") // this adds the stylings to our snake div
+		currentSnake.classList.add('snake') // this adds the stylings to our snake div
 		gameMap.appendChild(currentSnake) // this adds a snake div as a child node
 	})
 }
@@ -31,32 +31,34 @@ export function drawEverySnake(snakes) {
  */
 export function foodDraw(foodList) {
 	foodList.forEach((food) => {
-		const currentFood = document.createElement("div") // makes a div for our food
+		const currentFood = document.createElement('div') // makes a div for our food
 		currentFood.style.gridRowStart = food.foodLocation[y] // creates food at getFoodLocation()[1]
 		currentFood.style.gridColumnStart = food.foodLocation[x] // creates food at getFoodLocation()[0]
-		currentFood.classList.add("food") // this adds the stylings to our food div
+		currentFood.classList.add('food') // this adds the stylings to our food div
 		gameMap.appendChild(currentFood) // this adds a food div as a child node
 	})
 }
 
 export function drawLeaderboard(data) {
 	let rank = 1
-	const leaderBoard = document.getElementById("Leaderboard").querySelector("table")
-	leaderBoard.innerHTML = ""
+	const leaderBoard = document.getElementById('Leaderboard').querySelector('table')
+	leaderBoard.innerHTML = ''
 	let leaderBoardHeader = leaderBoard.createTHead()
 	let headerRow = leaderBoardHeader.insertRow(0)
 	console.log(leaderBoardHeader)
 	for (let column = 0; column < 3; column++) {
 		let headerCell = headerRow.insertCell(column)
 		if (column == 0) {
-			headerCell.innerHTML = "Rank"
+			headerCell.innerHTML = 'Rank'
 		} else if (column == 1) {
-			headerCell.innerHTML = "Username"
+			headerCell.innerHTML = 'Username'
 		} else if (column == 2) {
-			headerCell.innerHTML = "Wins"
+			headerCell.innerHTML = 'Wins'
 		}
 	}
-	for (var row = 0; row < data.length; row++) {
+
+	//leaderboard only shows top 9 players.
+	for (var row = 0; row < 9; row++) {
 		// create a new row
 		var newRow = leaderBoard.insertRow(leaderBoard.length)
 		for (var column = 0; column < 3; column++) {
@@ -75,16 +77,16 @@ export function drawLeaderboard(data) {
 
 export function drawScoreBoard(snakes) {
 	let rows = []
-	let scoreboard = document.getElementById("scoreboard").querySelector("table")
+	let scoreboard = document.getElementById('scoreboard').querySelector('table')
 	// Add each row to the array
-	scoreboard.innerHTML = ""
+	scoreboard.innerHTML = ''
 	let header = scoreboard.insertRow()
 	let hRank = header.insertCell(0)
-	hRank.innerHTML = "Rank"
+	hRank.innerHTML = 'Rank'
 	let hUser = header.insertCell(1)
-	hUser.innerHTML = "Username"
+	hUser.innerHTML = 'Username'
 	let hLength = header.insertCell(2)
-	hLength.innerHTML = "Length"
+	hLength.innerHTML = 'Length'
 	for (const socketid in snakes) {
 		let snake = snakes[socketid]
 		rows.push({
@@ -92,7 +94,7 @@ export function drawScoreBoard(snakes) {
 			score: snake.tailIndex,
 		})
 	}
-
+	//Scorebaord over flow when there is more than 12 players.
 	let sortedPlayers = rows.sort((a, b) => b.score - a.score)
 	sortedPlayers.forEach((player) => {
 		let row = scoreboard.insertRow()

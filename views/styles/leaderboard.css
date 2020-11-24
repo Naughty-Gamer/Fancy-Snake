@@ -3,7 +3,7 @@
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
 	border: 2px solid white;
 	width: 90vmin;
-	height: 90vmin;
+	height: 92vmin;
 	box-shadow: 0 0 150px 0 #892be28c;
 	display: none;
 }
