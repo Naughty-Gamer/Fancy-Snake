@@ -1,6 +1,6 @@
-var SQL = require("sql-template-strings")
-const mysql = require("mysql")
-const Creds = require("./credentials.js")
+var SQL = require('sql-template-strings')
+const mysql = require('mysql')
+const Creds = require('./credentials.js')
 
 // creating a connection pool with the database server
 var pool = mysql.createPool({
@@ -31,13 +31,18 @@ function executeQuery(query, callback) {
 				}
 			})
 		} else {
-			console.log("No Connection")
+			console.log('No Connection')
 		}
 	})
 }
 
 function getUser(user, callback) {
 	const query = SQL`SELECT * FROM users WHERE username = ${user};`
+	executeQuery(query, callback)
+}
+
+function getHashedPasswordByUser(user, callback) {
+	const query = SQL`SELECT password FROM users WHERE username = ${user};`
 	executeQuery(query, callback)
 }
 
@@ -83,4 +88,5 @@ module.exports = {
 	getOrderedLeaderboard,
 	updateLeaderboard,
 	getWinsbyPlayer,
+	getHashedPasswordByUser,
 }

@@ -1,7 +1,7 @@
-const Creds = require("./credentials.js")
+const Creds = require('./credentials.js')
 
 const createDb = function (callback) {
-	const mysql = require("mysql")
+	const mysql = require('mysql')
 
 	// creating a connection with the database server
 	const connection = mysql.createConnection({
@@ -25,9 +25,9 @@ const createDb = function (callback) {
 				console.error(err)
 			}
 			if (result.affectedRows !== 0) {
-				console.log("\nDatabase has been created")
+				console.log('\nDatabase has been created')
 			} else {
-				console.log("\nDatabase has been already created.")
+				console.log('\nDatabase has been already created.')
 			}
 		})
 
@@ -35,7 +35,7 @@ const createDb = function (callback) {
 		connection.changeUser({ database: `${Creds.database}` }, function (err) {
 			if (err) {
 				callback()
-				console.log("Database change error:\n", err)
+				console.log('Database change error:\n', err)
 				return
 			}
 		})
@@ -43,10 +43,10 @@ const createDb = function (callback) {
 		// making a "users" table
 		const createUserTableQuery =
 			`create table if not exists ${Creds.database}.users(` +
-			"username varchar(20) NOT NULL," +
-			"password varchar(15) NOT NULL," +
-			"PRIMARY KEY (username)" +
-			");"
+			'username varchar(20) NOT NULL,' +
+			'password varchar(100) NOT NULL,' +
+			'PRIMARY KEY (username)' +
+			');'
 		connection.query(createUserTableQuery, function (err, result) {
 			if (err) {
 				callback()
@@ -57,10 +57,10 @@ const createDb = function (callback) {
 		// making a "leaderboard" table
 		const createLeaderboardQuery =
 			`create table if not exists ${Creds.database}.leaderboard(` +
-			"username varchar(20) NOT NULL," +
-			"wins int(5)," +
+			'username varchar(20) NOT NULL,' +
+			'wins int(5),' +
 			`PRIMARY KEY (username)` +
-			");"
+			');'
 		connection.query(createLeaderboardQuery, function (err, result) {
 			if (err) {
 				callback()
@@ -69,9 +69,9 @@ const createDb = function (callback) {
 		})
 	})
 
-	connection.on("error", function (err) {
+	connection.on('error', function (err) {
 		console.error(err)
-		if (err.code === "PROTOCOL_CONNECTION_LOST") {
+		if (err.code === 'PROTOCOL_CONNECTION_LOST') {
 			createDb(callback)
 		} else {
 			callback()
