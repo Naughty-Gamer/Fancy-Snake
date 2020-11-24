@@ -42,6 +42,20 @@ export function foodDraw(foodList) {
 export function drawLeaderboard(data) {
 	let rank = 1
 	const leaderBoard = document.getElementById("Leaderboard").querySelector("table")
+	leaderBoard.innerHTML = ""
+	let leaderBoardHeader = leaderBoard.createTHead()
+	let headerRow = leaderBoardHeader.insertRow(0)
+	console.log(leaderBoardHeader)
+	for (let column = 0; column < 3; column++) {
+		let headerCell = headerRow.insertCell(column)
+		if (column == 0) {
+			headerCell.innerHTML = "Rank"
+		} else if (column == 1) {
+			headerCell.innerHTML = "Username"
+		} else if (column == 2) {
+			headerCell.innerHTML = "Wins"
+		}
+	}
 	for (var row = 0; row < data.length; row++) {
 		// create a new row
 		var newRow = leaderBoard.insertRow(leaderBoard.length)
