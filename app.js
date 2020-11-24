@@ -21,16 +21,16 @@ function send503() {
 	})
 }
 
-if (CREDS.host == undefined) {
+if (process.env.DB_HOST == undefined) {
 	console.error('\nDB_HOST not set')
 	env_not_set = true
-} else if (CREDS.user == undefined) {
+} else if (process.env.DB_USER == undefined) {
 	console.error('\nDB_USER not set')
 	env_not_set = true
-} else if (CREDS.password == undefined) {
+} else if (process.env.DB_PASS == undefined) {
 	console.error('\nDB_PASS not set')
 	env_not_set = true
-} else if (CREDS.database == undefined) {
+} else if (process.env.DB == undefined) {
 	console.error('\nDB not set')
 	env_not_set = true
 }
