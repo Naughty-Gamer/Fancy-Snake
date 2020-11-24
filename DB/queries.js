@@ -52,7 +52,7 @@ function createUser(user, pwd, callback) {
 }
 
 function getOrderedLeaderboard(callback) {
-	const query = SQL`SELECT @a:=@a+1 rank, username, wins FROM leaderboard, (select @a:=0) as a order by wins DESC;`
+	const query = SQL`SELECT username, wins FROM leaderboard, (select @a:=0) as a ORDER BY wins DESC;`
 	executeQuery(query, callback)
 }
 
