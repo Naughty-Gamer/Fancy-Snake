@@ -59,14 +59,14 @@ signoutbtn.addEventListener("click", signOut)
 function login() {
 	socket.emit("login", { username: loginUsernameInput.value, password: loginPasswordInput.value })
 	socket.on("loginResponse", function (data) {
-		if (data.success) {
+		if (data.reason == null && data.success) {
 			username = loginUsernameInput.value
 			/** If success, then log them in */
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
 		} else {
 			/** If not success, give them feedback */
-			alert("Log-in unsuccessul.")
+			alert(data.reason)
 		}
 	})
 }
@@ -74,14 +74,14 @@ function login() {
 function register() {
 	socket.emit("register", { username: registerUsernameInput.value, password: registerPasswordInput.value })
 	socket.on("registerResponse", function (data) {
-		if (data.success) {
+		if (data.reason == null && data.success) {
 			username = registerUsernameInput.value
 			/** If success, then log them in */
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
 		} else {
 			/** If not success, give them feedback */
-			alert("Registration unsuccessul.")
+			alert(data.reason)
 		}
 	})
 }

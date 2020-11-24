@@ -1,9 +1,10 @@
-const Snake = require("../models/snake.js")
-const AllFood = require("../models/food.js")
-const Collision = require("./GameCollision.js")
-const KillTimer = require("./KillTimer.js")
-const AuthenticationController = require("../controllers/AuthenticationController.js")
-const LeaderboardController = require("../controllers/LeaderboardController.js")
+const Snake = require('../models/snake.js')
+const AllFood = require('../models/food.js')
+const Collision = require('./GameCollision.js')
+const KillTimer = require('./KillTimer.js')
+const Validation = require('./Validation.js')
+const AuthenticationController = require('../controllers/AuthenticationController.js')
+const LeaderboardController = require('../controllers/LeaderboardController.js')
 const MAX_PLAYER = 2 //Change it later on to 5 players (2 is for testing).
 let numPlayer = 0
 let timer = 3
@@ -31,46 +32,58 @@ class GameStateManager {
 
 		GameStateManager.joinGameRequest = false
 
-		// Event listener for every time someone joins the websocket connection
-		server.sockets.on("connection", function (clientSocket) {
-			clientSocket.on("login", function (data) {
-				AuthenticationController.isValidLoginAttempt(data, function (res) {
-					if (res.length > 0) {
-						clientSocket.emit("loginResponse", { success: true })
-					} else {
-						clientSocket.emit("loginResponse", { success: false })
-					}
-				})
+		// Event listener for every time someone joins the websocket connection.
+		server.sockets.on('connection', function (clientSocket) {
+			clientSocket.on('login', function (data) {
+				let cleanData = Validation.validate(data)
+				if (cleanData.username && cleanData.password) {
+					let validData = { username: cleanData.username, password: cleanData.password }
+					AuthenticationController.isValidLoginAttempt(validData, function (err, res) {
+						if (res == true) {
+							clientSocket.emit('loginResponse', { success: true, reason: cleanData.reason })
+						} else {
+							clientSocket.emit('loginResponse', { success: false, reason: 'Username or password is incorrect' })
+						}
+					})
+				} else {
+					clientSocket.emit('loginResponse', { success: false, reason: cleanData.reason })
+				}
 			})
 
-			clientSocket.on("register", function (data) {
-				AuthenticationController.isUsernameTaken(data, function (res) {
-					if (res.length > 0) {
-						clientSocket.emit("registerResponse", { success: false })
-					} else {
-						AuthenticationController.addUser(data, function () {
-							LeaderboardController.updateLeaderboardData(data.username, 0, function () {
-								clientSocket.emit("registerResponse", { success: true })
+			clientSocket.on('register', function (data) {
+				let cleanData = Validation.validate(data)
+				if (cleanData.username && cleanData.password) {
+					let validData = { username: cleanData.username, password: cleanData.password }
+					AuthenticationController.isUsernameTaken(validData, function (res) {
+						if (res.length > 0) {
+							clientSocket.emit('registerResponse', { success: false, reason: 'User Already Exists.' })
+						} else {
+							AuthenticationController.addUser(validData, function () {
+								LeaderboardController.updateLeaderboardData(validData.username, 0, function () {
+									clientSocket.emit('registerResponse', { success: true, reason: null })
+								})
 							})
-						})
-					}
-				})
+						}
+					})
+				} else {
+					clientSocket.emit('registerResponse', { success: false, reason: cleanData.reason })
+				}
 			})
 
-			clientSocket.on("req_lb_data", function () {
+			clientSocket.on('req_lb_data', function () {
 				LeaderboardController.getLeaderboardData(function (res) {
 					if (res.length > 0) {
-						clientSocket.emit("lb_data_req_ack", res)
+						clientSocket.emit('lb_data_req_ack', res)
 					} else {
-						clientSocket.emit("lb_data_req_ack", null)
+						clientSocket.emit('lb_data_req_ack', null)
 					}
 				})
 			})
 
-			clientSocket.on("joinGameRequest", function (data) {
-				clientSocket.emit("request_ack")
+			clientSocket.on('joinGameRequest', function (data) {
+				clientSocket.emit('request_ack')
 				if (Object.keys(GameStateManager.socket_list).length == 0) {
-					console.log("\nNew game starting up")
+					console.log('\nNew game starting up')
 					GameStateManager.allFood = new AllFood(75, 75, 0.75)
 					// clearInterval(GameStateManager.sendingUpdateID)
 					// clearInterval(GameStateManager.gameUpdateID)
@@ -81,7 +94,7 @@ class GameStateManager {
 
 				Snake.onConnect(clientSocket, data.user)
 
-				clientSocket.on("disconnect", function () {
+				clientSocket.on('disconnect', function () {
 					Snake.disconnect(clientSocket)
 				})
 			})
@@ -103,10 +116,10 @@ GameStateManager.startSendingUpdates = function (tickrate = 30) {
 
 		for (let socket_id in GameStateManager.socket_list) {
 			let socket = GameStateManager.socket_list[socket_id]
-			socket.emit("init", GameStateManager.initpack) // if nobody new joins, then this just sends an empty object
-			socket.emit("update", snakepack)
-			socket.emit("food", foodpack)
-			socket.emit("remove", GameStateManager.removepack) // if nobody leaves, then this just sends an empty object
+			socket.emit('init', GameStateManager.initpack) // if nobody new joins, then this just sends an empty object
+			socket.emit('update', snakepack)
+			socket.emit('food', foodpack)
+			socket.emit('remove', GameStateManager.removepack) // if nobody leaves, then this just sends an empty object
 		}
 		GameStateManager.initpack.snakes = []
 		GameStateManager.removepack.IDs = []
@@ -121,7 +134,7 @@ GameStateManager.startGame = function (game_speed = 15) {
 			snake.update()
 			if (timer <= 0) {
 				if (Object.keys(Snake.player_list).length == 1) {
-					GameStateManager.socket_list[socket_id].emit("win")
+					GameStateManager.socket_list[socket_id].emit('win')
 
 					let username = Snake.player_list[socket_id].username
 
@@ -138,7 +151,7 @@ GameStateManager.startGame = function (game_speed = 15) {
 					if (snake.isDead) {
 						numPlayer--
 						// GameStateManager.socket_list[socket_id].on("dead_ack", function () {
-						GameStateManager.socket_list[socket_id].emit("dead")
+						GameStateManager.socket_list[socket_id].emit('dead')
 						Snake.disconnect(GameStateManager.socket_list[socket_id])
 						// })
 						// })
@@ -164,7 +177,7 @@ GameStateManager.terminateGame = function () {
 	numPlayer = 0
 	timer = 3
 	isnewGame = true
-	console.log("\nGame terminated")
+	console.log('\nGame terminated')
 }
 
 /**
@@ -175,9 +188,9 @@ Snake.disconnect = function (clientSocket) {
 	// if (numPlayer >= MAX_PLAYER) {
 	// 	numPlayer--
 	// } //Do this.
-	console.log("num of players", numPlayer)
+	console.log('num of players', numPlayer)
 	// Print to the server's terminal that a user disconnected
-	console.log("Player with ID:", clientSocket.id, "disconnected")
+	console.log('Player with ID:', clientSocket.id, 'disconnected')
 	delete GameStateManager.socket_list[clientSocket.id]
 	delete Snake.player_list[clientSocket.id]
 	GameStateManager.removepack.IDs.push(clientSocket.id)
@@ -193,25 +206,25 @@ Snake.disconnect = function (clientSocket) {
  */
 Snake.onConnect = function (clientSocket, username) {
 	// Print to the server's terminal that a player connected
-	console.log("Player with ID:", clientSocket.id, "connected")
+	console.log('Player with ID:', clientSocket.id, 'connected')
 
-	clientSocket.emit("CONN_ACK", "You succesfully connected")
+	clientSocket.emit('CONN_ACK', 'You succesfully connected')
 
 	if (numPlayer <= MAX_PLAYER) {
 		numPlayer++
 	} // DO THIS.
 
-	console.log("num of players", numPlayer)
+	console.log('num of players', numPlayer)
 	GameStateManager.socket_list[clientSocket.id] = clientSocket // adding each socket connection to an associative array
 
 	if (numPlayer >= MAX_PLAYER) {
 		let countdownID = setInterval(() => {
 			for (let socket_id in GameStateManager.socket_list) {
 				let socket = GameStateManager.socket_list[socket_id]
-				socket.emit("countdown", { time: timer })
+				socket.emit('countdown', { time: timer })
 			}
 			timer--
-			console.log("///////////////", timer, "//////////////")
+			console.log('///////////////', timer, '//////////////')
 			if (timer <= 0) clearInterval(countdownID)
 		}, 1000)
 		if (isnewGame) {
@@ -226,17 +239,20 @@ Snake.onConnect = function (clientSocket, username) {
 
 	GameStateManager.initpack.snakes.push(snake)
 
-	clientSocket.on("keyDown", (data) => {
-		console.log("Received:", data)
+	clientSocket.on('keyDown', (data) => {
+		console.log('Received:', data)
 		// added this to fix the bug were direction of the player changes, because they were able to send data over,whilst the game wasn't started.
 		if (timer <= 0) {
-			snake.setdirectionHeading(data.dir) // move this inside update
-			console.log(clientSocket.id, "moving", data.dir)
-			// snake.move()
+			// for security measures.
+			if (data.dir == 'down' || 'up' || 'left' || 'right') {
+				snake.setdirectionHeading(data.dir) // move this inside update
+				console.log(clientSocket.id, 'moving', data.dir)
+				// snake.move()
+			}
 		}
 	})
 
-	clientSocket.emit("init", { snakes: Snake.getInitSnakes() })
+	clientSocket.emit('init', { snakes: Snake.getInitSnakes() })
 }
 
 /**
