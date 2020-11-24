@@ -1,12 +1,16 @@
-const SQL = require('../DB/queries.js')
-const bcrypt = require('bcrypt')
+const SQL = require("../DB/queries.js")
+const bcrypt = require("bcrypt")
 const saltRounds = 10
 /** setTimeouts allows time for database querying */
 
 let isValidLoginAttempt = function (data, cb) {
 	setTimeout(function () {
 		SQL.getHashedPasswordByUser(data.username, function (hashedPassword) {
-			bcrypt.compare(data.password, hashedPassword[0].password, cb)
+			if (hashedPassword.length > 0) {
+				bcrypt.compare(data.password, hashedPassword[0].password, cb)
+			} else {
+				cb(false)
+			}
 		})
 	}, 100)
 }
