@@ -58,7 +58,7 @@ export function drawLeaderboard(data) {
 	}
 
 	//leaderboard only shows top 9 players.
-	for (var row = 0; row < 3; row++) {
+	for (var row = 0; row < 9; row++) {
 		// create a new row
 		var newRow = leaderBoard.insertRow(leaderBoard.length)
 		for (var column = 0; column < 3; column++) {
