@@ -6,8 +6,10 @@ Snake.player_list = {}
 const waitingText = document.getElementById("waiting-text")
 const waitingBox = document.getElementById("waiting-box")
 const gameMap = document.getElementById("game-map")
+const scoreBoard = document.getElementById("scoreboard")
 // const container = document.getElementById("container")
 const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
+const table = document.getElementById("tableScoreboard")
 
 //still not implemented:
 // const clock = document.getElementById("clock")
@@ -76,6 +78,10 @@ export default class Game {
 		socket.on("dead", () => {
 			this.snakeIsDead = true
 		})
+
+		socket.on("win", () => {
+			this.snakeWon = true
+		})
 	}
 
 	startRendering() {
@@ -85,6 +91,20 @@ export default class Game {
 			waitingText.innerText = countdownText
 			if (this.snakeIsDead) {
 				waitingText.innerText = "PATHETIC"
+				back2leaderBoardBtn.style.display = "block"
+				waitingBox.style.opacity = "80%"
+				waitingText.style.marginTop = "35%"
+			} else if (this.snakeWon) {
+				waitingText.innerText = "CHAMPION"
+				waitingText.style.color = "#FFD700" //Test the gold color.
+				gameMap.style.boxShadow = " 0 0 0px 0 #FFD700"
+				waitingBox.style.boxShadow = " 0 0 50px 0 #FFD700"
+				table.style.borderColor = "#FFD700"
+				gameMap.style.borderColor = "#FFD700"
+				waitingBox.style.borderColor = "#FFD700"
+				scoreBoard.style.boxShadow = " 0 0 0px 0 #FFD700"
+				scoreBoard.style.borderColor = "#FFD700"
+				document.body.style.borderColor = "#FFD700"
 				back2leaderBoardBtn.style.display = "block"
 				waitingBox.style.opacity = "80%"
 				waitingText.style.marginTop = "35%"

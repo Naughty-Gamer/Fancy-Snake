@@ -2,18 +2,18 @@ let gameMap = document.getElementById("game-map")
 
 const x = 0
 const y = 1
-
 /**
  * Draws a snake on the map
  * @param {[number[]]} snake_body The body of the snake that will be drawn
  */
-function snakeDraw(snake_body) {
+function snakeDraw(snake_body, color) {
 	// console.log(snake_body);
 	snake_body.forEach((part) => {
 		const currentSnake = document.createElement("div") // makes a div for our snake
 		currentSnake.style.gridRowStart = part[y] // creates snake at part[1]
 		currentSnake.style.gridColumnStart = part[x] // creates snake at part[0]
 		currentSnake.classList.add("snake") // this adds the stylings to our snake div
+		currentSnake.style.backgroundColor = color // specify the snake color.
 		gameMap.appendChild(currentSnake) // this adds a snake div as a child node
 	})
 }
@@ -21,7 +21,7 @@ function snakeDraw(snake_body) {
 export function drawEverySnake(snakes) {
 	for (const socketid in snakes) {
 		let snake_body = snakes[socketid].body
-		snakeDraw(snake_body)
+		snakeDraw(snake_body, snakes[socketid].snakeColor)
 	}
 }
 
@@ -92,6 +92,7 @@ export function drawScoreBoard(snakes) {
 		rows.push({
 			username: snake.username,
 			score: snake.tailIndex,
+			color: snake.snakeColor,
 		})
 	}
 	//Scorebaord over flow when there is more than 12 players.
@@ -99,10 +100,13 @@ export function drawScoreBoard(snakes) {
 	sortedPlayers.forEach((player) => {
 		let row = scoreboard.insertRow()
 		let rank = row.insertCell(0)
+		rank.style.color = player.color
 		let username = row.insertCell(1)
+		username.style.color = player.color
 		username.innerHTML = player.username
 		let length = row.insertCell(2)
 		length.innerHTML = player.score
+		length.style.color = player.color
 		getScore(sortedPlayers, player.score, rank)
 	})
 }
