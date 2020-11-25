@@ -2,7 +2,7 @@ const Collision = require("../services/GameCollision.js")
 
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
-	constructor(id, x, y, username) {
+	constructor(id, x, y, username, color) {
 		this.socketid = id
 		this.username = username
 		this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
@@ -12,6 +12,8 @@ class Snake {
 		this.tailLocation = this.body[this.body.length - 1]
 		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
 		this.isDead = false
+		this.snakeWon = false
+		this.snakeColor = color
 		Snake.player_list[this.socketid] = this
 	}
 	// return x,y coordinates of the head of the snake
@@ -114,6 +116,10 @@ class Snake {
 	die() {
 		this.isDead = true
 		// console.log(this.socketid, "is dead")
+	}
+
+	win() {
+		this.snakeWon = true
 	}
 
 	update() {
