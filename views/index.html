@@ -10,16 +10,16 @@
 		<link rel="stylesheet" type="text/css" href="./styles/menu.css" />
 		<link rel="stylesheet" type="text/css" href="./styles/leaderboard.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-		<script src="./src/index.js" defer type="module"></script>
+		<script src="./src/index.js" type="module"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<img id="logo" src="./Images/FancySnake.png" />
-		<audio id="main-music" src="./music/Chiptronical.mp3" loop="true"></audio>
-		<!-- <script src="./src/input.js" defer type="module"></script> -->
+		<img id="logo" alt="logo" src="./Images/FancySnake.png" />
+		<audio id="main-music" src="./music/Chiptronical.mp3" loop="loop"></audio>
 	</head>
+
 	<body>
 		<div id="menuModal">
-			<button id="joinGameBtn" class="menuBtn" type="button"><h3>Join Game</h3></button>
-			<button id="leaderBoardBtn" class="menuBtn" type="button"><h3>Leaderboard</h3></button>
+			<button id="joinGameBtn" class="menuBtn" type="button">Join Game</button>
+			<button id="leaderBoardBtn" class="menuBtn" type="button">Leaderboard</button>
 		</div>
 
 		<div id="signin-modal">
@@ -56,7 +56,7 @@
 		<div id="container">
 			<div id="waiting-box">
 				<button id="back2leaderBoardBtn" type="button">LeaderBoard</button>
-				<h1 id="waiting-text"></h1>
+				<h1 id="waiting-text">.</h1>
 				<h1 id="rotate-text">Please Rotate Your Device</h1>
 			</div>
 			<div id="game-map"></div>
@@ -64,8 +64,8 @@
 		<div id="scoreboard">
 			<table id="tableScoreboard"></table>
 		</div>
-		<button id="back2menuBtn" type="button"><h2 id="text">Main Menu</h2></button>
-		<button id="sign-out-btn" type="button"><h2>Sign Out</h2></button>
+		<button id="back2menuBtn" type="button">Main Menu</button>
+		<button id="sign-out-btn" type="button">Sign Out</button>
 		<div id="Leaderboard">
 			<table id="LeaderBoardTable">
 				<tr>

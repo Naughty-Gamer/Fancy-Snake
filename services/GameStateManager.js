@@ -9,7 +9,8 @@ const MAX_PLAYER = 2 //Change it later on to 5 players (2 is for testing).
 let numPlayer = 0
 let timer = 3
 let isnewGame = true
-let color_array = ["#A0522D	", "#8B4513", "#F0E68C", "blue", "red", "white"]
+let color_array = ["#10e39d", "#2d5ded", "#F0E68C", "#E22F2C", "#E28A2C", 
+"#2C47E2","#aeff00","#ff00a2","#6d1a99","#e2b42b","#dfe22b","#e22bdf"]
 
 class GameStateManager {
 	constructor(server) {
