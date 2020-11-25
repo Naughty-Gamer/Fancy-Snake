@@ -136,6 +136,7 @@ function back2leaderBoard() {
 	back2menuBtn.style.display = "none"
 	leaderBoard.style.display = "block"
 	signoutbtn.style.display = "inline-block"
+	document.body.style.borderColor = "#892be28cs"
 
 	// /** Removes the inner HTML of:
 	//  * - Game map
