@@ -11,6 +11,8 @@ const scoreBoard = document.getElementById("scoreboard")
 const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
 const table = document.getElementById("tableScoreboard")
 
+export let renderID = null
+
 //still not implemented:
 // const clock = document.getElementById("clock")
 // const numbers = document.getElementById("numbers")
@@ -87,7 +89,7 @@ export default class Game {
 	startRendering() {
 		const fps = 60
 		const delayBetweenFramesInMs = 1000 / fps
-		setInterval(() => {
+		renderID = setInterval(() => {
 			waitingText.innerText = countdownText
 			if (this.snakeIsDead) {
 				waitingText.innerText = "PATHETIC"
@@ -101,6 +103,7 @@ export default class Game {
 				waitingBox.style.boxShadow = " 0 0 50px 0 #FFD700"
 				table.style.borderColor = "#FFD700"
 				gameMap.style.borderColor = "#FFD700"
+				console.log("still running")
 				waitingBox.style.borderColor = "#FFD700"
 				scoreBoard.style.boxShadow = " 0 0 0px 0 #FFD700"
 				scoreBoard.style.borderColor = "#FFD700"
