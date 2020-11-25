@@ -1,6 +1,6 @@
 import Game from "./game.js"
 import { drawLeaderboard } from "./drawer.js"
-
+import { renderID } from "./game.js"
 /**
  * Joins the websocket connection that the HTTP server has established.
  * More precisely, it connects the client to the default namespace `'/'`
@@ -9,6 +9,8 @@ import { drawLeaderboard } from "./drawer.js"
 let socket = io()
 let username = ""
 
+let music = document.getElementById("main-music")
+music.play()
 //menu screen
 const signinModal = document.getElementById("signin-modal")
 const menuModal = document.getElementById("menuModal")
@@ -122,6 +124,7 @@ function requestLeaderboardData() {
 // }
 
 function back2leaderBoard() {
+	clearInterval(renderID)
 	requestLeaderboardData()
 	/** Removes CSS for:
 	 * - Game map
@@ -136,7 +139,7 @@ function back2leaderBoard() {
 	back2menuBtn.style.display = "none"
 	leaderBoard.style.display = "block"
 	signoutbtn.style.display = "inline-block"
-	document.body.style.borderColor = "#892be28cs"
+	document.body.style.borderColor = "#892be28c"
 
 	// /** Removes the inner HTML of:
 	//  * - Game map
