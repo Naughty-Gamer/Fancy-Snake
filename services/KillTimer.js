@@ -1,9 +1,9 @@
-let timeWithDelay = 3333
+let timeWithDelay = 93
 let secondsUntilDeath = timeWithDelay // Delay it 3 seconds because it starts immediatly after player >= max_players (Change it after finishing testing)
 // let timeInSeconds = 7
 
 function startKillTimer(sockets, snakes) {
-	secondsUntilDeath = 3333
+	secondsUntilDeath = 93
 	let killTimerID = setInterval(() => {
 		// timeInSeconds--
 		secondsUntilDeath--

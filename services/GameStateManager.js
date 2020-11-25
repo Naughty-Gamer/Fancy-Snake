@@ -237,8 +237,8 @@ Snake.onConnect = function (clientSocket, username) {
 	}
 
 	let color_num = Math.floor(Math.random() * color_array.length)
-	let x_axis = Math.floor(Math.random() * 74)
-	let y_axis = Math.floor(Math.random() * 74)
+	let x_axis = Math.floor(Math.random() * 73)
+	let y_axis = Math.floor(Math.random() * 73)
 	let snake = new Snake(clientSocket.id, x_axis, y_axis, username, color_array[color_num])
 
 	GameStateManager.initpack.snakes.push(snake)
