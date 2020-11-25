@@ -76,11 +76,26 @@ body {
 	color: #ffffff;
 }
 
+img {
+	display: block;
+	margin-left: 0%;
+	margin-right: 10%;
+	width: 40%;
+}
+
 @media only screen and (max-width: 700px) {
 	body {
 		border: 0px solid #8a2be2;
 	}
-
+	img {
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 30%;
+		margin-top: -70%;
+		margin-left: -100%;
+		max-width: 50%;
+	}
 	#signin-modal {
 		background-color: rgb(138, 43, 226);
 		-ms-flex: 0 0 100%;

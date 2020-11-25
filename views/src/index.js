@@ -14,6 +14,7 @@ const signinModal = document.getElementById("signin-modal")
 const menuModal = document.getElementById("menuModal")
 const joinGameBtn = document.getElementById("joinGameBtn")
 const leaderBoardBtn = document.getElementById("leaderBoardBtn")
+const logo = document.getElementById("logo")
 
 //Login-Form screen
 const loginbtn = document.getElementById("loginbtn")
@@ -62,6 +63,7 @@ function login() {
 		if (data.reason == null && data.success) {
 			username = loginUsernameInput.value
 			/** If success, then log them in */
+			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
 		} else {
@@ -77,6 +79,7 @@ function register() {
 		if (data.reason == null && data.success) {
 			username = registerUsernameInput.value
 			/** If success, then log them in */
+			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
 		} else {
@@ -87,6 +90,7 @@ function register() {
 }
 
 function goToMenu() {
+	logo.style.display = "none"
 	leaderBoard.style.display = "none"
 	menuModal.style.display = "block"
 	back2menuBtn.style.display = "none"
@@ -182,9 +186,7 @@ function tryJoiningGame() {
 	socket.on("request_ack", () => {
 		new Game(socket)
 	})
-	socket.on("win", () => {
-		console.log("you won lol")
-	})
+	//removed you win from here => to game.js
 }
 
 /**

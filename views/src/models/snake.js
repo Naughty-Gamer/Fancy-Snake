@@ -8,6 +8,7 @@ export default class Snake {
 		// this.lastTailLocation = initpack.lastTailLocation // keeps track of the last position the tail of the snake was on, for purpose of growing.
 		// this.directionHeading = initpack.directionHeading
 		// this.isDead = initpack.isDead
+		this.snakeColor = initpack.snakeColor
 		Snake.player_list[this.socketid] = this
 	}
 

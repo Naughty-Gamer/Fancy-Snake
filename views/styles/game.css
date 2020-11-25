@@ -21,8 +21,8 @@
 }
 
 .food {
-	background-color: green; /* Sets the default color for the snake */
-	border: 0.25vmin solid green;
+	background-color: #008000; /* Sets the default color for the food */
+	border: 0.25vmin solid #008000;
 	border-radius: 0.5vmin;
 }
 
