@@ -13,7 +13,6 @@ let color_array = ["#10e39d", "#2d5ded", "#F0E68C", "#E22F2C", "#E28A2C", "#2C47
 
 class GameStateManager {
 	constructor(server) {
-		// this.server = server;
 		/**
 		 * @type {"Socket.id : Socket"}
 		 */
@@ -111,6 +110,7 @@ class GameStateManager {
 		})
 	}
 }
+
 //this is a setInterval that starts sending updates to the client side.
 GameStateManager.startSendingUpdates = function (tickrate = 30) {
 	const delayBetweenTicksInMs = 1000 / tickrate
@@ -135,6 +135,7 @@ GameStateManager.startSendingUpdates = function (tickrate = 30) {
 		GameStateManager.removepack.IDs = []
 	}, delayBetweenTicksInMs)
 }
+
 //This setInterval is responsible to start up the game.
 GameStateManager.startGame = function (game_speed = 15) {
 	const delayBetweenTicksInMs = 1000 / game_speed
@@ -266,9 +267,8 @@ Snake.onConnect = function (clientSocket, username) {
 
 /**
  * @param {Snake} snake the snake being packed
- * @param {boolean} isInit is the snake being initialised?
+ * @param {boolean} isInit if the snake is being initialised
  */
-
 Snake.pack = function (snake, isInit = false) {
 	let pack = {
 		username: snake.username,
@@ -294,9 +294,6 @@ Snake.getInitSnakes = function () {
 }
 
 Snake.getUpdatedSnakes = function () {
-	// added this if statments.
-	// console.log("Getting updated snakes");
-	// checks if the players are sufficent to start the game or not.
 	let snakes = []
 	for (let socket_id in Snake.player_list) {
 		let snake = Snake.player_list[socket_id]
@@ -307,5 +304,3 @@ Snake.getUpdatedSnakes = function () {
 }
 
 module.exports = GameStateManager
-
-//Our snake should move continuously so it should be inside a setinterval which will make it move continuously. Which will make the speed of the snake the speed of the setInterval.
