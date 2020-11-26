@@ -1,7 +1,7 @@
 let gameMap = document.getElementById("game-map")
-
 const x = 0
 const y = 1
+
 /**
  * Draws a snake on the map
  * @param {[number[]]} snake_body The body of the snake that will be drawn
@@ -17,6 +17,10 @@ function snakeDraw(snake_body, color) {
 	})
 }
 
+/**
+ * This function is used to draw all of the snakes on the map.
+ * @param {Object} snakes players that are there in the game.
+ */
 export function drawEverySnake(snakes) {
 	for (const socketid in snakes) {
 		let snake_body = snakes[socketid].body
@@ -40,6 +44,10 @@ export function foodDraw(foodList) {
 	}
 }
 
+/**
+ * Gets the data from the database and draws it for the client.
+ * @param {not sure} data The information needed from the leaderboard to be drawn.
+ */
 export function drawLeaderboard(data) {
 	let rank = 1
 	const leaderBoard = document.getElementById("Leaderboard").querySelector("table")
@@ -75,6 +83,11 @@ export function drawLeaderboard(data) {
 	}
 }
 
+/**
+ * Draws the Scoreboard to showcase the scores of each player and their colors.
+ * @param {not sure} snakes Used to get the appropriate infromation
+ * from the snake to draw the score on the scoreboard.
+ */
 export function drawScoreBoard(snakes) {
 	let rows = []
 	let scoreboard = document.getElementById("scoreboard").querySelector("table")
@@ -111,6 +124,12 @@ export function drawScoreBoard(snakes) {
 	})
 }
 
+/**
+ * Adds the rank beside each players name on the scoreboard.
+ * @param {Array} playerlist the list of players in the game.
+ * @param {Int} score the score of the players.
+ * @param {Int} rank the rank beside the players name.
+ */
 function getScore(playerlist, score, rank) {
 	for (let index = 0; index < playerlist.length; index++) {
 		if (score == playerlist[index].score) {

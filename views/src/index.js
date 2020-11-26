@@ -59,8 +59,11 @@ back2leaderBoardBtn.addEventListener("click", back2leaderBoard)
 back2menuBtn.addEventListener("click", goToMenu)
 signoutbtn.addEventListener("click", signOut)
 
+//This function is excuted as soon as someone presses on the login button.
 function login() {
+	//send out the info submitted by the user to the server.
 	socket.emit("login", { username: loginUsernameInput.value, password: loginPasswordInput.value })
+	//when recieveing the loginResponse it checks if his login was successful or not.
 	socket.on("loginResponse", function (data) {
 		if (data.reason == null && data.success) {
 			username = loginUsernameInput.value
@@ -74,9 +77,11 @@ function login() {
 		}
 	})
 }
-
+//This function is excuted as soon as someone presses on the register button.
 function register() {
+	//send out the info submitted by the user to the server.
 	socket.emit("register", { username: registerUsernameInput.value, password: registerPasswordInput.value })
+	//when recieveing the registerResponse it checks if his regestration was successful or not.
 	socket.on("registerResponse", function (data) {
 		if (data.reason == null && data.success) {
 			username = registerUsernameInput.value
@@ -91,20 +96,23 @@ function register() {
 	})
 }
 
+//This function is excuted as soon as someone presses on the MainMenu button.
+//returns him into the main menu from the leaderboard.
 function goToMenu() {
 	logo.style.display = "none"
 	leaderBoard.style.display = "none"
 	menuModal.style.display = "block"
 	back2menuBtn.style.display = "none"
 }
-
+//This function is excuted as soon as someone presses on the LeaderBoard button.
 function getleaderboard() {
+	//Gets the required information to display the leaderboard.
 	requestLeaderboardData()
 	menuModal.style.display = "none"
 	leaderBoard.style.display = "block"
 	back2menuBtn.style.display = "inline-block"
 }
-
+//This is used to get the information of the leaderboard from the server to the client side.
 function requestLeaderboardData() {
 	socket.emit("req_lb_data")
 	socket.on("lb_data_req_ack", (data) => {
@@ -117,21 +125,10 @@ function requestLeaderboardData() {
 		}
 	})
 }
-
-// function mainMenu() {
-// 	signinModal.style.display = "None"
-// 	menuModal.style.display = "block"
-// }
-
+//Helps to return to the leaderboard after finishing up a game.
 function back2leaderBoard() {
 	clearInterval(renderID)
 	requestLeaderboardData()
-	/** Removes CSS for:
-	 * - Game map
-	 * - Waiting box
-	 * - The container holding game map and waiting box
-	 * - The scoreboard
-	 */
 	gameMap.style.display = "None"
 	waitingBox.style.display = "None"
 	container.style.display = "None"
@@ -140,71 +137,20 @@ function back2leaderBoard() {
 	leaderBoard.style.display = "block"
 	signoutbtn.style.display = "inline-block"
 	document.body.style.borderColor = "#892be28c"
-
-	// /** Removes the inner HTML of:
-	//  * - Game map
-	//  * - Waiting box (holding menubtn and waitingText)
-	//  * - Scoreboard
-	//  */
-	// gameMap.innerHTML = ""
-	// scoreBoard.innerHTML = ""
-	// waitingBox.innerHTML = ""
-	// waitingText.innerHTML = ""
-	// /** Unhides the menu modal */
-	// menuModal.style.display = "block"
-	//
 }
-
+//signOut button so people could leave the site.
 function signOut() {
 	location.reload()
 }
-
-// function resetGame() {
-// 	/** Resets the scoreboard */
-// 	scoreBoard.style.display = "block"
-// 	let scoreboardTable = document.createElement("table")
-// 	scoreBoard.append(scoreboardTable)
-
-// 	/** Resets the menu button */
-// 	let newBack2menuBtn = document.createElement("button")
-// 	newBack2menuBtn.id = "back2menuBtn"
-// 	newBack2menuBtn.innerText = "Main Menu"
-// 	waitingBox.append(newBack2menuBtn)
-
-// 	/** Resets the waiting text */
-// 	let newWaitingText = document.createElement("h1")
-// 	newWaitingText.id = "waiting-text"
-// 	waitingBox.append(waitingText)
-
-// 	gameMap.style.display = "grid"
-// }
-
+//This is the main button, which allows users to enter the game as a snake and have fun.
 function tryJoiningGame() {
 	back2menuBtn.style.display = "none"
 	container.style.display = "flex"
 	menuModal.style.display = "none"
 	waitingBox.style.display = "flex"
-	// gameMap.style.display = "grid";
 	scoreBoard.style.display = "block"
 	socket.emit("joinGameRequest", { user: username })
 	socket.on("request_ack", () => {
 		new Game(socket)
 	})
-	//removed you win from here => to game.js
 }
-
-/**
- * on server: when numPlayers == MAX_PLAYERS, emit("countdown")
- * on client: on("countdown",() => startCountdown())
- *
- * function startCountdown(){
- * 		- does a countdown using js and css
- * 		- waitingBox.style.display = "None";
- * 		- emit("startgame")
- * }
- *
- * on server: on("startgame",() => )
- */
-
-//
-// export default

@@ -10,14 +10,8 @@ const scoreBoard = document.getElementById("scoreboard")
 // const container = document.getElementById("container")
 const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
 const table = document.getElementById("tableScoreboard")
-
-export let renderID = null
-
-//still not implemented:
-// const clock = document.getElementById("clock")
-// const numbers = document.getElementById("numbers")
-
 let countdownText = "Waiting for players..."
+export let renderID = null
 
 export default class Game {
 	constructor(socket) {
@@ -26,75 +20,78 @@ export default class Game {
 		// this.delay = 55
 		document.addEventListener("keydown", this.keyDownHandler(socket))
 
+		//recieve the countdown timer from the server.
 		socket.on("countdown", (data) => {
 			countdownText = data.time
 		})
 
+		//Recieve the 90 seconds timer from the server to be able to draw it on the clients side.
 		socket.on("timetilldead", (data) => {
 			this.timeTillDeath = data.seconds
 		})
 
+		//Acknowledging that a user joined the game.
 		socket.on("CONN_ACK", (confirmation) => {
 			console.log(confirmation)
 			this.startRendering()
 			this.registerListeners(socket)
 		})
 	}
-
+	//Get the snakes information from the server.
 	registerListeners(socket) {
 		socket.on("init", (data) => {
 			data.snakes.forEach((snake) => {
 				new Snake(snake)
 			})
 		})
-
+		//Send updates about the position of the snake and the movement of the players.
 		socket.on("update", (snakepack) => {
 			snakepack.snakes.forEach((server_snake) => {
 				let client_snake = Snake.player_list[server_snake.socketid]
 				if (client_snake) {
 					if (server_snake.headLocation !== undefined) {
-						// client_snake.updateBody(
-						// 	server_snake.headLocation,
-						// 	server_snake.tailLocation
-						// )
-						client_snake.body = server_snake.body // naive implementation -- could just send head and tail
+						client_snake.body = server_snake.body
 						client_snake.tailIndex = server_snake.tailIndex
-						// client_snake.socketid = server_snake.socketid
 					}
 				}
 			})
 		})
 
+		//used to remove a player as soon as they disconnect or die.
 		socket.on("remove", (data) => {
 			data.IDs.forEach((socketid) => {
 				delete Snake.player_list[socketid]
 			})
 		})
 
-		// naive implementation -- need to have state for food
+		//Recieve the food state.
 		socket.on("food", (data) => {
 			this.food = data.food // acting as state for food
 		})
 
+		//when a player dies it sends a confirmation to the client side.
 		socket.on("dead", () => {
 			this.snakeIsDead = true
 		})
-
+		//when a player wins it sends a confirmation to the client side.
 		socket.on("win", () => {
 			this.snakeWon = true
 		})
 	}
 
+	// SetInterval to render the stuff happening on the clients side.
 	startRendering() {
 		const fps = 60
 		const delayBetweenFramesInMs = 1000 / fps
 		renderID = setInterval(() => {
 			waitingText.innerText = countdownText
+			//when the snake dies display some css to show him that he died.
 			if (this.snakeIsDead) {
 				waitingText.innerText = "PATHETIC"
 				back2leaderBoardBtn.style.display = "block"
 				waitingBox.style.opacity = "80%"
 				waitingText.style.marginTop = "35%"
+				//when the snake wins display some css to show him that he Won the game.
 			} else if (this.snakeWon) {
 				waitingText.innerText = "CHAMPION"
 				waitingText.style.color = "#FFD700" //Test the gold color.
@@ -110,6 +107,7 @@ export default class Game {
 				waitingBox.style.opacity = "80%"
 				waitingText.style.marginTop = "35%"
 			} else {
+				//while the game continue Display the timer on the screen.
 				if (countdownText <= 1) {
 					gameMap.style.display = "grid"
 					gameMap.style.zIndex = 0
@@ -123,7 +121,6 @@ export default class Game {
 					waitingText.innerText = this.timeTillDeath
 				}
 			}
-
 			drawScoreBoard(Snake.player_list)
 			document.getElementById("game-map").innerHTML = ""
 			drawEverySnake(Snake.player_list)
@@ -131,6 +128,7 @@ export default class Game {
 		}, delayBetweenFramesInMs)
 	}
 
+	//This function is used to allow the Client to move his snake freely in 4 different directions.
 	keyDownHandler(socket) {
 		return function (e) {
 			let key = e.key || e.keyCode
