@@ -2,9 +2,10 @@ let timeWithDelay = 93
 let secondsUntilDeath = timeWithDelay
 
 /**
- * Checks the length of all of the players and when the timer ends kills the smallest one.
- * @param {not sure} sockets used to emit the timer to the client side.
- * @param {Object} snakes gets the length of all of the snakes in the game.
+ * Checks the length of all of the players and kills the smallest one every interval
+ * @param {Object Literal} sockets used to emit the state of the timer to the every client in the game
+ * @param {Object Literal} snakes all of the snakes in the game
+ * @returns {String} the setInterval ID of the timer
  */
 function startKillTimer(sockets, snakes) {
 	secondsUntilDeath = 93

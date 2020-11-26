@@ -5,6 +5,7 @@ const y = 1
 /**
  * Draws a snake on the map
  * @param {[number[]]} snake_body The body of the snake that will be drawn
+ * @param {String} color
  */
 function snakeDraw(snake_body, color) {
 	snake_body.forEach((part) => {
@@ -18,8 +19,8 @@ function snakeDraw(snake_body, color) {
 }
 
 /**
- * This function is used to draw all of the snakes on the map.
- * @param {Object} snakes players that are there in the game.
+ * Draws all of the snakes on the map.
+ * @param {Object Literal} snakes all the players in the game.
  */
 export function drawEverySnake(snakes) {
 	for (const socketid in snakes) {

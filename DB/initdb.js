@@ -1,8 +1,10 @@
 const Creds = require("./credentials.js")
 
-//Initalizing the database and adding important SQL Quries.
-
-const createDb = function (callback) {
+/**
+ * Initalizing the database
+ * @param {Function} handleError the error handling middleware that will execute in the case of an error
+ */
+const createDb = function (handleError) {
 	const mysql = require("mysql")
 
 	// creating a connection with the database server
@@ -15,7 +17,7 @@ const createDb = function (callback) {
 	// connecting to the database server
 	connection.connect(function (err) {
 		if (err) {
-			callback()
+			handleError()
 			console.error(err)
 		}
 
@@ -23,7 +25,7 @@ const createDb = function (callback) {
 		const createDBQuery = `CREATE DATABASE IF NOT EXISTS ${Creds.database};`
 		connection.query(createDBQuery, function (err, result) {
 			if (err) {
-				callback()
+				handleError()
 				console.error(err)
 			}
 			if (result.affectedRows !== 0) {
@@ -36,7 +38,7 @@ const createDb = function (callback) {
 		// using the snake_game database
 		connection.changeUser({ database: `${Creds.database}` }, function (err) {
 			if (err) {
-				callback()
+				handleError()
 				console.log("Database change error:\n", err)
 				return
 			}
@@ -51,7 +53,7 @@ const createDb = function (callback) {
 			");"
 		connection.query(createUserTableQuery, function (err, result) {
 			if (err) {
-				callback()
+				handleError()
 				console.error(err)
 			}
 		})
@@ -65,18 +67,19 @@ const createDb = function (callback) {
 			");"
 		connection.query(createLeaderboardQuery, function (err, result) {
 			if (err) {
-				callback()
+				handleError()
 				console.error(err)
 			}
 		})
 	})
 
+	// reconnecting to the database server every time it closes the conenction due to inactivity
 	connection.on("error", function (err) {
 		console.error(err)
 		if (err.code === "PROTOCOL_CONNECTION_LOST") {
-			createDb(callback)
+			createDb(handleError)
 		} else {
-			callback()
+			handleError()
 		}
 	})
 }

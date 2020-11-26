@@ -2,7 +2,7 @@ var SQL = require("sql-template-strings")
 const mysql = require("mysql")
 const Creds = require("./credentials.js")
 
-//This page contains all of the quries that are required to make the database send and recieve information.
+//This page contains all of the queries that are required to carry out CRUD activities
 
 // creating a connection pool with the database server
 var pool = mysql.createPool({
@@ -39,8 +39,8 @@ function executeQuery(query, callback) {
 }
 
 /**
- * Gets the appropriate username.
- * @param {String} user the name that the user inputs.
+ * Gets the user information that was requested
+ * @param {String} user the username being searched.
  * @param {Function} callback will execute on a succesful query
  */
 function getUser(user, callback) {
@@ -50,7 +50,7 @@ function getUser(user, callback) {
 
 /**
  * Uses the username to get the hashed password.
- * @param {String} user the name that the user inputs.
+ * @param {String} user the username being searched.
  * @param {Function} callback will execute on a succesful query
  */
 function getHashedPasswordByUser(user, callback) {
@@ -59,19 +59,20 @@ function getHashedPasswordByUser(user, callback) {
 }
 
 /**
- * Queries the database and executes a callback
- * @param {user} query the name that the user inputs.
+ * Gets the user information that was requested
+ * @param {String} user the username that the user inputs.
+ * @param {String} pwd the password that the user inputs.
  * @param {Function} callback will execute on a succesful query
  */
-// function getUserWithPassword(user, pwd, callback) {
-// 	const query = SQL`SELECT * FROM users WHERE username = ${user} and password = ${pwd};`
-// 	executeQuery(query, callback)
-// }
+function getUserWithPassword(user, pwd, callback) {
+	const query = SQL`SELECT * FROM users WHERE username = ${user} and password = ${pwd};`
+	executeQuery(query, callback)
+}
 
 /**
  * Inserts the username and password of the user.
- * @param {user} user the name that the user inputs.
- * @param {user} pwd the password entered by the user while regestering.
+ * @param {String} user the username that the user inputs.
+ * @param {String} pwd the password that the user inputs.
  * @param {Function} callback will execute on a succesful query
  */
 function createUser(user, pwd, callback) {
@@ -80,7 +81,7 @@ function createUser(user, pwd, callback) {
 }
 
 /**
- * Arranges the database and sends it according to highest points.
+ * Sends back a sorted list of leaderboard information
  * @param {Function} callback will execute on a succesful query
  */
 function getOrderedLeaderboard(callback) {
@@ -89,8 +90,8 @@ function getOrderedLeaderboard(callback) {
 }
 
 /**
- * Checks how many wins the player has in the database.
- * @param {user} username the username of the player.
+ * Sends back the number of wins a player has
+ * @param {String} username the username of the player.
  * @param {Function} callback will execute on a succesful query
  */
 function getWinsbyPlayer(username, callback) {
@@ -98,20 +99,10 @@ function getWinsbyPlayer(username, callback) {
 	executeQuery(query, callback)
 }
 
-// function insertToLeaderboard(user, wins, callback) {
-// 	const query = SQL`INSERT INTO leaderboard VALUES(${user},${wins});`
-// 	executeQuery(query, callback)
-// }
-
-// function updateLeaderboard(user, wins, callback) {
-// 	const query = SQL`UPDATE leaderboard SET wins = ${wins} WHERE username LIKE ${user}`
-// 	executeQuery(query, callback)
-// }
-
 /**
- * Adds the appropriate amount of points to the user when he wins.
- * @param {user} user the name of the user.
- * @param {user} wins amount of wins he has.
+ * Updates a user's win count
+ * @param {String} user the name of the user.
+ * @param {number} wins updated amount of wins the user has.
  * @param {Function} callback will execute on a succesful query.
  */
 function updateLeaderboard(user, wins, callback) {

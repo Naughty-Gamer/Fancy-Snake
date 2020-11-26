@@ -1,11 +1,12 @@
 const SQL = require("../DB/queries.js")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
+
 /** setTimeouts allows time for database querying */
 
 /**
  * Check if the clients credintials are correct. Compare their hashed password inside the database with the input they entered.
- * @param {String} data the username and the password.
+ * @param {Object Literal} data the username and the password.
  * @param {Function} callback will execute on a succesful query
  */
 let isValidLoginAttempt = function (data, cb) {
@@ -22,7 +23,7 @@ let isValidLoginAttempt = function (data, cb) {
 
 /**
  * Check if the username entered by the user to register is taken by another user or not.
- * @param {String} data the username of the player.
+ * @param {Object Literal} data the username and the password.
  * @param {Function} callback will execute on a succesful query
  */
 let isUsernameTaken = function (data, cb) {
@@ -33,7 +34,7 @@ let isUsernameTaken = function (data, cb) {
 
 /**
  * Adding the hashed password and the username of the player when he registers.
- * @param {String} data both username and password.
+ * @param {Object Literal} data the username and the password.
  * @param {Function} callback will execute on a succesful query
  */
 let addUser = function (data, cb) {
