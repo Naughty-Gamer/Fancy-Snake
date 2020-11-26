@@ -1,3 +1,5 @@
+/*This page is responsible for the CSS of the Scoreboard that can be found in the Game.*/
+
 #scoreboard {
 	background-color: rgb(0, 0, 0); /* Sets the base color for the map */
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
@@ -32,7 +34,7 @@ td {
 	border-collapse: collapse;
 }
 
-/* Make the length of the username lower than 18 */
+/*This part is used to make the website responsive on the smart phones and different computer screens. */
 
 @media only screen and (max-width: 1000px) and (orientation: portrait) {
 	#scoreboard {

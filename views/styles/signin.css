@@ -1,3 +1,5 @@
+/*This page is responsible for the CSS of the Login / Register boxes that can be found inside the First page of the website.*/
+
 * {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -6,18 +8,19 @@ html {
 	height: 96%;
 }
 
+/* Body of the whole website. */
 body {
 	min-height: 100%; /*100% of viewport height*/
 	/* width: 97.2; 100% of viewport width */
 	display: flex; /* Establishes a flex formatting context */
 	justify-content: center; /*Centers the game map horizontally */
 	align-items: center; /*Centers the game map vertically */
-	/* justify-content: space-around; LEAVE THIS FOR NOW */
 	margin: 0;
 	background-color: black; /* Background color surrounding the game map */
 	border: 19px solid #8a2be2;
 }
 
+/* This is used to hold both the Login and Register forms inside the small box. */
 #signin-modal {
 	background-color: rgb(138, 43, 226);
 	-ms-flex: 0 0 25%;
@@ -28,11 +31,9 @@ body {
 	border-right: 15px solid #892be28c;
 }
 
+/* Related to the Login / Register form and filling it. */
 .form {
-	/* position: relative; */
 	background: #000000;
-	/* max-width: 360px; */
-	/* margin: 0 auto 100px; */
 	padding: 10%;
 	text-align: center;
 }
@@ -76,12 +77,15 @@ body {
 	color: #ffffff;
 }
 
+/* This is the Logo that can be found inside the first page of the website. */
 img {
 	display: block;
 	margin-left: 0%;
 	margin-right: 10%;
 	width: 40%;
 }
+
+/* This part is used to make the website responsive on the smart phones and different computer screens. */
 
 @media only screen and (max-width: 700px) {
 	body {

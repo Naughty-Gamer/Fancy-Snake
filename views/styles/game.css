@@ -1,3 +1,11 @@
+/*
+Game map and other game CSS page.
+
+We used a grid template to allow us to divide our game map into small sizes that
+allows us to draw the snake on and make the food spawn in different places.
+
+*/
+
 #game-map {
 	background-color: #000000; /* Sets the base color for the map */
 	border: 2px solid white;
@@ -15,8 +23,8 @@
 }
 
 .snake {
-	background-color: #892be28c; /* Sets the default color for the snake */
-	border: 0.05vmin solid rgb(255, 255, 255);
+	background-color: #892be28c; /* Defualt Color of the Snake. */
+	border: 0.03vmin solid rgb(255, 255, 255);
 	border-radius: 0.25vmin;
 }
 
@@ -73,6 +81,8 @@
 	display: none;
 }
 
+/*This part is used to make the website responsive on the smart phones and different computer screens. */
+
 @media only screen and (max-width: 1000px) and (orientation: portrait) {
 	#waiting-text {
 		display: none;
@@ -83,5 +93,3 @@
 		display: block;
 	}
 }
-/* @media only screen and (max-width: 1000px) and (orientation: landscape) {
-} */

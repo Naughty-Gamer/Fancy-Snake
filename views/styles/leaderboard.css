@@ -1,3 +1,5 @@
+/*Everything here is related to the Leaderboard page.*/
+
 #Leaderboard {
 	background-color: rgb(0, 0, 0); /* Sets the base color for the map */
 	/* These 2 make it so that the height/width is always 90% of the narrowest dimension*/
@@ -31,6 +33,7 @@ td {
 	border-collapse: collapse;
 }
 
+/* This is the button that allows a player to leave the game as soon as he is done. */
 #sign-out-btn {
 	width: 10vmin;
 	height: 10vmin;
@@ -49,6 +52,7 @@ td {
 	left: 3%;
 }
 
+/* The button that displays after someone dies. */
 #back2menuBtn {
 	width: 10vmin;
 	height: 10vmin;

@@ -1,11 +1,16 @@
+/*This page is responsible for the CSS of the menu page*/
+
 * {
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+/* The button that allows players to join a game. */
 
 #joinGameBtn {
 	margin-bottom: 10%;
 }
 
+/* This holds the 2 buttons found in the Main Menu. */
 #menuModal {
 	justify-content: center;
 	text-align: center;
@@ -46,6 +51,16 @@ h3 {
 	box-shadow: inset 0 0 25px 0 #000000;
 }
 
+/* A small disclaim found at the bottom of the page. */
+#Disclaimer {
+	position: relative;
+	margin-bottom: -43%;
+	padding: 1%;
+	color: white;
+}
+
+/*This part is used to make the website responsive on the smart phones and different computer screens. */
+
 @media only screen and (max-width: 1000px) {
 	#menuModal {
 		-ms-flex: 0 0 100%;
@@ -55,6 +70,9 @@ h3 {
 	.menuBtn {
 		padding: 20%;
 		font-size: 125%;
+	}
+	#Disclaimer {
+		display: none;
 	}
 }
 
