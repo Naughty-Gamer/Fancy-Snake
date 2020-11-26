@@ -243,8 +243,8 @@ Snake.onConnect = function (clientSocket, username) {
 	}
 
 	let color_num = Math.floor(Math.random() * color_array.length) // assing him a random color.
-	let x_axis = Math.floor(Math.random() * 73) // assing him a random x-axis position.
-	let y_axis = Math.floor(Math.random() * 73) // assing him a random y-axis position.
+	let x_axis = Math.floor(Math.random() * 73) // passing him a random x-axis position.
+	let y_axis = Math.floor(Math.random() * 73) // passing him a random y-axis position.
 	//spawn the snake when a player joins the game.
 	let snake = new Snake(clientSocket.id, x_axis, y_axis, username, color_array[color_num])
 
