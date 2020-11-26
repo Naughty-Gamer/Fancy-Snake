@@ -6,7 +6,7 @@
 
 Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of the project was to make a short fun game in which players can easily sign onto and challenge each other in a competitive game, and have their scores shown on a leader board which others can try and beat.
 
-[Play the Alpha Build!](https://fancy-snake.herokuapp.com)
+[Play the Alpha Build!](https://fancy-snake.herokuapp.com)  
 **Note: You will need a minimum of 3 player's to start a game**
 
 ### Controls:
@@ -40,4 +40,5 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 | Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
 
 ### YouTube Link:
-- https://www.youtube.com/watch?v=46E2y9QZu5w
+
+-   https://www.youtube.com/watch?v=46E2y9QZu5w
