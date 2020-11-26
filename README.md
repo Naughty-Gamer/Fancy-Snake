@@ -1,6 +1,6 @@
 # Fancy Snake
 
-![Imgur](https://i.imgur.com/a4VmYi4.mp4)
+![Imgur](https://i.imgur.com/R3WkhuK.gif)
 
 ### The game:
 
@@ -26,5 +26,5 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 | Farhan Fiaz   |    ff15     |        Lead Developer and Project Manager         |
 | Mahmood Aoude |    mma37    |        Lead Developer and Project Manager         |
 | Luke Mason    |    lcm9     |             Assistant Game Developer              |
-| Shoaib Khan   |    lcm9     | Database Designer and Assistant Backend developer |
-| Moaz Mohammed |    ms416    |            Assistant Webpage Designer             |
+| Shoaib Khan   |    ms416    | Database Designer and Assistant Backend developer |
+| Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
