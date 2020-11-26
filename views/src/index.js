@@ -24,6 +24,7 @@ const logo = document.getElementById("logo")
 const loginbtn = document.getElementById("loginbtn")
 const loginUsernameInput = document.getElementById("login-username")
 const loginPasswordInput = document.getElementById("login-password")
+const Disclaimer = document.getElementById("Disclaimer")
 
 //Register-Form screen HTML elements
 const registerbtn = document.getElementById("registerbtn")
@@ -70,6 +71,7 @@ function login() {
 		if (data.reason == null && data.success) {
 			username = loginUsernameInput.value
 			/** If success, then log them in */
+			Disclaimer.style.display = "none"
 			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -89,6 +91,7 @@ function register() {
 		if (data.reason == null && data.success) {
 			username = registerUsernameInput.value
 			/** If success, then log them in */
+			Disclaimer.style.display = "none"
 			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -102,6 +105,7 @@ function register() {
 //This function is executed as soon as someone presses on the MainMenu button while on the leaderboard screen
 // It returns the user to the main menu
 function goToMenu() {
+	Disclaimer.style.display = "none"
 	logo.style.display = "none"
 	leaderBoard.style.display = "none"
 	menuModal.style.display = "block"
@@ -111,6 +115,7 @@ function goToMenu() {
 //This function is executed as soon as someone presses on the LeaderBoard button on the main menu screen
 function getleaderboard() {
 	requestLeaderboardData()
+	Disclaimer.style.display = "none"
 	menuModal.style.display = "none"
 	leaderBoard.style.display = "block"
 	back2menuBtn.style.display = "inline-block"
@@ -134,6 +139,7 @@ function requestLeaderboardData() {
 function back2leaderBoard() {
 	clearInterval(renderID)
 	requestLeaderboardData()
+	Disclaimer.style.display = "none"
 	gameMap.style.display = "None"
 	waitingBox.style.display = "None"
 	container.style.display = "None"
@@ -151,6 +157,7 @@ function signOut() {
 
 // Requests the server to join a game and waits for a confirmation
 function tryJoiningGame() {
+	Disclaimer.style.display = "none"
 	back2menuBtn.style.display = "none"
 	container.style.display = "flex"
 	menuModal.style.display = "none"

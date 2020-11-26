@@ -53,10 +53,14 @@ h3 {
 
 /* A small disclaim found at the bottom of the page. */
 #Disclaimer {
-	position: relative;
-	margin-bottom: -43%;
-	padding: 1%;
+	position: absolute;
+	left: 1%;
+	bottom: 1%;
+	width: 10%;
+	height: 5%;
 	color: white;
+	border: 3px solid rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
 }
 
 /*This part is used to make the website responsive on the smart phones and different computer screens. */
@@ -72,7 +76,9 @@ h3 {
 		font-size: 125%;
 	}
 	#Disclaimer {
-		display: none;
+		left: 1.5%;
+		width: 40%;
+		font-size: 2vmin;
 	}
 }
 
@@ -82,11 +88,20 @@ h3 {
 	}
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1630px) {
 	#menuModal {
 		width: 30%;
 	}
+	#Disclaimer {
+		left: 1.5%;
+		width: 20%;
+	}
 }
+/* @media only screen and (max-width: 1648px) {
+	#menuModal {
+		width: 30%;
+	}
+} */
 @media only screen and (min-width: 2560px) {
 	#menuModal {
 		width: 20%;
