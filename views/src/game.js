@@ -32,7 +32,6 @@ export default class Game {
 
 		socket.on("timetilldead", (data) => {
 			this.timeTillDeath = data.seconds
-			console.log("Until Death:", data.seconds)
 		})
 
 		socket.on("CONN_ACK", (confirmation) => {
@@ -103,7 +102,6 @@ export default class Game {
 				waitingBox.style.boxShadow = " 0 0 50px 0 #FFD700"
 				table.style.borderColor = "#FFD700"
 				gameMap.style.borderColor = "#FFD700"
-				console.log("still running")
 				waitingBox.style.borderColor = "#FFD700"
 				scoreBoard.style.boxShadow = " 0 0 0px 0 #FFD700"
 				scoreBoard.style.borderColor = "#FFD700"

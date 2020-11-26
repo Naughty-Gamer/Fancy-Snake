@@ -7,7 +7,6 @@ const y = 1
  * @param {[number[]]} snake_body The body of the snake that will be drawn
  */
 function snakeDraw(snake_body, color) {
-	// console.log(snake_body);
 	snake_body.forEach((part) => {
 		const currentSnake = document.createElement("div") // makes a div for our snake
 		currentSnake.style.gridRowStart = part[y] // creates snake at part[1]
@@ -30,13 +29,15 @@ export function drawEverySnake(snakes) {
  * @param foodList list of the food that will be drawn
  */
 export function foodDraw(foodList) {
-	foodList.forEach((food) => {
-		const currentFood = document.createElement("div") // makes a div for our food
-		currentFood.style.gridRowStart = food.foodLocation[y] // creates food at getFoodLocation()[1]
-		currentFood.style.gridColumnStart = food.foodLocation[x] // creates food at getFoodLocation()[0]
-		currentFood.classList.add("food") // this adds the stylings to our food div
-		gameMap.appendChild(currentFood) // this adds a food div as a child node
-	})
+	if (foodList) {
+		foodList.forEach((food) => {
+			const currentFood = document.createElement("div") // makes a div for our food
+			currentFood.style.gridRowStart = food.foodLocation[y] // creates food at getFoodLocation()[1]
+			currentFood.style.gridColumnStart = food.foodLocation[x] // creates food at getFoodLocation()[0]
+			currentFood.classList.add("food") // this adds the stylings to our food div
+			gameMap.appendChild(currentFood) // this adds a food div as a child node
+		})
+	}
 }
 
 export function drawLeaderboard(data) {
@@ -45,7 +46,6 @@ export function drawLeaderboard(data) {
 	leaderBoard.innerHTML = ""
 	let leaderBoardHeader = leaderBoard.createTHead()
 	let headerRow = leaderBoardHeader.insertRow(0)
-	console.log(leaderBoardHeader)
 	for (let column = 0; column < 3; column++) {
 		let headerCell = headerRow.insertCell(column)
 		if (column == 0) {

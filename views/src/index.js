@@ -113,7 +113,7 @@ function requestLeaderboardData() {
 			drawLeaderboard(data)
 		} else {
 			// leaderboard currently unavailable
-			console.log(data)
+			console.log("No data:", data)
 		}
 	})
 }
