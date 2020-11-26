@@ -1,7 +1,9 @@
 /**
  * This function prevents any malicous attacks from the users, if they tried to,
- * by making sure all of the infromation they are send is saffe for the serveer.
- * @param {Object} data Gets the username and password of the user.
+ * by only allowing a whitelisted format to go through to the most critical
+ * components of the application
+ * @param {Object Literal} data the username and password of the user.
+ * @returns {Object Literal} the username and password after the validation process, as well as a reason if either of those were rejected
  */
 function validate(data) {
 	let reason = null

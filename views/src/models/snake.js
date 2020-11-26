@@ -1,4 +1,6 @@
-//This class holds the information sent about the snake from the server side.
+/**
+ * This class holds the state of the snake on the client side
+ */
 export default class Snake {
 	constructor(initpack) {
 		this.username = initpack.username
@@ -8,10 +10,5 @@ export default class Snake {
 		this.tailIndex = initpack.tailIndex // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.snakeColor = initpack.snakeColor
 		Snake.player_list[this.socketid] = this
-	}
-
-	updateBody(headLocation, tailLocation) {
-		this.body[0] = headLocation
-		this.body[this.body.length - 1] = tailLocation
 	}
 }

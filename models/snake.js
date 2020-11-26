@@ -1,5 +1,10 @@
 const Collision = require("../services/GameCollision.js")
 
+/**
+ * Snake class
+ * - Holds the state of a snake on the server
+ * - Holds a snake's behaviour
+ */
 class Snake {
 	// takes argument X and Y for starting coordinates seperately
 	constructor(id, x, y, username, color) {
@@ -86,7 +91,13 @@ class Snake {
 	win() {
 		this.snakeWon = true
 	}
-	//sends update of the snake to the server.
+
+	/**
+	 * This function is called on every tick of the game
+	 * It does 2 things:
+	 * - Moves the snake 1 block on every tick
+	 * - Checks if it should die on every tick
+	 */
 	update() {
 		this.move()
 		if (Collision.isCollidingWithBorder(this) || Collision.isCollidingWithSnake(Snake.player_list)) {

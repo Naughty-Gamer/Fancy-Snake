@@ -3,7 +3,7 @@ const SQL = require("../DB/queries.js")
 /** setTimeouts allows time for database querying */
 
 /**
- * Executes the SQL qurey, to get the information about the leaderboard.
+ * Executes the SQL query to get information about the leaderboard.
  * @param {Function} callback will execute on a succesful query
  */
 let getLeaderboardData = function (cb) {
@@ -13,9 +13,9 @@ let getLeaderboardData = function (cb) {
 }
 
 /**
- * Send back new information to the database and excutes the SQL qurey.
+ * Sends updated player win count to the database.
  * @param {String} user the username of the player.
- * @param {String} wins the wins of the player.
+ * @param {number} wins the wins of the player.
  * @param {Function} callback will execute on a succesful query
  */
 let updateLeaderboardData = function (user, wins, cb) {
@@ -25,7 +25,7 @@ let updateLeaderboardData = function (user, wins, cb) {
 }
 
 /**
- * Executes the SQL qurey, to get the wins of the player needed.
+ * Executes the SQL query to get the wins of the player needed.
  * @param {String} username the username of the player.
  * @param {Function} callback will execute on a succesful query
  */
