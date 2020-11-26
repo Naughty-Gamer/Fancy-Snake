@@ -40,13 +40,12 @@ class AllFood {
 		return this.amountOfFood
 	}
 
-	// adds amountOfFood number of food items (ONLY GREEN FOR NOW) to allFood array
+	// adds amountOfFood number of food items to allFood array
 	// takes argument x and y for size of map
 	// takes argument amountOfFood for number of food items to add into allFood array
 	addFood(x, y, amountOfFood) {
 		for (var n = 0; n < amountOfFood; n++) {
 			// Run code below, to make amountOfFood number of food items succesfully
-			// only making Green Food for now ---------------------------------------!!!
 			let newFoodLocation = this.createRandomLocation(x, y)
 			let newFoodItem = new FoodGreen(newFoodLocation)
 			this.allFood.push(newFoodItem)
@@ -60,10 +59,7 @@ class AllFood {
 			// create a new location for a new food item randomly within range of map size
 			// if this location is already occupied by another food item, then try again
 			looping = false
-			newFoodLocation = [
-				Math.floor(Math.random() * x) + 1,
-				Math.floor(Math.random() * y) + 1,
-			]
+			newFoodLocation = [Math.floor(Math.random() * x) + 1, Math.floor(Math.random() * y) + 1]
 			for (var i = 0; i < this.allFood.length; i++) {
 				// for each food item in the array of all food
 				if (this.allFood[i].getFoodLocation == newFoodLocation) {
@@ -79,16 +75,11 @@ class AllFood {
 		for (var n = 0; n < this.amountOfFood; n++) {
 			if (x == this.allFood[n].getFoodLocation()[0]) {
 				if (y == this.allFood[n].getFoodLocation()[1]) {
-					this.allFood[n].setFoodLocation(
-						this.createRandomLocation(this.mapXMax, this.mapYMax)
-					)
-					//this.allFood[n].setFoodLocation(this.createRandomLocation(3,3))
+					this.allFood[n].setFoodLocation(this.createRandomLocation(this.mapXMax, this.mapYMax))
 				}
 			}
 		}
 	}
-	// Math.floor(Math.random() * 10);     // returns a random integer from 0 to 9
-	//            0 (included) to 10 (excluded)
 }
 
 /*
