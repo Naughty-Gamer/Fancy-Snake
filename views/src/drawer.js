@@ -5,7 +5,7 @@ const y = 1
 /**
  * Draws a snake on the map
  * @param {[number[]]} snake_body The body of the snake that will be drawn
- * @param {String} color
+ * @param {String} color the color assigned to the client snake
  */
 function snakeDraw(snake_body, color) {
 	snake_body.forEach((part) => {
@@ -30,8 +30,8 @@ export function drawEverySnake(snakes) {
 }
 
 /**
- * This function is going to be used to draw the updated food on the map.
- * @param foodList list of the food that will be drawn
+ * Draws the state of the food on the map.
+ * @param {Array} foodList list of all the food locations that will be drawn
  */
 export function foodDraw(foodList) {
 	if (foodList) {
@@ -46,8 +46,8 @@ export function foodDraw(foodList) {
 }
 
 /**
- * Gets the data from the database and draws it for the client.
- * @param {not sure} data The information needed from the leaderboard to be drawn.
+ * Gets the data from the server and draws it for the client.
+ * @param {Array} data list of every player's leaderboard information
  */
 export function drawLeaderboard(data) {
 	let rank = 1
@@ -85,9 +85,8 @@ export function drawLeaderboard(data) {
 }
 
 /**
- * Draws the Scoreboard to showcase the scores of each player and their colors.
- * @param {not sure} snakes Used to get the appropriate infromation
- * from the snake to draw the score on the scoreboard.
+ * Draws the scoreboard to showcase the scores of each player and their colors.
+ * @param {Object Literal} snakes all the players in the game.
  */
 export function drawScoreBoard(snakes) {
 	let rows = []
@@ -109,7 +108,8 @@ export function drawScoreBoard(snakes) {
 			color: snake.snakeColor,
 		})
 	}
-	//Scorebaord over flow when there is more than 12 players.
+
+	//Scoreboard over flow when there is more than 12 players.
 	let sortedPlayers = rows.sort((a, b) => b.score - a.score)
 	sortedPlayers.forEach((player) => {
 		let row = scoreboard.insertRow()
@@ -128,8 +128,8 @@ export function drawScoreBoard(snakes) {
 /**
  * Adds the rank beside each players name on the scoreboard.
  * @param {Array} playerlist the list of players in the game.
- * @param {Int} score the score of the players.
- * @param {Int} rank the rank beside the players name.
+ * @param {number} score the score of the players.
+ * @param {number} rank the rank beside the players name.
  */
 function getScore(playerlist, score, rank) {
 	for (let index = 0; index < playerlist.length; index++) {

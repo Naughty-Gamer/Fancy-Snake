@@ -1,6 +1,7 @@
 import Game from "./game.js"
 import { drawLeaderboard } from "./drawer.js"
 import { renderID } from "./game.js"
+
 /**
  * Joins the websocket connection that the HTTP server has established.
  * More precisely, it connects the client to the default namespace `'/'`
@@ -11,29 +12,30 @@ let username = ""
 
 let music = document.getElementById("main-music")
 music.play()
-//menu screen
+
+//menu screen HTML elements
 const signinModal = document.getElementById("signin-modal")
 const menuModal = document.getElementById("menuModal")
 const joinGameBtn = document.getElementById("joinGameBtn")
 const leaderBoardBtn = document.getElementById("leaderBoardBtn")
 const logo = document.getElementById("logo")
 
-//Login-Form screen
+//Login-Form screen HTML elements
 const loginbtn = document.getElementById("loginbtn")
 const loginUsernameInput = document.getElementById("login-username")
 const loginPasswordInput = document.getElementById("login-password")
 
-//Register-Form screen
+//Register-Form screen HTML elements
 const registerbtn = document.getElementById("registerbtn")
 const registerUsernameInput = document.getElementById("register-username")
 const registerPasswordInput = document.getElementById("register-password")
 
-//LeaderBoard screen
+//LeaderBoard screen HTML elements
 const leaderBoard = document.getElementById("Leaderboard")
 const back2menuBtn = document.getElementById("back2menuBtn")
 const signoutbtn = document.getElementById("sign-out-btn")
 
-//game screen
+//game screen HTML elements
 const gameMap = document.getElementById("game-map")
 const scoreBoard = document.getElementById("scoreboard")
 const waitingBox = document.getElementById("waiting-box")
@@ -77,7 +79,8 @@ function login() {
 		}
 	})
 }
-//This function is excuted as soon as someone presses on the register button.
+
+//This function is executed as soon as someone presses on the register button.
 function register() {
 	//send out the info submitted by the user to the server.
 	socket.emit("register", { username: registerUsernameInput.value, password: registerPasswordInput.value })
@@ -96,23 +99,24 @@ function register() {
 	})
 }
 
-//This function is excuted as soon as someone presses on the MainMenu button.
-//returns him into the main menu from the leaderboard.
+//This function is executed as soon as someone presses on the MainMenu button while on the leaderboard screen
+// It returns the user to the main menu
 function goToMenu() {
 	logo.style.display = "none"
 	leaderBoard.style.display = "none"
 	menuModal.style.display = "block"
 	back2menuBtn.style.display = "none"
 }
-//This function is excuted as soon as someone presses on the LeaderBoard button.
+
+//This function is executed as soon as someone presses on the LeaderBoard button on the main menu screen
 function getleaderboard() {
-	//Gets the required information to display the leaderboard.
 	requestLeaderboardData()
 	menuModal.style.display = "none"
 	leaderBoard.style.display = "block"
 	back2menuBtn.style.display = "inline-block"
 }
-//This is used to get the information of the leaderboard from the server to the client side.
+
+// Requests leaderboard data and waits for a response to display it on the leaderboard.
 function requestLeaderboardData() {
 	socket.emit("req_lb_data")
 	socket.on("lb_data_req_ack", (data) => {
@@ -125,7 +129,8 @@ function requestLeaderboardData() {
 		}
 	})
 }
-//Helps to return to the leaderboard after finishing up a game.
+
+// returns the user to the leaderboard screen after a game has ended
 function back2leaderBoard() {
 	clearInterval(renderID)
 	requestLeaderboardData()
@@ -138,11 +143,13 @@ function back2leaderBoard() {
 	signoutbtn.style.display = "inline-block"
 	document.body.style.borderColor = "#892be28c"
 }
-//signOut button so people could leave the site.
+
+// Signs the player out
 function signOut() {
 	location.reload()
 }
-//This is the main button, which allows users to enter the game as a snake and have fun.
+
+// Requests the server to join a game and waits for a confirmation
 function tryJoiningGame() {
 	back2menuBtn.style.display = "none"
 	container.style.display = "flex"

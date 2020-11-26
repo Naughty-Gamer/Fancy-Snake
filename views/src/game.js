@@ -7,17 +7,20 @@ const waitingText = document.getElementById("waiting-text")
 const waitingBox = document.getElementById("waiting-box")
 const gameMap = document.getElementById("game-map")
 const scoreBoard = document.getElementById("scoreboard")
-// const container = document.getElementById("container")
 const back2leaderBoardBtn = document.getElementById("back2leaderBoardBtn")
 const table = document.getElementById("tableScoreboard")
 let countdownText = "Waiting for players..."
 export let renderID = null
 
+/**
+ * Game class
+ * - Updates the client's state of the game every time it receives data from the server
+ * - Draws the state of the game on the client's screen
+ */
 export default class Game {
 	constructor(socket) {
 		this.snakeIsDead = false
 		this.direction = ""
-		// this.delay = 55
 		document.addEventListener("keydown", this.keyDownHandler(socket))
 
 		//recieve the countdown timer from the server.
@@ -37,14 +40,16 @@ export default class Game {
 			this.registerListeners(socket)
 		})
 	}
-	//Get the snakes information from the server.
+	// Registers all the listeners that waits for data to be sent by the server
 	registerListeners(socket) {
+		// adds a new snake to the client's list of snakes every time a new player joins
 		socket.on("init", (data) => {
 			data.snakes.forEach((snake) => {
 				new Snake(snake)
 			})
 		})
-		//Send updates about the position of the snake and the movement of the players.
+
+		// changes the state of every snake every time the server sends an update
 		socket.on("update", (snakepack) => {
 			snakepack.snakes.forEach((server_snake) => {
 				let client_snake = Snake.player_list[server_snake.socketid]
@@ -57,29 +62,30 @@ export default class Game {
 			})
 		})
 
-		//used to remove a player as soon as they disconnect or die.
+		// removes the snakes that are authorized to be removed by the server
 		socket.on("remove", (data) => {
 			data.IDs.forEach((socketid) => {
 				delete Snake.player_list[socketid]
 			})
 		})
 
-		//Recieve the food state.
+		// Recieve updated locations of food
 		socket.on("food", (data) => {
 			this.food = data.food // acting as state for food
 		})
 
-		//when a player dies it sends a confirmation to the client side.
+		// sets the snake's "dead" state to true if the server says it is dead
 		socket.on("dead", () => {
 			this.snakeIsDead = true
 		})
-		//when a player wins it sends a confirmation to the client side.
+
+		// sets the snake's "snakeWon" state to true if the server says it has won
 		socket.on("win", () => {
 			this.snakeWon = true
 		})
 	}
 
-	// SetInterval to render the stuff happening on the clients side.
+	// starts rendering the client's state of the game
 	startRendering() {
 		const fps = 60
 		const delayBetweenFramesInMs = 1000 / fps
@@ -94,7 +100,7 @@ export default class Game {
 				//when the snake wins display some css to show him that he Won the game.
 			} else if (this.snakeWon) {
 				waitingText.innerText = "CHAMPION"
-				waitingText.style.color = "#FFD700" //Test the gold color.
+				waitingText.style.color = "#FFD700"
 				gameMap.style.boxShadow = " 0 0 0px 0 #FFD700"
 				waitingBox.style.boxShadow = " 0 0 50px 0 #FFD700"
 				table.style.borderColor = "#FFD700"
@@ -128,7 +134,7 @@ export default class Game {
 		}, delayBetweenFramesInMs)
 	}
 
-	//This function is used to allow the Client to move his snake freely in 4 different directions.
+	// sends the server the player's inputs
 	keyDownHandler(socket) {
 		return function (e) {
 			let key = e.key || e.keyCode
