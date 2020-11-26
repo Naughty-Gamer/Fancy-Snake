@@ -1,11 +1,14 @@
 let timeWithDelay = 93
-let secondsUntilDeath = timeWithDelay // Delay it 3 seconds because it starts immediatly after player >= max_players (Change it after finishing testing)
-// let timeInSeconds = 7
+let secondsUntilDeath = timeWithDelay
 
+/**
+ * Checks the length of all of the players and when the timer ends kills the smallest one.
+ * @param {not sure} sockets used to emit the timer to the client side.
+ * @param {Object} snakes gets the length of all of the snakes in the game.
+ */
 function startKillTimer(sockets, snakes) {
 	secondsUntilDeath = 93
 	let killTimerID = setInterval(() => {
-		// timeInSeconds--
 		secondsUntilDeath--
 		for (const socketid in sockets) {
 			let socket = sockets[socketid]
@@ -30,9 +33,8 @@ function startKillTimer(sockets, snakes) {
 			if (Object.keys(snakes).length > 1) {
 				// kills the smallest snake
 				snakes[smallestPlayer.id].die()
-				// console.log(snakes[smallestPlayer.id], "got killed by the timer");
 			}
-			secondsUntilDeath = timeWithDelay - 3 //change it to 60 after finishing testing.
+			secondsUntilDeath = timeWithDelay - 3
 		}
 	}, 1000)
 
@@ -40,6 +42,3 @@ function startKillTimer(sockets, snakes) {
 }
 
 module.exports.startKillTimer = startKillTimer
-
-//Client side: when the countdown == 0, we will start drawing a clock or a timer.
-//Server side: when the countdown == 0, start the timerKill function.
