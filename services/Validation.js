@@ -19,7 +19,7 @@ function validate(data) {
 			username: null,
 			password: null,
 			reason:
-				"Please enter a password that contains at least 1 special character, 1 uppercase character and 1 number.\nIt should be atleast 8 characters long and a maximum of 50",
+				"Please enter a password that contains at least 1 special character, 1 uppercase character, 1 lowercase character and 1 number.\nIt should be atleast 8 characters long and a maximum of 50",
 		}
 	}
 
