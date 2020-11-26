@@ -6,6 +6,8 @@
 
 Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of the project was to make a short fun game in which players can easily sign onto and challenge each other in a competitive game, and have their scores shown on a leader board which others can try and beat.
 
+**You will need a minimum of 3 player's to start a game**
+
 ### Controls:
 
 | Direction | Key | Alternative Key |
@@ -18,6 +20,13 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 ### Look and Feel:
 
 The game gives you a feeling of the retro classic 2D snake game. It has been designed to look like its ancestor while still feeling modern. The choice of arcade music fits the 90’s era vibe that the game is going for. It contains a leaderboard with every players' wins so that there is a sense of competition among new and continuing players alike. On winning, the game gives you a banner declaring you as a champion, giving you a sense of accomplishment.
+
+### Architecture choices:
+
+-   We have adopted a server authoritative system, where all of the game's logic is processed on the server. We hope that this will help prevent cheating and ruining other player's experiences, as any important decision in the game is taken by the server
+-   The client only receives the state of the game from the server and renders it on their machine. All the CPU intensive processes are done
+    on the server.
+-   While player's can host the game themselves and play in a peer-to-peer environment, the official game has dedicated servers where players can expect a more consistent network experience
 
 ### Members:
 
