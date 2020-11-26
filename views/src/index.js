@@ -22,6 +22,7 @@ const logo = document.getElementById("logo")
 const loginbtn = document.getElementById("loginbtn")
 const loginUsernameInput = document.getElementById("login-username")
 const loginPasswordInput = document.getElementById("login-password")
+const Disclaimer = document.getElementById("Disclaimer")
 
 //Register-Form screen
 const registerbtn = document.getElementById("registerbtn")
@@ -68,6 +69,7 @@ function login() {
 		if (data.reason == null && data.success) {
 			username = loginUsernameInput.value
 			/** If success, then log them in */
+			Disclaimer.style.display = "none"
 			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -86,6 +88,7 @@ function register() {
 		if (data.reason == null && data.success) {
 			username = registerUsernameInput.value
 			/** If success, then log them in */
+			Disclaimer.style.display = "none"
 			logo.style.display = "none"
 			signinModal.style.display = "none"
 			menuModal.style.display = "inline-block"
@@ -99,6 +102,7 @@ function register() {
 //This function is excuted as soon as someone presses on the MainMenu button.
 //returns him into the main menu from the leaderboard.
 function goToMenu() {
+	Disclaimer.style.display = "none"
 	logo.style.display = "none"
 	leaderBoard.style.display = "none"
 	menuModal.style.display = "block"
@@ -108,6 +112,7 @@ function goToMenu() {
 function getleaderboard() {
 	//Gets the required information to display the leaderboard.
 	requestLeaderboardData()
+	Disclaimer.style.display = "none"
 	menuModal.style.display = "none"
 	leaderBoard.style.display = "block"
 	back2menuBtn.style.display = "inline-block"
@@ -129,6 +134,7 @@ function requestLeaderboardData() {
 function back2leaderBoard() {
 	clearInterval(renderID)
 	requestLeaderboardData()
+	Disclaimer.style.display = "none"
 	gameMap.style.display = "None"
 	waitingBox.style.display = "None"
 	container.style.display = "None"
@@ -144,6 +150,7 @@ function signOut() {
 }
 //This is the main button, which allows users to enter the game as a snake and have fun.
 function tryJoiningGame() {
+	Disclaimer.style.display = "none"
 	back2menuBtn.style.display = "none"
 	container.style.display = "flex"
 	menuModal.style.display = "none"

@@ -1,4 +1,4 @@
-### TODO LIST SNAKE GAME:
+# TODO LIST:
 
 ### Essentials Of The Game:
 
