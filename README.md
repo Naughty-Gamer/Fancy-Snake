@@ -27,7 +27,6 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 - Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
 - npm i or npm install
-- npm i --save nodemon
 - Open up your mySQL and Xampp and then set up your env variables by doing the following in the terminal:
 - set DB_Host=localhost
 - set DB=snake_game
