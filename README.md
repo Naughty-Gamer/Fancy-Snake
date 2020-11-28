@@ -27,11 +27,11 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 - Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
 - npm i or npm install
-- set DB_Host=localhost
-- set DB=snake_game
-- set DB_user=root
-- set DB_pass=root
-- Run XAMPP and start up Apache and MySQL.
+- SET DB_Host=localhost
+- SET DB=snake_game
+- SET DB_user=root
+- SET DB_pass=root
+- Next step is to run XAMPP and start up Apache and MySQL.
 - Once you have done the above, run "npm start" in the project's root directory
 - Open any browser of your choice, and type in "localhost:3000" in the address bar.
 
