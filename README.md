@@ -41,4 +41,4 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 | Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
 
 ### YouTube Link:
-- [Click Here] (https://youtu.be/46E2y9QZu5w)
+- https://youtu.be/46E2y9QZu5w
