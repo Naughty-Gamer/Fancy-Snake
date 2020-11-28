@@ -25,7 +25,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 - npm i or npm install
 - npm i --save nodemon
-- Open up your mySQL and Xampp and then set up your env varialbes by doing the following in the terminal:
+- Open up your mySQL and Xampp and then set up your env variables by doing the following in the terminal:
 - set DB_Host=localhost
 - set DB=snake_game
 - set DB_user=root
