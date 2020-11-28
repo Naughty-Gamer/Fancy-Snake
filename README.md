@@ -19,6 +19,19 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 |   Left    |  A  | Left Arrow Key  |
 |   Right   |  D  | Right Arrow Key |
 
+### How To Run The Game Locally:
+
+- Once you have download the code open it on vs code and do the following in the terminal :
+
+- npm i or npm install
+- npm i --save nodemon
+- Open up your mySQL and Xampp and then set up your env varialbes by doing the following in the terminal:
+- set DB_Host=localhost
+- set DB=snake_game
+- set DB_user=root
+- set DB_pass=root
+- once everything has been done , write "npm start" and you are good to go!
+
 ### Look and Feel:
 
 The game gives you a feeling of the retro classic 2D snake game. It has been designed to look like its ancestor while still feeling modern. The choice of arcade music fits the 90’s era vibe that the game is going for. It contains a leaderboard with every players' wins so that there is a sense of competition among new and continuing players alike. On winning, the game gives you a banner declaring you as a champion, giving you a sense of accomplishment.
