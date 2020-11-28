@@ -21,7 +21,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 ### How To Run The Game Locally:
 
-- Once you have downloaded the code open it on vs code and do the following in the terminal :
+- Once you have downloaded the code open it in vs code and do the following in the terminal :
 
 - npm i or npm install
 - npm i --save nodemon
