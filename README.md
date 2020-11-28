@@ -23,8 +23,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 **Note: instructions have been laid out on README-dev.md, but we are laying them out here just in case you miss it**
 
-- Once you have downloaded the code open it in VSCode and run the following in the terminal at the project's root directory:
-
+- Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
 - npm i or npm install
 - npm i --save nodemon
 - Open up your mySQL and Xampp and then set up your env variables by doing the following in the terminal:
