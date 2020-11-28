@@ -1,5 +1,7 @@
 # Fancy Snake
 
+[Trailer!](https://youtu.be/46E2y9QZu5w)
+
 [![Demo](https://i.imgur.com/R3WkhuK.gif)](https://www.youtube.com/watch?v=46E2y9QZu5w "Check out our trailer :)")
 
 ### The game:
@@ -53,6 +55,3 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 | Luke Mason    |    lcm9     |             Assistant Game Developer              |
 | Shoaib Khan   |    ms416    | Database Designer and Assistant Backend developer |
 | Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
-
-### YouTube Link:
-- https://youtu.be/46E2y9QZu5w
