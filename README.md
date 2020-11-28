@@ -20,7 +20,19 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 |   Right   |  D  | Right Arrow Key |
 
 ### How To Run The Game Locally:
--Read the Readme-dev.ml file.
+
+**Note: instructions have been laid out on README-dev.md, but we are laying them out here just in case you miss it**
+
+- Once you have downloaded the code open it in VSCode and run the following in the terminal at the project's root directory:
+
+- npm i or npm install
+- npm i --save nodemon
+- Open up your mySQL and Xampp and then set up your env variables by doing the following in the terminal:
+- set DB_Host=localhost
+- set DB=snake_game
+- set DB_user=root
+- set DB_pass=root
+- once everything has been done , write "npm start" and you are good to go!
 
 ### Look and Feel:
 
