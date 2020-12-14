@@ -15,7 +15,7 @@ class Snake {
 		this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
 		this.tailLocation = this.body[this.body.length - 1]
-		this.directionHeading = null // current direction the snake is moving. (CURRENTLY NULL???)
+		this.directionHeading = null // current direction the snake is moving.
 		this.isDead = false // to update the status of the snake.
 		this.snakeWon = false // to update the status of the snake.
 		this.snakeColor = color // color of the snake.

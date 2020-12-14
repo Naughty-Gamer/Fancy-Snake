@@ -25,15 +25,15 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 **Note: instructions have been laid out on README-dev.md, but we are laying them out here just in case you miss it**
 
-- Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
-- npm i or npm install
-- SET DB_Host=localhost
-- SET DB=snake_game
-- SET DB_user=root
-- SET DB_pass=root
-- Next step is to run XAMPP and start up Apache and MySQL.
-- Once you have done the above, run "npm start" in the project's root directory
-- Open any browser of your choice, and type in "localhost:3000" in the address bar.
+-   Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
+-   npm i or npm install
+-   SET DB_Host=localhost
+-   SET DB=snake_game
+-   SET DB_user=root
+-   SET DB_pass=root
+-   Next step is to run XAMPP and spin up an Apache HTTP Server and a MySQL instance, both if which can be done usign XAMPP.
+-   Once you have done the above, run "npm start" in the project's root directory
+-   Open any browser of your choice, and type in "localhost:3000" in the address bar.
 
 At this point you should see the game's sign-in page. Which means you have done all the above steps correctly!
 
@@ -55,5 +55,5 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 | Farhan Fiaz   |    ff15     |        Lead Developer and Project Manager         |
 | Mahmoud Aoude |    mma37    |        Lead Developer and Project Manager         |
 | Luke Mason    |    lcm9     |             Assistant Game Developer              |
-| Shoaib Khan   |    ms416    | Database Designer and Assistant Backend developer |
+| Shoaib Khan   |    ms416    | Database Designer and Assistant Backend Developer |
 | Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |

@@ -5,7 +5,7 @@ const KillTimer = require("./KillTimer.js")
 const Validation = require("./Validation.js")
 const AuthenticationController = require("../controllers/AuthenticationController.js")
 const LeaderboardController = require("../controllers/LeaderboardController.js")
-const MAX_PLAYER = 3 //Change it later on to 3 players (2 is for testing).
+const MAX_PLAYER = 2
 let numPlayer = 0
 let timer = 3
 let isnewGame = true
@@ -54,6 +54,7 @@ class GameStateManager {
 					clientSocket.emit("loginResponse", { success: false, reason: cleanData.reason })
 				}
 			})
+
 			//when it recieves the emit "register" from the client side, it checks for the validataion of the register.
 			clientSocket.on("register", function (data) {
 				let cleanData = Validation.validate(data)
@@ -242,7 +243,7 @@ Snake.onConnect = function (clientSocket, username) {
 		}
 	}
 
-	let color_num = Math.floor(Math.random() * color_array.length) // assing him a random color.
+	let color_num = Math.floor(Math.random() * color_array.length) // passing him a random color.
 	let x_axis = Math.floor(Math.random() * 73) // passing him a random x-axis position.
 	let y_axis = Math.floor(Math.random() * 73) // passing him a random y-axis position.
 	//spawn the snake when a player joins the game.
@@ -255,7 +256,7 @@ Snake.onConnect = function (clientSocket, username) {
 		console.log("Received:", data)
 		//make sure users input is not registerd until the countdown ends.
 		if (timer <= 0) {
-			// for security measures. If the values enterd are not the values we need we reject them.
+			// for security measures; If the values entered are not directions, we ignore them.
 			if (data.dir == "down" || "up" || "left" || "right") {
 				snake.setdirectionHeading(data.dir)
 			}
