@@ -10,7 +10,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 [Play the Alpha Build!](https://fancy-snake.herokuapp.com)
 
-**Note: You will need a minimum of 3 player's to start a game**
+**Note: You will need a minimum of 2 players to start a game**
 
 ### Controls:
 
