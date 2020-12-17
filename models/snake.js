@@ -10,7 +10,7 @@ class Snake {
 	constructor(id, x, y, username, color) {
 		this.socketid = id
 		this.username = username //username of the player.
-		this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y] //,[x,y+1],[x,y+2],[x,y+3],[x,y+4],[x,y+5]
+		this.body = [[x, y]] // creates array to represent snake, starting with 1 block at location [x,y]
 		this.headLocation = this.getHeadLocation() // location of head of snake
 		this.tailIndex = 0 // position of snake's tail, starting at this.body[0] which is also it's head – also used for size (by adding 1)
 		this.lastTailLocation = [-1, -1] // keeps track of the last position the tail of the snake was on, for purpose of growing.
