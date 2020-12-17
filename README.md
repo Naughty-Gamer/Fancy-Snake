@@ -8,7 +8,7 @@
 
 Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of the project was to make a short fun game in which players can easily sign onto and challenge each other in a competitive game, and have their scores shown on a leader board which others can try and beat.
 
-[Play the Alpha Build!](https://fancy-snake.herokuapp.com)
+[Stable Release!](https://fancy-snake.herokuapp.com)
 
 **Note: You will need a minimum of 2 players to start a game**
 
@@ -50,10 +50,9 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 
 ### Members:
 
-| Name          | HW Username |                       Role                        |
+| Name          | Github Handle |                       Role                        |
 | :------------ | :---------: | :-----------------------------------------------: |
-| Farhan Fiaz   |    ff15     |        Lead Developer and Project Manager         |
-| Mahmoud Aoude |    mma37    |        Lead Developer and Project Manager         |
-| Luke Mason    |    lcm9     |             Assistant Game Developer              |
-| Shoaib Khan   |    ms416    | Database Designer and Assistant Backend Developer |
-| Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
+| Farhan Fiaz   |    [farhansolodev](https://github.com/farhansolodev)     |        Lead Developer, Designer and Project Manager         |
+| Mahmoud Aoude |    [MahmoudAoude](https://github.com/MahmoudAoude)       |        Lead Developer, Designer and Project Manager         |
+| Luke Mason    |    [LukeCMason](https://github.com/LukeCMason)           |             Assistant Game Developer              |
+| Shoaib Khan   |    [DeathCall1O1](https://github.com/DeathCall1O1)       | Database Designer and Assistant Backend Developer |
