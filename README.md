@@ -23,7 +23,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 ### How To Run The Game Locally:
 
-**Note: instructions have been laid out on README-dev.md, but we are laying them out here just in case you miss it**
+**Note: instructions have been laid out on README-dev.md, but we are explaining them here as well just in case you missed it**
 
 -   Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
 -   npm i or npm install
@@ -31,7 +31,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 -   SET DB=snake_game
 -   SET DB_user=root
 -   SET DB_pass=root
--   Next step is to run XAMPP and spin up an Apache HTTP Server and a MySQL instance, both if which can be done usign XAMPP.
+-   Next step is to run XAMPP and spin up an Apache HTTP Server and a MySQL instance, both if which can be done using XAMPP.
 -   Once you have done the above, run "npm start" in the project's root directory
 -   Open any browser of your choice, and type in "localhost:3000" in the address bar.
 
