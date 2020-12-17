@@ -50,10 +50,9 @@ The game gives you a feeling of the retro classic 2D snake game. It has been des
 
 ### Members:
 
-| Name          | HW Username |                       Role                        |
+| Name          | Github Handle |                       Role                        |
 | :------------ | :---------: | :-----------------------------------------------: |
-| Farhan Fiaz   |    ff15     |        Lead Developer and Project Manager         |
-| Mahmoud Aoude |    mma37    |        Lead Developer and Project Manager         |
-| Luke Mason    |    lcm9     |             Assistant Game Developer              |
-| Shoaib Khan   |    ms416    | Database Designer and Assistant Backend Developer |
-| Moaz Mohammed |    mtm12    |            Assistant Webpage Designer             |
+| Farhan Fiaz   |    [farhansolodev](https://github.com/farhansolodev)     |        Lead Developer, Designer and Project Manager         |
+| Mahmoud Aoude |    [MahmoudAoude](https://github.com/MahmoudAoude)       |        Lead Developer, Designer and Project Manager         |
+| Luke Mason    |    [LukeCMason](https://github.com/LukeCMason)           |             Assistant Game Developer              |
+| Shoaib Khan   |    [DeathCall1O1](https://github.com/DeathCall1O1)       | Database Designer and Assistant Backend Developer |
