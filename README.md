@@ -31,7 +31,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 -   SET DB=snake_game
 -   SET DB_user=root
 -   SET DB_pass=root
--   Next step is to spin up an Apache HTTP Server and a MySQL instance, both if which can be done using XAMPP.
+-   Next step is to spin up a HTTP Server and a MySQL instance, both if which can be done using XAMPP.
 -   Once you have done the above, run "npm start" in the project's root directory
 -   Open any browser of your choice, and type in "localhost:3000" in the address bar.
 
