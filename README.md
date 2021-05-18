@@ -8,7 +8,7 @@
 
 Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of the project was to make a short fun game in which players can easily sign onto and challenge each other in a competitive game, and have their scores shown on a leader board which others can try and beat.
 
-[Stable Release!](https://fancy-snake.herokuapp.com)
+[Stable Release!](https://fancy-snake-game.herokuapp.com)
 
 **Note: You will need a minimum of 2 players to start a game**
 
