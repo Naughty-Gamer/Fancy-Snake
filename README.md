@@ -23,7 +23,7 @@ Our game is a multiplayer adaptation of the well-known 2D snake game. The aim of
 
 ### How To Run The Game Locally:
 
-**Note: instructions have been laid out on README-dev.md, but we are explaining them here as well just in case you missed it**
+**Note: instructions have been laid out on [README-dev.md](https://github.com/Naughty-Gamer/Fancy-Snake/blob/main/README-dev.md), but we are explaining them here as well just in case you missed it**
 
 -   Fork, then clone this project, or alternatively, download it as zip, then run the following in the terminal at the project's root directory:
 -   npm i or npm install
