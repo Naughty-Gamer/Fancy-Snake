@@ -6,7 +6,7 @@ const Creds = require("./credentials.js")
  */
 const createDb = function (handleError) {
 	const mysql = require("mysql")
-
+	console.log(Creds)
 	// creating a connection with the database server
 	const connection = mysql.createConnection({
 		host: Creds.host,
